@@ -10,8 +10,8 @@ public class EdgeConnectivity implements InvariantCounter {
 
     private static final int MAXN = 1000;
 
-    int mincut(int[][] graph) {
-        int[][] g = Arrays.copyOf(graph, graph.length);
+    int mincut(short[][] graph) {
+        short[][] g = Arrays.copyOf(graph, graph.length);
         for (int i = 0; i < g.length; i++) {
             g[i] = Arrays.copyOf(graph[i], graph[i].length);
         }
