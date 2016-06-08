@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class App {
-    private static final int MIN_VERTEXES = 5;
-    private static final int MAX_VERTEXES = 5;
+    private static final int MIN_VERTEXES = 2;
+    private static final int MAX_VERTEXES = 10;
     private static final Pattern GRAPH_BEGIN = Pattern.compile("Graph ([0-9]+), order ([0-9]+).");
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -15,15 +15,27 @@ public class App {
 
         final InvariantCounter worker = new EdgeConnectivity();
         for (int n = MIN_VERTEXES; n <= MAX_VERTEXES; n++) {
-            Scanner scanner = new Scanner(new File("g" + n));
-            PrintWriter writer = new PrintWriter("g" + n + ".out");
-            while (scanner.hasNext()) {
-                Graph graph = readNextGraph(scanner);
-                if (graph != null) {
-                    writer.println(graph.toString() + " Edge connectivity = " + worker.getInvariant(graph));
+            Scanner scanner = new Scanner(new File("input/g" + n));
+            PrintWriter writer = null;
+            long a = System.currentTimeMillis();
+            try {
+                writer = new PrintWriter("res/g" + n + ".out");
+                System.out.println("Order " + n + " counting...");
+
+                while (scanner.hasNext()) {
+                    Graph graph = readNextGraph(scanner);
+                    if (graph != null) {
+                        writer.println(graph.toString() + " Edge connectivity = " + worker.getInvariant(graph));
+                    }
+                }
+            } finally {
+                long b = System.currentTimeMillis();
+                System.out.println("Order " + n + " finished with time " + (b - a));
+                if (writer != null) {
+                    writer.close();
                 }
             }
-            writer.close();
+
         }
 
         long end = System.currentTimeMillis();
