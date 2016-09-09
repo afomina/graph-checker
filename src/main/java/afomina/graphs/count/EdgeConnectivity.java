@@ -1,10 +1,13 @@
-package afomina.graphs;
+package afomina.graphs.count;
+
+import afomina.graphs.Graph;
+import afomina.graphs.count.InvariantCounter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EdgeConnectivity implements InvariantCounter {
+public class EdgeConnectivity implements InvariantCounter<Integer> {
     public Integer getInvariant(Graph g) {
         return mincut(g.getMatrix());
     }

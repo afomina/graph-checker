@@ -1,5 +1,9 @@
 package afomina.graphs;
 
+import afomina.graphs.count.ConnectivityCounter;
+import afomina.graphs.count.RadDimCounter;
+import afomina.graphs.count.VertexConnectivity;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 
@@ -8,14 +12,18 @@ import java.math.BigInteger;
 public class Graph {
     private short[][] matrix;
     private String name;
-    private int edgeConnectivity;
-    private int edgeAmount = -1;
+    private Integer edgeConnectivity;
+    private Integer vertexConnectivity;
+    private Integer edgeAmount;
     private String code;
     private Integer id;
     private int order;
     private Boolean connected;
+    private Integer radius;
+    private Integer diametr;
 
-    public Graph() {}
+    public Graph() {
+    }
 
     public Graph(short[][] matrix) {
         this.matrix = matrix;
@@ -33,8 +41,8 @@ public class Graph {
 
     @Column(name = "vertex")
     public int getOrder() {
-        if (order == 0&& matrix != null) {
-             order = matrix.length;
+        if (order == 0 && matrix != null) {
+            order = matrix.length;
         }
         return order;
     }
@@ -58,12 +66,12 @@ public class Graph {
     }
 
     @Column(name = "EDGE")
-    public int getEdgeAmount() {
-        if (edgeAmount == -1) {
+    public Integer getEdgeAmount() {
+        if (edgeAmount == null) {
             int cnt = 0;
             for (int i = 0; i < matrix.length - 1; i++) {
                 short[] shorts = matrix[i];
-                for (int j = i+1; j < shorts.length; j++) {
+                for (int j = i + 1; j < shorts.length; j++) {
                     cnt += shorts[j];
                 }
             }
@@ -77,23 +85,22 @@ public class Graph {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < matrix.length - 1; i++) {
                 short[] shorts = matrix[i];
-                for (int j = i+1; j < shorts.length; j++) {
+                for (int j = i + 1; j < shorts.length; j++) {
                     builder.append(shorts[j]);
                 }
             }
             BigInteger big = new BigInteger(builder.toString(), 2);
-//            int decimal = Integer.parseInt(builder.toString(), 2);
-            code = big.toString(16);//Integer.toString(decimal, 16);
+            code = big.toString(16);
         }
         return code;
     }
 
     @Column(name = "EDGECON")
-    public int getEdgeConnectivity() {
+    public Integer getEdgeConnectivity() {
         return edgeConnectivity;
     }
 
-    public void setEdgeConnectivity(int edgeCon) {
+    public void setEdgeConnectivity(Integer edgeCon) {
         this.edgeConnectivity = edgeCon;
     }
 
@@ -111,7 +118,7 @@ public class Graph {
         this.matrix = matrix;
     }
 
-    public void setEdgeAmount(int edgeAmount) {
+    public void setEdgeAmount(Integer edgeAmount) {
         this.edgeAmount = edgeAmount;
     }
 
@@ -128,5 +135,38 @@ public class Graph {
 
     public void setConnected(Boolean connected) {
         this.connected = connected;
+    }
+
+    public Integer getRadius() {
+        if (radius == null) {
+            new RadDimCounter().getInvariant(this);
+        }
+        return radius;
+    }
+
+    public void setRadius(Integer radius) {
+        this.radius = radius;
+    }
+
+    public Integer getDiametr() {
+        if (diametr == null) {
+            new RadDimCounter().getInvariant(this);
+        }
+        return diametr;
+    }
+
+    public void setDiametr(Integer diametr) {
+        this.diametr = diametr;
+    }
+
+    public Integer getVertexConnectivity() {
+        if (vertexConnectivity == null) {
+            vertexConnectivity = new VertexConnectivity().getInvariant(this);
+        }
+        return vertexConnectivity;
+    }
+
+    public void setVertexConnectivity(Integer vertexConnectivity) {
+        this.vertexConnectivity = vertexConnectivity;
     }
 }

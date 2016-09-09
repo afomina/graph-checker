@@ -57,6 +57,12 @@ public class App {
         graph.getCode();
         graph.getEdgeAmount();
         graph.getOrder();
+
+        graph.getConnected();
+        graph.getRadius();
+
+        graph.getVertexConnectivity();
+        graph.getEdgeConnectivity();
         graphService.save(graph);
     }
 
