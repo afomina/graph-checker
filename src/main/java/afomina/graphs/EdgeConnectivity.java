@@ -1,10 +1,11 @@
+package afomina.graphs;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class EdgeConnectivity implements InvariantCounter {
-    @Override
-    public int getInvariant(Graph g) {
+    public Integer getInvariant(Graph g) {
         return mincut(g.getMatrix());
     }
 
@@ -19,7 +20,7 @@ public class EdgeConnectivity implements InvariantCounter {
         int n = g.length;
         int best_cost = Integer.MAX_VALUE;
 //        List<Integer> best_cut = Collections.emptyList();
-        List<List<Integer>> v = new ArrayList<>(n);
+        List<List<Integer>> v = new ArrayList<List<Integer>>(n);
         for (int i = 0; i < n; ++i) {
             v.add(new ArrayList<Integer>(i));
         }
@@ -44,7 +45,6 @@ public class EdgeConnectivity implements InvariantCounter {
                 if (it == n - ph - 1) {
                     if (w[sel] < best_cost) {
                         best_cost = w[sel];
-//                        best_cut = v.get(sel);
                     }
                     v.get(prev).addAll(v.get(sel));
                     for (int i = 0; i < n; ++i) {
