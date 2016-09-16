@@ -14,16 +14,19 @@ public class ConnectivityCounter implements InvariantCounter<Boolean> {
 
         for (boolean b : used) {
             if (!b) {
+                g.setConnected(false);
                 return false;
             }
         }
+        g.setConnected(true);
         return true;
     }
 
 
     private void dfs(int v, Graph g, boolean[] used) {
         used[v] = true;
-        for (int i = 0; i < g.getMatrix()[v].length; ++i) {
+        short[][] matrix = g.getMatrix();
+        for (int i = 0; i < matrix[v].length; ++i) {
             int to = g.getMatrix()[v][i];
             if (!used[to])
                 dfs(to, g, used);

@@ -19,7 +19,7 @@ public class VertexConnectivity implements InvariantCounter<Integer> {
     int[] q = new int[MAXN];
 
     @Override
-    public Integer getInvariant(Graph g) {
+    public Integer getInvariant(Graph g) {//TODO!!!!
         int flow = 0;
         for (; ; ) {
             if (!bfs()) break;

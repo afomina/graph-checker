@@ -12,12 +12,14 @@ import java.math.BigInteger;
 public class Graph {
     private short[][] matrix;
     private String name;
-    private Integer edgeConnectivity;
-    private Integer vertexConnectivity;
-    private Integer edgeAmount;
-    private String code;
+
     private Integer id;
+    private String code;
     private int order;
+    private Integer edgeAmount;
+    private Integer edgeConnectivity;
+
+    private Integer vertexConnectivity;
     private Boolean connected;
     private Integer radius;
     private Integer diametr;
@@ -36,14 +38,25 @@ public class Graph {
 
     @Transient
     public short[][] getMatrix() {
+        if (matrix == null) {
+            BigInteger integer = new BigInteger(getCode(), 16);
+            String code2 = integer.toString(2);
+            matrix = new short[order][order];
+            int idx = 0;
+            for (int i = 0; i < matrix.length - 1; i++) {
+                for (int j = i + 1; j < order; j++) {
+                    matrix[i][j] = matrix[j][i] = Short.parseShort(code2.charAt(idx++) + ""); //TODO: not really sure about this
+                }
+            }
+        }
         return matrix;
     }
 
     @Column(name = "vertex")
     public int getOrder() {
-        if (order == 0 && matrix != null) {
+       /* if (order == 0 && matrix != null) {
             order = matrix.length;
-        }
+        }*/
         return order;
     }
 
@@ -67,7 +80,7 @@ public class Graph {
 
     @Column(name = "EDGE")
     public Integer getEdgeAmount() {
-        if (edgeAmount == null) {
+        /*if (edgeAmount == null) {
             int cnt = 0;
             for (int i = 0; i < matrix.length - 1; i++) {
                 short[] shorts = matrix[i];
@@ -76,12 +89,12 @@ public class Graph {
                 }
             }
             edgeAmount = cnt;
-        }
+        }*/
         return edgeAmount;
     }
 
     public String getCode() {
-        if (code == null) {
+        /*if (code == null) {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < matrix.length - 1; i++) {
                 short[] shorts = matrix[i];
@@ -91,7 +104,7 @@ public class Graph {
             }
             BigInteger big = new BigInteger(builder.toString(), 2);
             code = big.toString(16);
-        }
+        }*/
         return code;
     }
 
@@ -126,10 +139,11 @@ public class Graph {
         this.code = code;
     }
 
+    @Column(name = "conn")
     public Boolean getConnected() {
-        if (connected == null) {
+        /*if (connected == null) {
             connected = new ConnectivityCounter().getInvariant(this);
-        }
+        }*/
         return connected;
     }
 
@@ -138,9 +152,9 @@ public class Graph {
     }
 
     public Integer getRadius() {
-        if (radius == null) {
+        /*if (radius == null) {
             new RadDimCounter().getInvariant(this);
-        }
+        }*/
         return radius;
     }
 
@@ -149,9 +163,9 @@ public class Graph {
     }
 
     public Integer getDiametr() {
-        if (diametr == null) {
+        /*if (diametr == null) {
             new RadDimCounter().getInvariant(this);
-        }
+        }*/
         return diametr;
     }
 
@@ -159,10 +173,11 @@ public class Graph {
         this.diametr = diametr;
     }
 
+    @Column(name = "vertcon")
     public Integer getVertexConnectivity() {
-        if (vertexConnectivity == null) {
+       /* if (vertexConnectivity == null) {
             vertexConnectivity = new VertexConnectivity().getInvariant(this);
-        }
+        }*/
         return vertexConnectivity;
     }
 

@@ -4,8 +4,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+
+import java.util.Collections;
+import java.util.List;
 
 public class GraphService {
 
@@ -14,10 +18,10 @@ public class GraphService {
     private static SessionFactory sessionFactory;
 
     private GraphService() {}
-    
+
     /**
      * Returns a single <code>GraphService</code> instance.
-     * 
+     *
      * @return the <code>GraphService</code> object
      */
     public static GraphService get() {
@@ -29,11 +33,24 @@ public class GraphService {
         return INSTANCE;
     }
 
-    public void save(Graph graph) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = session.beginTransaction();
+    public Session openSession() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        return session;
+    }
+
+    public void closeSession(Session session) {
+        session.getTransaction().commit();
+    }
+
+    public void save(Graph graph, Session session) {
+        session.save(graph);
+    }
+
+    public void saveOne(Graph graph) {
+		Session session = openSession();
 		session.save(graph);
-		transaction.commit();
+        closeSession(session);
     }
 
     public void update(Graph graph) {
@@ -49,6 +66,20 @@ public class GraphService {
         session.delete(file);
         transaction.commit();
     }
-    
+
+    public List<Graph> findByOrder(Integer order) {
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            List<Graph> result = session.createCriteria(Graph.class)
+                    .add(Restrictions.eq("order", order))
+                    .list();
+            session.getTransaction().commit();
+            return result;
+        } catch (NullPointerException e) {
+            return Collections.emptyList();
+        }
+    }
+
 
 }

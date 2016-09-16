@@ -1,6 +1,14 @@
 package afomina.graphs;
 
+import afomina.graphs.count.ConnectivityCounter;
+import afomina.graphs.count.InvariantCounter;
+import afomina.graphs.count.RadDimCounter;
+import afomina.graphs.count.VertexConnectivity;
+import org.hibernate.Session;
+
 import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,12 +19,14 @@ import java.util.regex.Pattern;
 public class App {
     private static final int MIN_VERTEXES = 9;
     private static final int MAX_VERTEXES = 11;
+    private static final int GRAPHS_TO_STORE = 5000;
     private static final Pattern GRAPH_BEGIN = Pattern.compile("Graph ([0-9]+), order ([0-9]+).");
     private static final Pattern EDGE_CON = Pattern.compile(".*Edge connectivity = ([0-9]+)");
     private static final String INPUT_GRAPH_PATH = "input/g";
     private static final String OUTPUT_PATH = "res/g"; //"/media/alexa/DATA/res/g";
     private static final GraphService graphService = GraphService.get();
     private static final Logger log = Logger.getLogger("App");
+    private static final List<InvariantCounter> INVARIANTS = Arrays.asList(/*new VertexConnectivity(), */new ConnectivityCounter(), new RadDimCounter());
 
     public static void parseAndStoreGraphs() throws Exception {
         long begin = System.currentTimeMillis();
@@ -30,6 +40,8 @@ public class App {
             try {
                 Graph graph;
                 String line;
+                Session session = graphService.openSession();
+                int cnt = 0;
                 while (graphReader.ready() && (line = graphReader.readLine()) != null) {
                     graph = readNextGraph(graphReader, line);
 
@@ -37,7 +49,11 @@ public class App {
                         int edgeCon = readNextEdgeCon(edgeConReader);
                         graph.setEdgeConnectivity(edgeCon);
                         try {
-                            store(graph);
+                            store(graph, session);
+                            if (++cnt == GRAPHS_TO_STORE) {
+                                graphService.closeSession(session);
+                                cnt = 0;
+                            }
                         } catch (Exception e) {
                             log.log(Level.SEVERE, "exception when storing graph " + graph.toString(), e);
                         }
@@ -53,17 +69,12 @@ public class App {
         System.out.println("Total time: " + (end - begin));
     }
 
-    private static void store(Graph graph) {
+    private static void store(Graph graph, Session session) {
         graph.getCode();
         graph.getEdgeAmount();
         graph.getOrder();
-
-        graph.getConnected();
-        graph.getRadius();
-
-        graph.getVertexConnectivity();
-        graph.getEdgeConnectivity();
-        graphService.save(graph);
+//        graph.getEdgeConnectivity();
+       calcInvariants(graph, session);
     }
 
     private static int readNextEdgeCon(BufferedReader reader) throws IOException {
@@ -78,8 +89,35 @@ public class App {
     public static void main(String[] args) throws Exception {
         setLogger();
 
-        parseAndStoreGraphs();
+//        parseAndStoreGraphs();
+        processGraphs();
+    }
 
+    private static void processGraphs() {
+        Session session = graphService.openSession();
+        int cnt = 0;
+        for (int n = MIN_VERTEXES; n <= MAX_VERTEXES; n++) {
+            List<Graph> graphs = graphService.findByOrder(n);
+            for (Graph graph : graphs) {
+                calcInvariants(graph, session);
+                if (++cnt == GRAPHS_TO_STORE) {
+                    graphService.closeSession(session);
+                }
+            }
+        }
+        if (!session.getTransaction().wasCommitted()) {
+            graphService.closeSession(session);
+        }
+    }
+//    static InvariantCounter vertexConnectivity = new VertexConnectivity(),cnnectivityCounter = new ConnectivityCounter(), radDimCounter =new RadDimCounter();
+    private static void calcInvariants(Graph graph, Session session) {
+        for (InvariantCounter invariant : INVARIANTS) {
+            invariant.getInvariant(graph);
+        }
+        if (session == null || session.getTransaction().wasCommitted()) {
+            session = graphService.openSession();
+        }
+        graphService.save(graph, session); //FIXME: this creates new graph instead .. :(
     }
 
     private static void setLogger() {
