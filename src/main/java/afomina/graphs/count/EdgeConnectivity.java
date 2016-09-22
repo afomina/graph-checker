@@ -1,7 +1,6 @@
 package afomina.graphs.count;
 
-import afomina.graphs.Graph;
-import afomina.graphs.count.InvariantCounter;
+import afomina.graphs.data.Graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;

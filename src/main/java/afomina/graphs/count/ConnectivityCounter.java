@@ -1,6 +1,6 @@
 package afomina.graphs.count;
 
-import afomina.graphs.Graph;
+import afomina.graphs.data.Graph;
 
 /**
  * Created by alexandra on 10.09.2016.

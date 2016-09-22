@@ -1,4 +1,4 @@
-package afomina.graphs;
+package afomina.graphs.data;
 
 import afomina.graphs.count.ConnectivityCounter;
 import afomina.graphs.count.RadDimCounter;

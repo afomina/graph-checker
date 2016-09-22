@@ -1,6 +1,5 @@
-package afomina.graphs;
+package afomina.graphs.data;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

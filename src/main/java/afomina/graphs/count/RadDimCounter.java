@@ -1,6 +1,6 @@
 package afomina.graphs.count;
 
-import afomina.graphs.Graph;
+import afomina.graphs.data.Graph;
 
 import java.util.Set;
 import java.util.TreeSet;

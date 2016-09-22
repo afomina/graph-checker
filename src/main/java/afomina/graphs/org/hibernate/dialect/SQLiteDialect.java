@@ -7,10 +7,11 @@
  *    May you share freely, never taking more than you give.
  *
  */
-package org.hibernate.dialect;
+package afomina.graphs.org.hibernate.dialect;
 
 import java.sql.Types;
 
+import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.function.AbstractAnsiTrimEmulationFunction;
 import org.hibernate.dialect.function.NoArgSQLFunction;
 import org.hibernate.dialect.function.SQLFunction;

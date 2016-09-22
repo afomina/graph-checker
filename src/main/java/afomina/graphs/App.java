@@ -3,9 +3,22 @@ package afomina.graphs;
 import afomina.graphs.count.ConnectivityCounter;
 import afomina.graphs.count.InvariantCounter;
 import afomina.graphs.count.RadDimCounter;
-import afomina.graphs.count.VertexConnectivity;
+import afomina.graphs.data.Graph;
+import afomina.graphs.data.GraphService;
 import org.hibernate.Session;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.sql.DataSource;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +29,13 @@ import java.util.logging.SimpleFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class App {
+@SpringBootApplication
+//@Configuration
+//@EnableAutoConfiguration
+@ComponentScan("afomina.graphs")
+@EnableWebMvc
+@EnableWebSecurity
+public class App extends SpringBootServletInitializer {
     private static final int MIN_VERTEXES = 9;
     private static final int MAX_VERTEXES = 11;
     private static final int GRAPHS_TO_STORE = 5000;
@@ -86,11 +105,25 @@ public class App {
         return -1;
     }
 
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(App.class);
+    }
+
+//    @Bean
+//    public DataSource dataSource() {
+//        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+//        dataSourceBuilder.driverClassName("org.sqlite.JDBC");
+//        dataSourceBuilder.url("jdbc:sqlite:/F:/sasha/data/graph.db");
+//        return dataSourceBuilder.build();
+//    }
+
     public static void main(String[] args) throws Exception {
         setLogger();
 
 //        parseAndStoreGraphs();
-        processGraphs();
+//        processGraphs();
+        SpringApplication.run(App.class, args);
     }
 
     private static void processGraphs() {

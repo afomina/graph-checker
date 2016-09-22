@@ -1,8 +1,7 @@
 package afomina.graphs.ui;
 
-import afomina.graphs.Graph;
-import afomina.graphs.GraphService;
-import org.hibernate.Criteria;
+import afomina.graphs.data.Graph;
+import afomina.graphs.data.GraphService;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
