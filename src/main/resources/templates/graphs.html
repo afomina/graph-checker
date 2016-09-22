@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graphs</title>
+</head>
+<body>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Code</th>
+        <th>N</th>
+        <th>E</th>
+        <th>Connected</th>
+        <th>Edge connectivity</th>
+        <th>Radius</th>
+        <th>Diametr</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="g : ${graphs}">
+        <td th:text="${g.getCode()}"></td>
+        <td th:text="${m.getOrder()}"></td>
+        <td th:text="${m.getEdgeAmount}"></td>
+        <td th:text="${m.getConnected()}"></td>
+        <td th:text="${m.getEdgeConnectivity()}"></td>
+        <td th:text="${m.getRadius()}"></td>
+        <td th:text="${m.getDiametr()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

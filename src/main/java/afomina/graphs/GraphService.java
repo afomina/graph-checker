@@ -1,5 +1,6 @@
 package afomina.graphs;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -80,6 +81,10 @@ public class GraphService {
             return Collections.emptyList();
         }
     }
+
+//    public List<Graph> findByCriteria(Criteria criteria) {
+//
+//    }
 
 
 }
