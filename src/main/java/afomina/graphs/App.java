@@ -115,7 +115,7 @@ public class App extends SpringBootServletInitializer {
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.sqlite.JDBC");
-        dataSourceBuilder.url("jdbc:sqlite:graphs.db");
+        dataSourceBuilder.url("jdbc:sqlite:/F:/sasha/data/graph.db");
         return dataSourceBuilder.build();
     }
 

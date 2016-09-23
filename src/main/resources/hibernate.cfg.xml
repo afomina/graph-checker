@@ -9,7 +9,7 @@
         <property name="format_sql">true</property>
         <property name="dialect">afomina.graphs.org.hibernate.dialect.SQLiteDialect</property>
         <property name="connection.driver_class">org.sqlite.JDBC</property>
-        <property name="connection.url">jdbc:sqlite:graphs.db</property>
+        <property name="connection.url">jdbc:sqlite:/F:/sasha/data/graph.db</property>
         <property name="connection.username"></property>
         <property name="connection.password"></property>
          

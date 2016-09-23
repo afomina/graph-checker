@@ -35,7 +35,7 @@ public class GraphService {
 
     public Session openSession() {
         Session session = sessionFactory.openSession();
-        session.beginTransaction();
+//        session.beginTransaction();
         return session;
     }
 
