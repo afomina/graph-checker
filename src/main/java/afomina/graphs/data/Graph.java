@@ -20,7 +20,7 @@ public class Graph {
     private Integer edgeConnectivity;
 
     private Integer vertexConnectivity;
-    private Boolean connected;
+    private Integer connected;
     private Integer radius;
     private Integer diametr;
 
@@ -118,7 +118,7 @@ public class Graph {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -140,16 +140,21 @@ public class Graph {
     }
 
     @Column(name = "conn")
-    public Boolean getConnected() {
+    public Integer getConnected() {
         /*if (connected == null) {
             connected = new ConnectivityCounter().getInvariant(this);
         }*/
         return connected;
     }
 
-    public void setConnected(Boolean connected) {
+    public void setConnected(Integer connected) {
         this.connected = connected;
     }
+
+//    @Transient
+//    public boolean isConnected() {
+//        return getConnected() == 1;
+//    }
 
     public Integer getRadius() {
         /*if (radius == null) {

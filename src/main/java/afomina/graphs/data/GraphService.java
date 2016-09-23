@@ -3,10 +3,10 @@ package afomina.graphs.data;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,8 +27,8 @@ public class GraphService {
     public static GraphService get() {
 //    	Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
     	Configuration configuration = new Configuration().configure();
-        serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties())
-        				  .buildServiceRegistry();
+        serviceRegistry =  new StandardServiceRegistryBuilder().applySettings(configuration.getProperties())
+        				  .build();
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         return INSTANCE;
     }

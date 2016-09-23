@@ -14,11 +14,11 @@ public class ConnectivityCounter implements InvariantCounter<Boolean> {
 
         for (boolean b : used) {
             if (!b) {
-                g.setConnected(false);
+                g.setConnected(0);
                 return false;
             }
         }
-        g.setConnected(true);
+        g.setConnected(1);
         return true;
     }
 

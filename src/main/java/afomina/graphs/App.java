@@ -5,6 +5,7 @@ import afomina.graphs.count.InvariantCounter;
 import afomina.graphs.count.RadDimCounter;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphService;
+import afomina.graphs.ui.MainController;
 import org.hibernate.Session;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -31,10 +32,10 @@ import java.util.regex.Pattern;
 
 @SpringBootApplication
 //@Configuration
-//@EnableAutoConfiguration
+@EnableAutoConfiguration
 @ComponentScan("afomina.graphs")
-@EnableWebMvc
-@EnableWebSecurity
+//@EnableWebMvc
+//@EnableWebSecurity
 public class App extends SpringBootServletInitializer {
     private static final int MIN_VERTEXES = 9;
     private static final int MAX_VERTEXES = 11;
@@ -110,16 +111,16 @@ public class App extends SpringBootServletInitializer {
         return application.sources(App.class);
     }
 
-//    @Bean
-//    public DataSource dataSource() {
-//        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-//        dataSourceBuilder.driverClassName("org.sqlite.JDBC");
-//        dataSourceBuilder.url("jdbc:sqlite:/F:/sasha/data/graph.db");
-//        return dataSourceBuilder.build();
-//    }
+    @Bean
+    public DataSource dataSource() {
+        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        dataSourceBuilder.driverClassName("org.sqlite.JDBC");
+        dataSourceBuilder.url("jdbc:sqlite:graphs.db");
+        return dataSourceBuilder.build();
+    }
 
     public static void main(String[] args) throws Exception {
-        setLogger();
+//        setLogger();
 
 //        parseAndStoreGraphs();
 //        processGraphs();
@@ -138,16 +139,16 @@ public class App extends SpringBootServletInitializer {
                 }
             }
         }
-        if (!session.getTransaction().wasCommitted()) {
+//        if (!session.getTransaction().wasCommitted()) {
             graphService.closeSession(session);
-        }
+//        }
     }
 //    static InvariantCounter vertexConnectivity = new VertexConnectivity(),cnnectivityCounter = new ConnectivityCounter(), radDimCounter =new RadDimCounter();
     private static void calcInvariants(Graph graph, Session session) {
         for (InvariantCounter invariant : INVARIANTS) {
             invariant.getInvariant(graph);
         }
-        if (session == null || session.getTransaction().wasCommitted()) {
+        if (session == null ){//|| session.getTransaction().wasCommitted()) {
             session = graphService.openSession();
         }
         graphService.save(graph, session); //FIXME: this creates new graph instead .. :(
