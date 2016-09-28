@@ -39,13 +39,17 @@ public class Graph {
     @Transient
     public short[][] getMatrix() {
         if (matrix == null) {
+            matrix = new short[order][order];
+            if ("0".equals(getCode())) {
+                return matrix;
+            }
+
             BigInteger integer = new BigInteger(getCode(), 16);
             String code2 = integer.toString(2);
-            matrix = new short[order][order];
             int idx = 0;
             for (int i = 0; i < matrix.length - 1; i++) {
                 for (int j = i + 1; j < order; j++) {
-                    matrix[i][j] = matrix[j][i] = Short.parseShort(code2.charAt(idx++) + ""); //TODO: not really sure about this
+                    matrix[i][j] = matrix[j][i] = Short.parseShort(code2.charAt(idx++) + ""); //!TODO: not really sure about this
                 }
             }
         }

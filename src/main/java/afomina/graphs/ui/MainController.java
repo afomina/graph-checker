@@ -1,5 +1,9 @@
 package afomina.graphs.ui;
 
+import afomina.graphs.App;
+import afomina.graphs.count.ConnectivityCounter;
+import afomina.graphs.count.InvariantCounter;
+import afomina.graphs.count.RadDimCounter;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
 import afomina.graphs.data.GraphService;
@@ -12,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class MainController {
 
+    private static final int MIN_VERTEXES = 3;
+    private static final int MAX_VERTEXES = 3;
+    private static final int GRAPHS_TO_STORE = 5000;
+    private static final List<InvariantCounter> INVARIANTS = Arrays.asList(/*new VertexConnectivity(), */new ConnectivityCounter(), new RadDimCounter());
     @Autowired
     GraphDao graphDao;
 
@@ -38,8 +44,9 @@ public class MainController {
             Object value = entry.getValue();
             if (!entry.getValue().isEmpty()) {
                 try {
-                   value  = new Integer(Integer.parseInt(entry.getValue()));
-                } catch (NumberFormatException e ) {}
+                    value = new Integer(Integer.parseInt(entry.getValue()));
+                } catch (NumberFormatException e) {
+                }
                 userParams.put(entry.getKey(), value);
             }
         }
@@ -48,5 +55,27 @@ public class MainController {
 //        session.getTransaction().commit();
         model.addAttribute("graphs", graphs);
         return "graphs";
+    }
+
+    @RequestMapping(value = "calc", method = RequestMethod.GET)
+    public String calcInvariants() {
+        processGraphs();
+        return "index";
+    }
+
+    public void processGraphs() {
+        int cnt = 0;
+        for (int n = MIN_VERTEXES; n <= MAX_VERTEXES; n++) {
+            List<Graph> graphs = graphDao.findByOrder(n);
+            for (Graph graph : graphs) {
+                for (InvariantCounter invariant : INVARIANTS) {
+                    invariant.getInvariant(graph);
+                }
+                graphDao.save(graph);
+                if (++cnt == GRAPHS_TO_STORE) {
+                    graphDao.flush();
+                }
+            }
+        }
     }
 }

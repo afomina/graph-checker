@@ -20,7 +20,7 @@ public class GraphDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-   public List<Graph> find( Map<String, Object> userParams) {
+    public List<Graph> find(Map<String, Object> userParams) {
         Criteria criteria;
 
         Session session = entityManager.unwrap(Session.class);
@@ -28,5 +28,26 @@ public class GraphDao {
         criteria.add(Restrictions.allEq(userParams));
 
         return (List<Graph>) criteria.list();
+    }
+
+    public List<Graph> findByOrder(Integer order) {
+        Criteria criteria;
+
+        Session session = entityManager.unwrap(Session.class);
+        criteria = session.createCriteria(Graph.class);
+        criteria.add(Restrictions.eq("order", order));
+
+        return (List<Graph>) criteria.list();
+    }
+
+    public void save(Graph toStore) {
+        Session session = entityManager.unwrap(Session.class);
+        session.save(toStore);
+    }
+
+    public void flush() {
+        Session session = entityManager.unwrap(Session.class);
+        session.flush();
+        session.clear();
     }
 }

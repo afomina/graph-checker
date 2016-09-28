@@ -5,7 +5,6 @@ import afomina.graphs.count.InvariantCounter;
 import afomina.graphs.count.RadDimCounter;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphService;
-import afomina.graphs.ui.MainController;
 import org.hibernate.Session;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,12 +14,12 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.FileHandler;
@@ -127,22 +126,9 @@ public class App extends SpringBootServletInitializer {
         SpringApplication.run(App.class, args);
     }
 
-    private static void processGraphs() {
-        Session session = graphService.openSession();
-        int cnt = 0;
-        for (int n = MIN_VERTEXES; n <= MAX_VERTEXES; n++) {
-            List<Graph> graphs = graphService.findByOrder(n);
-            for (Graph graph : graphs) {
-                calcInvariants(graph, session);
-                if (++cnt == GRAPHS_TO_STORE) {
-                    graphService.closeSession(session);
-                }
-            }
-        }
-//        if (!session.getTransaction().wasCommitted()) {
-            graphService.closeSession(session);
-//        }
-    }
+
+
+
 //    static InvariantCounter vertexConnectivity = new VertexConnectivity(),cnnectivityCounter = new ConnectivityCounter(), radDimCounter =new RadDimCounter();
     private static void calcInvariants(Graph graph, Session session) {
         for (InvariantCounter invariant : INVARIANTS) {
