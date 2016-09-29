@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 @ComponentScan("afomina.graphs")
 //@EnableWebMvc
 //@EnableWebSecurity
-public class App extends SpringBootServletInitializer {
+public class App {
     private static final int MIN_VERTEXES = 9;
     private static final int MAX_VERTEXES = 11;
     private static final int GRAPHS_TO_STORE = 5000;
@@ -105,7 +105,6 @@ public class App extends SpringBootServletInitializer {
         return -1;
     }
 
-    @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(App.class);
     }
