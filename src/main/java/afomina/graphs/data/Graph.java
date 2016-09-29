@@ -50,6 +50,9 @@ public class Graph {
             for (int i = 0; i < matrix.length - 1; i++) {
                 for (int j = i + 1; j < order; j++) {
                     matrix[i][j] = matrix[j][i] = Short.parseShort(code2.charAt(idx++) + ""); //!TODO: not really sure about this
+                    if (idx == code2.length()) {
+                        break;
+                    }
                 }
             }
         }
