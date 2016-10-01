@@ -27,9 +27,9 @@ public class ConnectivityCounter implements InvariantCounter<Boolean> {
         used[v] = true;
         short[][] matrix = g.getMatrix();
         for (int i = 0; i < matrix[v].length; ++i) {
-            int to = g.getMatrix()[v][i];
-            if (!used[to])
-                dfs(to, g, used);
+            if (matrix[v][i] == 1 && !used[i]) {
+                dfs(i, g, used);
+            }
         }
     }
 

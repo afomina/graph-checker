@@ -54,6 +54,9 @@ public class Graph {
                         break;
                     }
                 }
+                if (idx == code2.length()) {
+                    break;
+                }
             }
         }
         return matrix;

@@ -77,5 +77,6 @@ public class MainController {
                 }
             }
         }
+        graphDao.flush();
     }
 }
