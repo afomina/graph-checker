@@ -24,6 +24,9 @@ public class Graph {
     private Integer radius;
     private Integer diametr;
 
+    private Integer components;
+    private Integer girth;
+
     public Graph() {
     }
 
@@ -198,5 +201,26 @@ public class Graph {
 
     public void setVertexConnectivity(Integer vertexConnectivity) {
         this.vertexConnectivity = vertexConnectivity;
+    }
+
+    public Integer getComponents() {
+        return components;
+    }
+
+    public void setComponents(Integer components) {
+        this.components = components;
+    }
+
+    public Integer getGirth() {
+        return girth;
+    }
+
+    public void setGirth(Integer girth) {
+        this.girth = girth;
+    }
+
+    @Transient
+    public boolean isAcyclic() {
+        return (girth!=null && girth==0);
     }
 }

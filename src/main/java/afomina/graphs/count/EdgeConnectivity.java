@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EdgeConnectivity implements InvariantCounter<Integer> {
+public class EdgeConnectivity extends InvariantCounter<Integer> {
     public Integer getInvariant(Graph g) {
         return mincut(g.getMatrix());
     }

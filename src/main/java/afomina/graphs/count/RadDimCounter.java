@@ -8,7 +8,7 @@ import java.util.TreeSet;
 /**
  * Created by alexandra on 10.09.2016.
  */
-public class RadDimCounter implements InvariantCounter {
+public class RadDimCounter extends InvariantCounter {
     @Override
     public Object getInvariant(Graph g) {
         int n = g.getOrder();

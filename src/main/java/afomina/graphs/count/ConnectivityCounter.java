@@ -4,9 +4,8 @@ import afomina.graphs.data.Graph;
 
 /**
  * Created by alexandra on 10.09.2016.
- * TODO : test this bullshit
  */
-public class ConnectivityCounter implements InvariantCounter<Boolean> {
+public class ConnectivityCounter extends InvariantCounter<Boolean> {
     @Override
     public Boolean getInvariant(Graph g) {
         boolean[] used = new boolean[g.getOrder()];
@@ -20,17 +19,6 @@ public class ConnectivityCounter implements InvariantCounter<Boolean> {
         }
         g.setConnected(1);
         return true;
-    }
-
-
-    private void dfs(int v, Graph g, boolean[] used) {
-        used[v] = true;
-        short[][] matrix = g.getMatrix();
-        for (int i = 0; i < matrix[v].length; ++i) {
-            if (matrix[v][i] == 1 && !used[i]) {
-                dfs(i, g, used);
-            }
-        }
     }
 
 }

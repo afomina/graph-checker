@@ -8,13 +8,14 @@
 <table border="1">
     <thead>
     <tr>
-        <th>Code</th>
+        <th>Код</th>
         <th>N</th>
         <th>E</th>
-        <th>Connected</th>
-        <th>Edge connectivity</th>
-        <th>Radius</th>
-        <th>Diametr</th>
+        <th>Связный</th>
+        <th>Вершинная связность</th>
+        <th>Реберная связность</th>
+        <th>Радиус</th>
+        <th>Диаметр</th>
     </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
         <td th:text="${g.getOrder()}"></td>
         <td th:text="${g.getEdgeAmount()}"></td>
         <td th:text="${g.getConnected()}"></td>
+        <td th:text="${g.getVertexConnectivity()}"></td>
         <td th:text="${g.getEdgeConnectivity()}"></td>
         <td th:text="${g.getRadius()}"></td>
         <td th:text="${g.getDiametr()}"></td>

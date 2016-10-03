@@ -3,33 +3,36 @@
 <head th:fragment="htmlhead">
     <meta charset="UTF-8" />
     <title>Title</title>
-    <link th:href="@{/webjars/bootstrap/3.0.3/css/bootstrap.min.css}" rel="stylesheet"/>
-
+    <!--<link th:href="@{/webjars/bootstrap/3.0.3/css/bootstrap.min.css}" rel="stylesheet" media="all"/>-->
+    <link th:href="@{/styles.css}" rel="stylesheet" media="all"/>
 </head>
 <body>
-<form method="get" action="graphs" >
+<form method="get" action="graphs" class="contact_form" >
     <div class="form-group">
-        <label for="code">Code:</label>
+        <label for="code">Код:</label>
         <input id="code" name="code"/>
     </div>
     <div class="form-group">
-        <label for="order">Order</label>
+        <label for="order">N</label>
         <input id="order" name="order"/>
         </div>
     <div class="form-group">
-        <label> Edge amount</label>  <input name="edgeAmount"/>
+        <label> E</label>  <input name="edgeAmount"/>
         </div>
     <div class="form-group">
-        <label>Connected</label><input type="checkbox" name="connected"/>
+        <label>Связный</label><input type="checkbox" name="connected"/>
         </div>
     <div class="form-group">
-        <label>Edge Connectivity</label><input name="edgeConnectivity"/>
+        <label>Вершинная связность</label><input name="vertexConnectivity"/>
+    </div>
+    <div class="form-group">
+        <label>Реберная связность</label><input name="edgeConnectivity"/>
         </div>
     <div class="form-group">
-        <label>Radius</label><input name="radius"/>
+        <label>Радиус</label><input name="radius"/>
         </div>
     <div class="form-group">
-        <label>Diametr</label><input name="diametr"/>
+        <label>Диаметр</label><input name="diametr"/>
         </div>
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
