@@ -26,6 +26,9 @@ public class Graph {
 
     private Integer components;
     private Integer girth;
+    private Boolean primitive;
+    private Integer exp;
+    private Boolean twoPartial;
 
     public Graph() {
     }
@@ -222,5 +225,29 @@ public class Graph {
     @Transient
     public boolean isAcyclic() {
         return (girth!=null && girth==0);
+    }
+
+    public Boolean getPrimitive() {
+        return primitive;
+    }
+
+    public void setPrimitive(Boolean primitive) {
+        this.primitive = primitive;
+    }
+
+    public Integer getExp() {
+        return exp;
+    }
+
+    public void setExp(Integer exp) {
+        this.exp = exp;
+    }
+
+    public Boolean getTwoPartial() {
+        return twoPartial;
+    }
+
+    public void setTwoPartial(Boolean twoPartial) {
+        this.twoPartial = twoPartial;
     }
 }

@@ -6,6 +6,7 @@ import afomina.graphs.data.Graph;
  * Created by alexandra on 03.10.2016.
  */
 public class ComponentCounter extends InvariantCounter<Integer> {
+
     @Override
     public Integer getInvariant(Graph g) {
         int n = g.getOrder();
@@ -21,4 +22,15 @@ public class ComponentCounter extends InvariantCounter<Integer> {
         g.setComponents(res);
         return res;
     }
+
+    protected void dfs(int v, Graph g, boolean[] used) {
+        used[v] = true;
+        short[][] matrix = g.getMatrix();
+        for (int i = 0; i < matrix[v].length; ++i) {// count shortest cicle = girth here
+            if (matrix[v][i] == 1 && !used[i]) {
+                dfs(i, g, used);
+            }
+        }
+    }
+
 }
