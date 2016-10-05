@@ -38,7 +38,7 @@ public class TwoPartChecker extends InvariantCounter<Boolean> {
                 }
             }
         }
-        graph.setTwoPartial(ok);
+        graph.setTwoPartial(ok? 1 : 0);
         return ok;
     }
 }

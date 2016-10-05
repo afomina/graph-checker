@@ -1,10 +1,7 @@
 package afomina.graphs.ui;
 
 import afomina.graphs.App;
-import afomina.graphs.count.ConnectivityCounter;
-import afomina.graphs.count.InvariantCounter;
-import afomina.graphs.count.RadDimCounter;
-import afomina.graphs.count.VertexConnectivity;
+import afomina.graphs.count.*;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
 import afomina.graphs.data.GraphService;
@@ -25,7 +22,7 @@ public class MainController {
     private static final int MIN_VERTEXES = 2;
     private static final int MAX_VERTEXES = 3;
     private static final int GRAPHS_TO_STORE = 5000;
-    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new VertexConnectivity());
+    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new ComponentCounter(), new Girth(), new TwoPartChecker());
     @Autowired
     GraphDao graphDao;
 

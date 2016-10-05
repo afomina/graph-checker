@@ -26,9 +26,9 @@ public class Graph {
 
     private Integer components;
     private Integer girth;
-    private Boolean primitive;
+    private Integer primitive;
     private Integer exp;
-    private Boolean twoPartial;
+    private Integer twoPartial;
 
     public Graph() {
     }
@@ -227,11 +227,11 @@ public class Graph {
         return (girth!=null && girth==0);
     }
 
-    public Boolean getPrimitive() {
+    public Integer getPrimitive() {
         return primitive;
     }
 
-    public void setPrimitive(Boolean primitive) {
+    public void setPrimitive(Integer primitive) {
         this.primitive = primitive;
     }
 
@@ -243,11 +243,12 @@ public class Graph {
         this.exp = exp;
     }
 
-    public Boolean getTwoPartial() {
+    @Column(name = "twopartial")
+    public Integer getTwoPartial() {
         return twoPartial;
     }
 
-    public void setTwoPartial(Boolean twoPartial) {
+    public void setTwoPartial(Integer twoPartial) {
         this.twoPartial = twoPartial;
     }
 }
