@@ -27,11 +27,12 @@ public class Girth extends InvariantCounter<Integer> {
         color[v] = 1;
 
         for (int to = 0; to < matrix[v].length; ++to) {// count shortest circle = girth here
-            if (matrix[v][to] == 1) {
+            if (matrix[v][to] == 1 && to != p[v]) {
                 if (color[to] == 0) {
                     p[to] = v;
                     cycle(to, matrix, color, p);
                 } else if (color[to] == 1) {
+                    p[v] = to;
                     int end = v;
                     int begin = to;
 
