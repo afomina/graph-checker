@@ -125,9 +125,6 @@ public class App {
         SpringApplication.run(App.class, args);
     }
 
-
-
-
 //    static InvariantCounter vertexConnectivity = new VertexConnectivity(),cnnectivityCounter = new ConnectivityCounter(), radDimCounter =new RadDimCounter();
     private static void calcInvariants(Graph graph, Session session) {
         for (InvariantCounter invariant : INVARIANTS) {
