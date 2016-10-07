@@ -44,7 +44,7 @@ public class GraphDao {
         Criteria criteria;
 
         Session session = entityManager.unwrap(Session.class);
-        criteria = session.createCriteria(Graph.class).;
+        criteria = session.createCriteria(Graph.class);
         criteria.add(Restrictions.eq("id", id));
 
         return (List<Graph>) criteria.list();
