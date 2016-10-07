@@ -34,7 +34,7 @@
         <th>E</th>
         <th>Связный</th>
         <th>Вершинная связность</th>
-        <th>Реберная связность</th>
+        <!--<th>Реберная связность</th>-->
         <th>Радиус</th>
         <th>Диаметр</th>
         <th>Число компонент связности</th>
@@ -51,7 +51,7 @@
         <td th:text="${graphs.get(i).getOrder()}"></td>
         <td th:text="${graphs.get(i).getEdgeAmount()}"></td>
         <td th:text="${graphs.get(i).getConnected()==1? 'Да':'Нет'}"></td>
-        <td th:text="${graphs.get(i).getVertexConnectivity()}"></td>
+        <!--<td th:text="${graphs.get(i).getVertexConnectivity()}"></td>-->
         <td th:text="${graphs.get(i).getEdgeConnectivity()}"></td>
         <td th:text="${graphs.get(i).getConnected()==1? graphs.get(i).getRadius(): 'Н/Д'}"></td>
         <td th:text="${graphs.get(i).getConnected()==1? graphs.get(i).getDiametr(): 'Н/Д'}"></td>
