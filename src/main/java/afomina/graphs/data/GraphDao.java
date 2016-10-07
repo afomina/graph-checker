@@ -40,6 +40,16 @@ public class GraphDao {
         return (List<Graph>) criteria.list();
     }
 
+    public List<Graph> findById(Integer id) {
+        Criteria criteria;
+
+        Session session = entityManager.unwrap(Session.class);
+        criteria = session.createCriteria(Graph.class).;
+        criteria.add(Restrictions.eq("id", id));
+
+        return (List<Graph>) criteria.list();
+    }
+
     public void save(Graph toStore) {
         Session session = entityManager.unwrap(Session.class);
         session.save(toStore);

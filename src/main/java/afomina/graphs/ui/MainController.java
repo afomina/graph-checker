@@ -9,6 +9,7 @@ import afomina.graphs.data.GraphDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,6 +50,12 @@ public class MainController {
         List<Graph> graphs = graphDao.find(userParams);
         model.addAttribute("graphs", graphs);
         return "graphs";
+    }
+
+    @RequestMapping(value = "/graphs/{id}", method = RequestMethod.GET)
+    public String getGraph(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("graph", graphDao.findById(id));
+        return "graph";
     }
 
     @RequestMapping(value = "calc", method = RequestMethod.GET)
