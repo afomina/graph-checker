@@ -1,9 +1,6 @@
 package afomina.graphs.ui;
 
-import afomina.graphs.count.ComponentCounter;
-import afomina.graphs.count.Girth;
-import afomina.graphs.count.InvariantCounter;
-import afomina.graphs.count.TwoPartChecker;
+import afomina.graphs.count.*;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +19,10 @@ import java.util.Map;
 @Controller
 public class MainController {
 
-    private static final int MIN_VERTEXES = 2;
-    private static final int MAX_VERTEXES = 3;
+    private static final int MIN_VERTEXES = 4;
+    private static final int MAX_VERTEXES = 7;
     private static final int GRAPHS_TO_STORE = 5000;
-    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new ComponentCounter(), new Girth(), new TwoPartChecker());
+    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new ExponentCounter());
     @Autowired
     GraphDao graphDao;
 

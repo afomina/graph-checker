@@ -134,7 +134,15 @@ public class Graph {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//GenerationType.TABLE, generator = "id")
+//    @TableGenerator(
+//            name="id",
+//            table="GENERATOR_TABLE",
+//            pkColumnName = "key",
+//            valueColumnName = "next",
+//            pkColumnValue="course",
+//            allocationSize=30
+//    )
     public Integer getId() {
         return id;
     }

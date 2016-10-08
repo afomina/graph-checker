@@ -40,9 +40,9 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
                 return 1;
             }
         };
-        EdmondsKarpMaxFlow<Integer, Integer> alg = new EdmondsKarpMaxFlow(g, 0, g.getOrder()-1, capTransformer, edgeFlowMap, edgeFactory);
-        alg.evaluate();
-        Integer maxFlow = alg.getMaxFlow();
+//        EdmondsKarpMaxFlow<Integer, Integer> alg = new EdmondsKarpMaxFlow(g, 0, g.getOrder()-1, capTransformer, edgeFlowMap, edgeFactory);
+//        alg.evaluate();
+        Integer maxFlow =0;// alg.getMaxFlow();
         g.setVertexConnectivity(maxFlow);
         return maxFlow;
     }

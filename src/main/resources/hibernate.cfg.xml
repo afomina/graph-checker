@@ -4,7 +4,7 @@
  
 <hibernate-configuration>
     <session-factory>
-    	<property name="hbm2dll.auto">validate</property>
+    	<property name="hbm2dll.auto">update</property>
         <property name="show_sql">false</property>
         <property name="format_sql">true</property>
         <property name="dialect">afomina.graphs.org.hibernate.dialect.SQLiteDialect</property>

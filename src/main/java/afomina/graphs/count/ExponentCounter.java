@@ -22,21 +22,31 @@ public class ExponentCounter extends InvariantCounter<Integer> {
         }
         DoubleMatrix2D graphMatrix = DoubleFactory2D.dense.make(doubleMatrix);
         int exp = 1;
-        int maxExp = n*n - 2*n +2;
-        while (exp <= maxExp && !isMatrixEqual1(graphMatrix, n) /*!=(1 1 1)*/){
+        int maxExp = n * n - 2 * n + 2;
+        while (exp <= maxExp && !isMatrixEqual1(graphMatrix, n) /*!=(1 1 1)*/) {
             graphMatrix = algebra.mult(graphMatrix, graphMatrix);
             exp++;
         }
-        if (exp == 1 &&!isMatrixEqual1(graphMatrix, n) || exp > maxExp) {
+        if (!isMatrixEqual1(graphMatrix, n)) {
             g.setPrimitive(0);
         } else {
             g.setPrimitive(1);
+            if (exp > 1) {
+                exp--;
+            }
             g.setExp(exp);
         }
         return exp;
     }
 
     private boolean isMatrixEqual1(DoubleMatrix2D matrix, int n) {
-        return matrix.zSum() == n * n;
+        for (int i = 0; i < matrix.rows(); i++) {
+            for (int j = 0; j < matrix.columns(); j++) {
+                if (matrix.getQuick(i, j) != 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
