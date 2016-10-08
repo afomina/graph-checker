@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <!--<meta charset="UTF-8">-->
-    <title>Graphs</title>
+    <title>Результат запроса</title>
     <style>
         thead {
         display: table-header-group;
@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-<table border="1">
+<table th:if="${graphs != null && graphs.size() > 0}" border="1">
     <thead>
     <tr>
         <th>#</th>

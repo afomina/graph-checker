@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="htmlhead">
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title>База данных графов</title>
     <!--<link th:href="@{/webjars/bootstrap/3.0.3/css/bootstrap.min.css}" rel="stylesheet" media="all"/>-->
     <!--<link th:href="@{/styles.css}" rel="stylesheet" media="all"/>-->
     <head >
@@ -39,7 +39,7 @@
 
             /* === Form Elements === */
             .contact_form label {
-            width:150px;
+            width:250px;
             margin-top: 3px;
             display:inline-block;
             float:left;
@@ -51,7 +51,7 @@
             padding:5px 8px;
             }
             .contact_form textarea {padding:8px; width:300px;}
-            .contact_form button {margin-left:156px;}
+            .contact_form button {margin-left:256px;}
 
             /* form element visual styles */
             .contact_form input, .contact_form textarea {
@@ -181,36 +181,86 @@
     </head>
 </head>
 <body>
+<h2>Поиск графов с заданными параметрами</h2>
 <form method="get" action="graphs" class="contact_form" >
     <div class="form-group">
-        <label for="code">Код:</label>
+        <label for="code">Код</label>
         <input id="code" name="code"/>
+        <span class="form_hint">Матричный код в формате graph8</span>
     </div>
     <div class="form-group">
-        <label for="order">N</label>
+        <label for="order">n</label>
         <input id="order" name="order"/>
+        <span class="form_hint">Количество вершин</span>
         </div>
     <div class="form-group">
-        <label> E</label>  <input id="e" name="edgeAmount"/>
+        <label>m</label>
+        <input id="e" name="edgeAmount"/>
+        <span class="form_hint">Количество ребер</span>
         </div>
     <div class="form-group">
-        <label for="c">Связный</label><input id="c" type="checkbox" name="connected" value="1"/>
+        <label for="c">Связный</label>
+        <select id="c" name="connected">
+            <option></option>
+            <option value="1">Да</option>
+            <option value="0">Нет</option>
+        </select>
         </div>
     <div class="form-group">
-        <label for="v">Вершинная связность</label><input id="v" name="vertexConnectivity"/>
+        <label for="v">Вершинная связность</label>
+        <input id="v" name="vertexConnectivity"/>
+        <span class="form_hint">Наименьшее число вершин, удаление которых приводит к несвязному графу</span>
     </div>
     <div class="form-group">
-        <label>Реберная связность</label><input name="edgeConnectivity"/>
-        </div>
+        <label>Реберная связность</label>
+        <input name="edgeConnectivity"/>
+        <span class="form_hint">Наименьшее число ребер, удаление которых приводит к несвязному графу</span>
+    </div>
     <div class="form-group">
-        <label for="r">Радиус</label><input id="r" name="radius"/>
-        </div>
+        <label for="r">Радиус</label>
+        <input id="r" name="radius"/>
+        <span class="form_hint">Минимальный эксцентриситет</span>
+    </div>
     <div class="form-group">
-        <label>Диаметр</label><input name="diametr"/>
-        </div>
-    <button type="submit" class="btn btn-primary">Search</button>
+        <label>Диаметр</label>
+        <input name="diametr"/>
+        <span class="form_hint">Максимальный эксцентриситет</span>
+    </div>
+    <div class="form-group">
+        <label>Число компонент связности</label>
+        <input name="components"/>
+    </div>
+    <div class="form-group">
+        <label for="gir">Обхват</label>
+        <input id="gir" name="girth"/>
+        <span class="form_hint">Длина наименьшего цикла</span>
+    </div>
+    <div class="form-group">
+        <label>Примитивный</label>
+        <select name="primitive">
+            <option></option>
+            <option value="1">Да</option>
+            <option value="0">Нет</option>
+        </select>
+        <span class="form_hint">Существует ли целое число r ≥ 1 такое, что каждая вершина графа достижима из любой вершины за r шагов</span>
+    </div>
+    <div class="form-group">
+        <label>Экспонента</label>
+        <input name="exp"/>
+        <!--<span class="form_hint"></span>-->
+    </div>
+    <div class="form-group">
+        <label>Двудольный</label>
+        <select name="twoPartial">
+            <option></option>
+            <option value="1">Да</option>
+            <option value="0">Нет</option>
+        </select>
+        <span class="form_hint">Можно ли разделить его вершины на две доли так, чтобы не было ребер, соединяющих две вершины одной доли</span>
+    </div>
+    <button type="submit" class="btn btn-primary">Найти</button>
 </form>
-<a th:href="@{/more}">Расширенный запрос</a>
+<a th:href="@{/more}" style="font-size: 20px;">Расширенный запрос</a>
 <script th:src="@{/webjars/jquery/2.0.3/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/3.0.3/js/bootstrap.min.js}"></script>
 </body>
