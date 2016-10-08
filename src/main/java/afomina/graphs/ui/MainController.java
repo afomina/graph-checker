@@ -31,6 +31,11 @@ public class MainController {
         return "index";
     }
 
+    @RequestMapping(value = "more", method = RequestMethod.GET)
+    public String more() {
+        return "more";
+    }
+
     @RequestMapping(value = "/graphs", method = RequestMethod.GET)
     public String findGraphs(@RequestParam Map<String, String> requestParams, Model model) {
         Map<String, Object> userParams = new HashMap<>();
@@ -45,6 +50,13 @@ public class MainController {
             }
         }
         List<Graph> graphs = graphDao.find(userParams);
+        model.addAttribute("graphs", graphs);
+        return "graphs";
+    }
+
+    @RequestMapping(value = "graphsMore", method = RequestMethod.GET)
+    public String findGraphs(@RequestParam String sql, Model model) {
+        List<Graph> graphs = graphDao.findBySql(sql);
         model.addAttribute("graphs", graphs);
         return "graphs";
     }
