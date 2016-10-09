@@ -1,14 +1,13 @@
 package afomina.graphs.data;
 
-import afomina.graphs.count.ConnectivityCounter;
-import afomina.graphs.count.RadDimCounter;
-import afomina.graphs.count.VertexConnectivity;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
 @Table(name = "graph")
+@JsonAutoDetect
 public class Graph {
     private short[][] matrix;
     private String name;
@@ -70,9 +69,6 @@ public class Graph {
 
     @Column(name = "vertex")
     public int getOrder() {
-       /* if (order == 0 && matrix != null) {
-            order = matrix.length;
-        }*/
         return order;
     }
 
@@ -96,31 +92,10 @@ public class Graph {
 
     @Column(name = "EDGE")
     public Integer getEdgeAmount() {
-        /*if (edgeAmount == null) {
-            int cnt = 0;
-            for (int i = 0; i < matrix.length - 1; i++) {
-                short[] shorts = matrix[i];
-                for (int j = i + 1; j < shorts.length; j++) {
-                    cnt += shorts[j];
-                }
-            }
-            edgeAmount = cnt;
-        }*/
         return edgeAmount;
     }
 
     public String getCode() {
-        /*if (code == null) {
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < matrix.length - 1; i++) {
-                short[] shorts = matrix[i];
-                for (int j = i + 1; j < shorts.length; j++) {
-                    builder.append(shorts[j]);
-                }
-            }
-            BigInteger big = new BigInteger(builder.toString(), 2);
-            code = big.toString(16);
-        }*/
         return code;
     }
 
@@ -134,15 +109,7 @@ public class Graph {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//GenerationType.TABLE, generator = "id")
-//    @TableGenerator(
-//            name="id",
-//            table="GENERATOR_TABLE",
-//            pkColumnName = "key",
-//            valueColumnName = "next",
-//            pkColumnValue="course",
-//            allocationSize=30
-//    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -165,9 +132,6 @@ public class Graph {
 
     @Column(name = "conn")
     public Integer getConnected() {
-        /*if (connected == null) {
-            connected = new ConnectivityCounter().getInvariant(this);
-        }*/
         return connected;
     }
 
@@ -175,15 +139,7 @@ public class Graph {
         this.connected = connected;
     }
 
-//    @Transient
-//    public boolean isConnected() {
-//        return getConnected() == 1;
-//    }
-
     public Integer getRadius() {
-        /*if (radius == null) {
-            new RadDimCounter().getInvariant(this);
-        }*/
         return radius;
     }
 
@@ -192,9 +148,6 @@ public class Graph {
     }
 
     public Integer getDiametr() {
-        /*if (diametr == null) {
-            new RadDimCounter().getInvariant(this);
-        }*/
         return diametr;
     }
 
@@ -204,9 +157,6 @@ public class Graph {
 
     @Column(name = "vertcon")
     public Integer getVertexConnectivity() {
-       /* if (vertexConnectivity == null) {
-            vertexConnectivity = new VertexConnectivity().getInvariant(this);
-        }*/
         return vertexConnectivity;
     }
 

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="htmlhead">
+<%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<html>
+<head>
     <meta charset="UTF-8" />
     <title>База данных графов</title>
     <!--<link th:href="@{/webjars/bootstrap/3.0.3/css/bootstrap.min.css}" rel="stylesheet" media="all"/>-->
@@ -185,11 +188,30 @@
     <div class="form-group">
         <label for="sql">Запрос:</label>
         <textarea id="sql" name="sql"></textarea>
-        <span >vertex - количество вершин, edge - количество ребер</span>
     </div>
     <button type="submit" class="btn btn-primary">Найти</button>
-</form>
-<script th:src="@{/webjars/jquery/2.0.3/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/3.0.3/js/bootstrap.min.js}"></script>
+    <br/>
+
+</form><span>
+            Введите запрос в формате: <b>инвариант1</b> =(<,>) <b>значение1</b> and(or) <b>инвариант2</b> =(<,>) <b>значение2</b> и т.д.<br/>
+            Возможные инварианты:<br/>
+            <ul>
+                <li>code - матричный код</li>
+                <li>vertex - количество вершин</li>
+                <li>edge - количество ребер</li>
+                <li>edgecon - реберная связность</li>
+                <li>vertcon - вершинная связность</li>
+                <li>conn - связность (значения 0 или 1)</li>
+                <li>radius - радиус</li>
+                <li>diametr - диаметр</li>
+                <li>components - число компонент связности</li>
+                <li>girth - обхват</li>
+                <li>primitive - примитивность (значения 0 или 1)</li>
+                <li>exp - экспонент</li>
+                <li>twoPartial - двудольность (значения 0 или 1)</li>
+            </ul>
+        </span>
+<script src="@{/webjars/jquery/2.0.3/jquery.min.js}"></script>
+<script src="@{/webjars/bootstrap/3.0.3/js/bootstrap.min.js}"></script>
 </body>
 </html>

@@ -21,7 +21,6 @@ public class EdgeConnectivity extends InvariantCounter<Integer> {
 
         int n = g.length;
         int best_cost = Integer.MAX_VALUE;
-//        List<Integer> best_cut = Collections.emptyList();
         List<List<Integer>> v = new ArrayList<List<Integer>>(n);
         for (int i = 0; i < n; ++i) {
             v.add(new ArrayList<Integer>(i));

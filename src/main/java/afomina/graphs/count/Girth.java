@@ -2,9 +2,6 @@ package afomina.graphs.count;
 
 import afomina.graphs.data.Graph;
 
-/**
- * Обхват
- */
 public class Girth extends InvariantCounter<Integer> {
 
     @Override
@@ -26,7 +23,7 @@ public class Girth extends InvariantCounter<Integer> {
     protected int cycle(int v, short[][] matrix, short[] color, int[] p) {
         color[v] = 1;
 
-        for (int to = 0; to < matrix[v].length; ++to) {// count shortest circle = girth here
+        for (int to = 0; to < matrix[v].length; ++to) {
             if (matrix[v][to] == 1 && to != p[v]) {
                 if (color[to] == 0) {
                     p[to] = v;

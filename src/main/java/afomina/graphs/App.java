@@ -30,11 +30,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SpringBootApplication
-//@Configuration
 @EnableAutoConfiguration
 @ComponentScan("afomina.graphs")
-//@EnableWebMvc
-//@EnableWebSecurity
 public class App {
     private static final int MIN_VERTEXES = 9;
     private static final int MAX_VERTEXES = 11;
@@ -42,10 +39,10 @@ public class App {
     private static final Pattern GRAPH_BEGIN = Pattern.compile("Graph ([0-9]+), order ([0-9]+).");
     private static final Pattern EDGE_CON = Pattern.compile(".*Edge connectivity = ([0-9]+)");
     private static final String INPUT_GRAPH_PATH = "input/g";
-    private static final String OUTPUT_PATH = "res/g"; //"/media/alexa/DATA/res/g";
+    private static final String OUTPUT_PATH = "res/g";
     private static final GraphService graphService = GraphService.get();
     private static final Logger log = Logger.getLogger("App");
-    private static final List<InvariantCounter> INVARIANTS = Arrays.asList(/*new VertexConnectivity(), */new ConnectivityCounter(), new RadDimCounter());
+    private static final List<InvariantCounter> INVARIANTS = Arrays.asList(new ConnectivityCounter(), new RadDimCounter());
 
     public static void parseAndStoreGraphs() throws Exception {
         long begin = System.currentTimeMillis();
@@ -92,7 +89,6 @@ public class App {
         graph.getCode();
         graph.getEdgeAmount();
         graph.getOrder();
-//        graph.getEdgeConnectivity();
        calcInvariants(graph, session);
     }
 
@@ -118,36 +114,17 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-//        setLogger();
-
-//        parseAndStoreGraphs();
-//        processGraphs();
         SpringApplication.run(App.class, args);
     }
 
-//    static InvariantCounter vertexConnectivity = new VertexConnectivity(),cnnectivityCounter = new ConnectivityCounter(), radDimCounter =new RadDimCounter();
     private static void calcInvariants(Graph graph, Session session) {
         for (InvariantCounter invariant : INVARIANTS) {
             invariant.getInvariant(graph);
         }
-        if (session == null ){//|| session.getTransaction().wasCommitted()) {
+        if (session == null ){
             session = graphService.openSession();
         }
-        graphService.save(graph, session); //FIXME: this creates new graph instead .. :(
-    }
-
-    private static void setLogger() {
-        FileHandler fh;
-        try {
-            fh = new FileHandler("F:\\sasha\\data\\app.log");
-            log.addHandler(fh);
-            SimpleFormatter formatter = new SimpleFormatter();
-            fh.setFormatter(formatter);
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        graphService.save(graph, session);
     }
 
     static Graph readNextGraph(BufferedReader reader, String s) throws Exception {

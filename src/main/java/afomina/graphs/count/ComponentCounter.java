@@ -2,9 +2,6 @@ package afomina.graphs.count;
 
 import afomina.graphs.data.Graph;
 
-/**
- * Created by alexandra on 03.10.2016.
- */
 public class ComponentCounter extends InvariantCounter<Integer> {
 
     @Override

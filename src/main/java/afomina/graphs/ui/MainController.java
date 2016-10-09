@@ -1,6 +1,7 @@
 package afomina.graphs.ui;
 
-import afomina.graphs.count.*;
+import afomina.graphs.count.ExponentCounter;
+import afomina.graphs.count.InvariantCounter;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,10 @@ import java.util.Map;
 @Controller
 public class MainController {
 
-    private static final int MIN_VERTEXES = 4;
-    private static final int MAX_VERTEXES = 7;
+    private static final int MIN_VERTEXES = 2;
+    private static final int MAX_VERTEXES = 5;
     private static final int GRAPHS_TO_STORE = 5000;
+    private static final int DEFAULT_PAGE_SIZE = 20;
     private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new ExponentCounter());
     @Autowired
     GraphDao graphDao;
@@ -40,17 +42,26 @@ public class MainController {
     public String findGraphs(@RequestParam Map<String, String> requestParams, Model model) {
         Map<String, Object> userParams = new HashMap<>();
         for (Map.Entry<String, String> entry : requestParams.entrySet()) {
-            Object value = entry.getValue();
-            if (!entry.getValue().isEmpty()) {
-                try {
-                    value = new Integer(Integer.parseInt(entry.getValue()));
-                } catch (NumberFormatException e) {
+            if (!"page".equals(entry.getKey())) {
+                Object value = entry.getValue();
+                if (!entry.getValue().isEmpty()) {
+                    try {
+                        value = new Integer(Integer.parseInt(entry.getValue()));
+                    } catch (NumberFormatException e) {
+                    }
+                    userParams.put(entry.getKey(), value);
                 }
-                userParams.put(entry.getKey(), value);
             }
         }
-        List<Graph> graphs = graphDao.find(userParams);
+        int page = requestParams.containsKey("page")? Integer.parseInt(requestParams.get("page")) : 1;
+        List<Graph> graphs = graphDao.find(userParams, DEFAULT_PAGE_SIZE, page);
         model.addAttribute("graphs", graphs);
+        Long count = graphDao.count(userParams);
+        long pageCount = count / DEFAULT_PAGE_SIZE;
+        if (count % DEFAULT_PAGE_SIZE != 0) {
+            pageCount++;
+        }
+        model.addAttribute("pageCount", pageCount);
         return "graphs";
     }
 

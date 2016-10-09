@@ -1,16 +1,7 @@
 package afomina.graphs.count;
 
 import afomina.graphs.data.Graph;
-import edu.uci.ics.jung.algorithms.flows.EdmondsKarpMaxFlow;
-import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.Factory;
 
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * Created by alexandra on 10.09.2016.
- */
 public class VertexConnectivity extends InvariantCounter<Integer> {
 
     int MAXN = 11;
@@ -26,25 +17,7 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
 
     @Override
     public Integer getInvariant(Graph g) {
-        Transformer capTransformer =
-                new Transformer() {
-                    @Override
-                    public Object transform(Object o) {
-                        return o;
-                    }
-                };
-        Map<Integer, Double> edgeFlowMap = new HashMap<Integer, Double>();
-        // This Factory produces new edges for use by the algorithm
-        Factory edgeFactory = new Factory() {
-            public Integer create() {
-                return 1;
-            }
-        };
-//        EdmondsKarpMaxFlow<Integer, Integer> alg = new EdmondsKarpMaxFlow(g, 0, g.getOrder()-1, capTransformer, edgeFlowMap, edgeFactory);
-//        alg.evaluate();
-        Integer maxFlow =0;// alg.getMaxFlow();
-        g.setVertexConnectivity(maxFlow);
-        return maxFlow;
+        return dinic(g);
     }
 
     Integer dinic(Graph g) {

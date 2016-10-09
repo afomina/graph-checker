@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="htmlhead">
+<%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<html lang="ru">
+<head >
     <meta charset="UTF-8" />
     <title>База данных графов</title>
     <!--<link th:href="@{/webjars/bootstrap/3.0.3/css/bootstrap.min.css}" rel="stylesheet" media="all"/>-->
@@ -245,7 +248,7 @@
         <span class="form_hint">Существует ли целое число r ≥ 1 такое, что каждая вершина графа достижима из любой вершины за r шагов</span>
     </div>
     <div class="form-group">
-        <label>Экспонента</label>
+        <label>Экспонент</label>
         <input name="exp"/>
         <!--<span class="form_hint"></span>-->
     </div>
@@ -260,8 +263,8 @@
     </div>
     <button type="submit" class="btn btn-primary">Найти</button>
 </form>
-<a th:href="@{/more}" style="font-size: 20px;">Расширенный запрос</a>
-<script th:src="@{/webjars/jquery/2.0.3/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/3.0.3/js/bootstrap.min.js}"></script>
+<a href="more" style="font-size: 20px;">Расширенный запрос</a>
+<script src="@{/webjars/jquery/2.0.3/jquery.min.js}"></script>
+<script src="@{/webjars/bootstrap/3.0.3/js/bootstrap.min.js}"></script>
 </body>
 </html>

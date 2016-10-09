@@ -5,9 +5,6 @@ import afomina.graphs.data.Graph;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * Created by alexandra on 10.09.2016.
- */
 public class RadDimCounter extends InvariantCounter {
     @Override
     public Object getInvariant(Graph g) {
@@ -27,12 +24,11 @@ public class RadDimCounter extends InvariantCounter {
                 }
             }
         }
-        int[] e = new int[n]; // ?????????????? ??????
-        Set<Integer> centr = new TreeSet<>(); // ????? ?????
-        int rad = INF; // ?????? ?????
-        int diam = 0; // ??????? ?????
+        int[] e = new int[n];
+        Set<Integer> centr = new TreeSet<>();
+        int rad = INF;
+        int diam = 0;
 
-// ???????? ??????-????????
         for (int k = 0; k < n; k++) {
             for (int j = 0; j < n; j++) {
                 for (int i = 0; i < n; i++) {
@@ -41,14 +37,12 @@ public class RadDimCounter extends InvariantCounter {
             }
         }
 
-// ?????????? ???????????????
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 e[i] = Math.max(e[i], d[i][j]);
             }
         }
 
-// ?????????? ???????? ? ???????
         for (int i = 0; i < n; i++) {
             rad = Math.min(rad, e[i]);
             diam = Math.max(diam, e[i]);
