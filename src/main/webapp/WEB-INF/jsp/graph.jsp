@@ -12,7 +12,8 @@
 
 </head>
 <body>
-<span>${graph.getMatrix()}</span>
+<span>${graph.matrixString()}</span>
+
     <div id="canvas" style="height: 600px; width: 600px;"></div>
 
     <script type="text/javascript">
@@ -20,8 +21,8 @@
 //            /*<![CDATA[*/
 //
 window.onload = function() {
-            var graph = <c:out value="${graph}"/>
-            console.log(graph);
+            <%--var graph = <c:out value="${graph}"/>--%>
+            <%--console.log(graph);--%>
 
             var g = new Dracula.Graph();
 

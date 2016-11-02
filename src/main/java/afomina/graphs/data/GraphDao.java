@@ -39,6 +39,18 @@ public class GraphDao {
         return (List<Graph>) criteria.list();
     }
 
+    public List<Graph> findByOrder(Integer order, int pageSize, int page) {
+        Criteria criteria;
+
+        Session session = entityManager.unwrap(Session.class);
+        criteria = session.createCriteria(Graph.class);
+        criteria.add(Restrictions.eq("order", order));
+        criteria.setFirstResult(page * pageSize);
+        criteria.setMaxResults(pageSize);
+
+        return (List<Graph>) criteria.list();
+    }
+
     public Graph findById(Integer id) {
         return entityManager.find(Graph.class, id);
     }
@@ -59,10 +71,29 @@ public class GraphDao {
         session.clear();
     }
 
+    public void start() {
+        Session session = entityManager.unwrap(Session.class);
+        session.getTransaction().begin();
+    }
+
+    public void close() {
+        Session session = entityManager.unwrap(Session.class);
+        session.getTransaction().commit();
+        session.close();
+    }
+
     public Long count(Map<String, Object> userParams) {
         Session session = entityManager.unwrap(Session.class);
         Criteria criteria = session.createCriteria(Graph.class)
                 .add(Restrictions.allEq(userParams))
+                .setProjection(Projections.rowCount());
+        return (Long) criteria.uniqueResult();
+    }
+
+    public Long count(Integer order) {
+        Session session = entityManager.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Graph.class)
+                .add(Restrictions.eq("order", order))
                 .setProjection(Projections.rowCount());
         return (Long) criteria.uniqueResult();
     }

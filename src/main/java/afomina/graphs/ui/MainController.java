@@ -1,7 +1,6 @@
 package afomina.graphs.ui;
 
-import afomina.graphs.count.ExponentCounter;
-import afomina.graphs.count.InvariantCounter;
+import afomina.graphs.count.*;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +19,11 @@ import java.util.Map;
 @Controller
 public class MainController {
 
-    private static final int MIN_VERTEXES = 2;
-    private static final int MAX_VERTEXES = 5;
-    private static final int GRAPHS_TO_STORE = 5000;
+    private static final int MIN_VERTEXES = 6;
+    private static final int MAX_VERTEXES = 10;
+    private static final int GRAPHS_TO_STORE = 100;
     private static final int DEFAULT_PAGE_SIZE = 20;
-    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new ExponentCounter());
+    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new Girth());
     @Autowired
     GraphDao graphDao;
 
@@ -53,8 +52,10 @@ public class MainController {
                 }
             }
         }
-        int page = requestParams.containsKey("page")? Integer.parseInt(requestParams.get("page")) : 1;
+        int page = requestParams.containsKey("page") ? Integer.parseInt(requestParams.get("page")) : 1;
+        model.addAttribute("curPage", page);
         List<Graph> graphs = graphDao.find(userParams, DEFAULT_PAGE_SIZE, page);
+
         model.addAttribute("graphs", graphs);
         Long count = graphDao.count(userParams);
         long pageCount = count / DEFAULT_PAGE_SIZE;
@@ -86,16 +87,46 @@ public class MainController {
 
     public void processGraphs() {
         int cnt = 0;
+//        int page = 1;
+//        graphDao.start();
         for (int n = MIN_VERTEXES; n <= MAX_VERTEXES; n++) {
-            List<Graph> graphs = graphDao.findByOrder(n);
-            for (Graph graph : graphs) {
-                for (InvariantCounter invariant : INVARIANTS) {
-                    invariant.getInvariant(graph);
+            try {
+                Long count = graphDao.count(n);
+                long pageCount = count / 100;
+                if (count % 100 != 0) {
+                    pageCount++;
                 }
-                graphDao.save(graph);
-                if (++cnt == GRAPHS_TO_STORE) {
-                    graphDao.flush();
+                for (int page = 0; page < pageCount; page++) {
+                    List<Graph> graphs = graphDao.findByOrder(n, 100, page);
+                    for (Graph graph : graphs) {
+                        for (InvariantCounter invariant : INVARIANTS) {
+                            invariant.getInvariant(graph);
+                        }
+                        graphDao.save(graph);
+                        if (++cnt == GRAPHS_TO_STORE) {
+                            graphDao.flush();
+                            cnt = 0;
+                        }
+                    }
                 }
+            } catch (Exception e) {
+                System.out.println("Exception processing graph, vertexes=" + n);
+//                break;
+            }
+        }
+        graphDao.flush();
+    }
+
+    public void processGraphs(List<Graph> graphs) {
+        int cnt = 0;
+        for (Graph graph : graphs) {
+            for (InvariantCounter invariant : INVARIANTS) {
+                invariant.getInvariant(graph);
+            }
+            graphDao.save(graph);
+            if (++cnt == GRAPHS_TO_STORE) {
+                graphDao.flush();
+                cnt = 0;
             }
         }
         graphDao.flush();

@@ -29,18 +29,15 @@ public class ExponentCounter extends InvariantCounter<Integer> {
             g.setPrimitive(0);
         } else {
             g.setPrimitive(1);
-            if (exp > 1) {
-                exp--;
-            }
             g.setExp(exp);
         }
         return exp;
     }
 
     private boolean isMatrixEqual1(DoubleMatrix2D matrix, int n) {
-        for (int i = 0; i < matrix.rows() - 1; i++) {
-            for (int j = i + 1; j < n; j++) {
-                if (matrix.getQuick(i, j) != 1) {
+        for (int i = 0; i < matrix.rows(); i++) {
+            for (int j = 0; j < matrix.columns(); j++) {
+                if (matrix.getQuick(i, j) < 1) {
                     return false;
                 }
             }

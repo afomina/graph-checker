@@ -17,6 +17,9 @@ public class ComponentCounter extends InvariantCounter<Integer> {
         }
 
         g.setComponents(res);
+        if (res == 1) {
+            g.setConnected(1);
+        }
         return res;
     }
 

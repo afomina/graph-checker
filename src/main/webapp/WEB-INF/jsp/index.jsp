@@ -209,11 +209,11 @@
             <option value="0">Нет</option>
         </select>
         </div>
-    <div class="form-group">
-        <label for="v">Вершинная связность</label>
-        <input id="v" name="vertexConnectivity"/>
-        <span class="form_hint">Наименьшее число вершин, удаление которых приводит к несвязному графу</span>
-    </div>
+    <%--<div class="form-group">--%>
+        <%--<label for="v">Вершинная связность</label>--%>
+        <%--<input id="v" name="vertexConnectivity"/>--%>
+        <%--<span class="form_hint">Наименьшее число вершин, удаление которых приводит к несвязному графу</span>--%>
+    <%--</div>--%>
     <div class="form-group">
         <label>Реберная связность</label>
         <input name="edgeConnectivity"/>

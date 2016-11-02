@@ -199,16 +199,16 @@
                 <li>code - матричный код</li>
                 <li>vertex - количество вершин</li>
                 <li>edge - количество ребер</li>
-                <li>edgecon - реберная связность</li>
-                <li>vertcon - вершинная связность</li>
-                <li>conn - связность (значения 0 или 1)</li>
+                <li>edgeCon - реберная связность</li>
+                <%--<li>vertcon - вершинная связность</li>--%>
+                <li>isConnected - связность (значения 0 или 1)</li>
                 <li>radius - радиус</li>
-                <li>diametr - диаметр</li>
+                <li>diameter - диаметр</li>
                 <li>components - число компонент связности</li>
                 <li>girth - обхват</li>
-                <li>primitive - примитивность (значения 0 или 1)</li>
+                <li>isPrimitive - примитивность (значения 0 или 1)</li>
                 <li>exp - экспонент</li>
-                <li>twoPartial - двудольность (значения 0 или 1)</li>
+                <li>isBipartite - двудольность (значения 0 или 1)</li>
             </ul>
         </span>
 <script src="@{/webjars/jquery/2.0.3/jquery.min.js}"></script>

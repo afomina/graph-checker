@@ -1,5 +1,7 @@
 package afomina.graphs.data;
 
+import afomina.graphs.count.ComponentCounter;
+import afomina.graphs.count.Girth;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import javax.persistence.*;
@@ -109,7 +111,7 @@ public class Graph {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -182,7 +184,10 @@ public class Graph {
 
     @Transient
     public boolean isAcyclic() {
-        return (girth!=null && girth==0);
+        if (girth == null) {
+            girth = new Girth().getInvariant(this);
+        }
+        return (girth==0);
     }
 
     public Integer getPrimitive() {
@@ -208,5 +213,26 @@ public class Graph {
 
     public void setTwoPartial(Integer twoPartial) {
         this.twoPartial = twoPartial;
+    }
+
+    @Transient
+    public String matrixString() {
+        short[][] m = getMatrix();
+        String res="";
+        for (int i=0;i<getOrder();i++) {
+            for (int j=0;j<getOrder();j++) {
+                res += m[i][j] + " ";
+            }
+            res+="<br />";
+        }
+        return res;
+    }
+
+    @Transient
+    public boolean isCon() {
+        if (getComponents() == null) {
+            setComponents(new ComponentCounter().getInvariant(this));
+        }
+        return getComponents() == 1;
     }
 }

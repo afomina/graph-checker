@@ -30,7 +30,8 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-<table c:if="${graphs != null && graphs.size() > 0}" class="table table-bordered">
+<c:if test="${graphs != null && graphs.size() > 0}">
+<table class="table table-bordered">
     <thead>
     <tr>
         <th>#</th>
@@ -38,7 +39,7 @@
         <th>n</th>
         <th>m</th>
         <th>Связный</th>
-        <th>Вершинная связность</th>
+        <%--<th>Вершинная связность</th>--%>
         <th>Реберная связность</th>
         <th>Радиус</th>
         <th>Диаметр</th>
@@ -60,13 +61,13 @@
         </td>
         <td>${graphs.get(i).getOrder()}</td>
         <td>${graphs.get(i).getEdgeAmount()}</td>
-        <td>${graphs.get(i).getConnected()==1? 'Да':'Нет'}</td>
-        <td>${graphs.get(i).getVertexConnectivity()}</td>
-        <td>${graphs.get(i).getEdgeConnectivity()}</td>
-        <td>${graphs.get(i).getConnected()==1? graphs.get(i).getRadius(): '-'}</td>
-        <td>${graphs.get(i).getConnected()==1? graphs.get(i).getDiametr(): '-'}</td>
+        <td>${graphs.get(i).isCon()? 'Да':'Нет'}</td>
+        <%--<td>${graphs.get(i).getVertexConnectivity()}</td>--%>
+        <td>${graphs.get(i).isCon()? graphs.get(i).getEdgeConnectivity() : 0}</td>
+        <td>${graphs.get(i).isCon()? graphs.get(i).getRadius(): '-'}</td>
+        <td>${graphs.get(i).isCon()? graphs.get(i).getDiametr(): '-'}</td>
         <td>${graphs.get(i).getComponents()}</td>
-        <td>${graphs.get(i).getGirth()}</td>
+        <td>${graphs.get(i).isAcyclic()? '-' : graphs.get(i).getGirth()}</td>
         <td>${graphs.get(i).isAcyclic()?'Да':'Нет'}</td>
         <td>${graphs.get(i).getTwoPartial()==1? 'Да':'Нет'}</td>
         <td>${graphs.get(i).getExp()==null?'-':graphs.get(i).getExp()}</td>
@@ -75,10 +76,28 @@
     </tbody>
 </table>
 <ul class="pagination">
-    <c:forEach var="j" begin="1" end="${pageCount}">
-        <li><a onclick="page(${j})">${j}</a></li>
-    </c:forEach>
+    <c:if test="${curPage == 1}">
+        <li class="active"><a onclick="page(1)">1</a></li>
+    </c:if>
+    <c:if test="${curPage != 1}">
+        <li><a onclick="page(1)">1</a></li>
+    </c:if>
+    <c:if test="${curPage > 3}">
+        <li><a href="#">...</a></li>
+    </c:if>
+    <c:if test="${curPage > 2}">
+        <li><a onclick="page(${curPage - 1})">${curPage - 1}</a></li>
+    </c:if>
+    <c:if test="${curPage > 1}">
+        <li class="active"><a onclick="page(${curPage})">${curPage}</a></li>
+    </c:if>
+    <c:if test="${pageCount > curPage}">
+        <li><a onclick="page(${curPage + 1})">${curPage + 1}</a></li>
+        <li><a href="#">...</a></li>
+        <li><a onclick="page(${pageCount})">${pageCount}</a></li>
+    </c:if>
 </ul>
+</c:if>
 <script>
     var page = function(n) {
         var url = window.location.href;

@@ -27,9 +27,9 @@ public class Girth extends InvariantCounter<Integer> {
             if (matrix[v][to] == 1 && to != p[v]) {
                 if (color[to] == 0) {
                     p[to] = v;
-                    cycle(to, matrix, color, p);
+                    return cycle(to, matrix, color, p);
                 } else if (color[to] == 1) {
-                    p[v] = to;
+                    p[to] = v;
                     int end = v;
                     int begin = to;
 
@@ -37,7 +37,7 @@ public class Girth extends InvariantCounter<Integer> {
                     for (int k = end; k != begin; k = p[k]) {
                         len++;
                     }
-                    return len;
+                    return ++len;
 
                 }
             }
