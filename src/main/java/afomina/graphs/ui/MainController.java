@@ -80,16 +80,19 @@ public class MainController {
     }
 
     @RequestMapping(value = "calc", method = RequestMethod.GET)
-    public String calcInvariants() {
-        processGraphs();
+    public String calcInvariants(@RequestParam(required = false) Integer min, @RequestParam(required = false) Integer max) {
+        if (min == null) min = MIN_VERTEXES;
+        if (max == null) max = MAX_VERTEXES;
+        processGraphs(min, max);
         return "index";
     }
 
-    public void processGraphs() {
+    public void processGraphs(Integer min, Integer max) {
         int cnt = 0;
 //        int page = 1;
 //        graphDao.start();
-        for (int n = MIN_VERTEXES; n <= MAX_VERTEXES; n++) {
+        List<Graph> graphs;
+        for (int n = min; n <= max; n++) {
             try {
                 Long count = graphDao.count(n);
                 long pageCount = count / 100;
@@ -97,7 +100,7 @@ public class MainController {
                     pageCount++;
                 }
                 for (int page = 0; page < pageCount; page++) {
-                    List<Graph> graphs = graphDao.findByOrder(n, 100, page);
+                    graphs = graphDao.findByOrder(n, 100, page);
                     for (Graph graph : graphs) {
                         for (InvariantCounter invariant : INVARIANTS) {
                             invariant.getInvariant(graph);
@@ -111,6 +114,7 @@ public class MainController {
                 }
             } catch (Exception e) {
                 System.out.println("Exception processing graph, vertexes=" + n);
+                e.printStackTrace();
 //                break;
             }
         }

@@ -51,6 +51,16 @@ public class GraphDao {
         return (List<Graph>) criteria.list();
     }
 
+    public List<Graph> findByGirth(Integer girth) {
+        Criteria criteria;
+
+        Session session = entityManager.unwrap(Session.class);
+        criteria = session.createCriteria(Graph.class);
+        criteria.add(Restrictions.eq("girth", girth));
+
+        return (List<Graph>) criteria.list();
+    }
+
     public Graph findById(Integer id) {
         return entityManager.find(Graph.class, id);
     }
