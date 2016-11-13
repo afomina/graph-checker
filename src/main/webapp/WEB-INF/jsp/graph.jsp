@@ -14,7 +14,7 @@
 <body>
 <span>${graph.matrixString()}</span>
 
-    <div id="canvas" style="height: 600px; width: 600px;"></div>
+    <div id="canvas" ></div>
 
     <script type="text/javascript">
 //        $(document).ready(function(){
@@ -39,8 +39,12 @@ window.onload = function() {
             var layouter = new Dracula.Layout.Spring(g);
             layouter.layout();
 
-            var renderer = new Dracula.Renderer.Raphael('canvas', g, 600, 600);
+            var renderer = new Dracula.Renderer.Raphael('canvas', g, 0, 200);
             renderer.draw();
+
+            $('svg').removeAttr("style");
+//    $('svg').removeAttr("width");
+            $('svg').width("500");
 };
 //            /*]]>*/
 //        });
