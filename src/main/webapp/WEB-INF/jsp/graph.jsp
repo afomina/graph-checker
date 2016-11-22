@@ -9,11 +9,47 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="https://rawgit.com/DmitryBaranovskiy/raphael/master/raphael.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/graphdracula/1.0.3/dracula.min.js"></script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
 <span id="graph" style="display:none;">${graph.matrixString()}</span>
 <span id="order" style="display:none;">${graph.getOrder()}</span>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+<th>n</th>
+<th>m</th>
+<th>Связный</th>
+<%--<th>Вершинная связность</th>--%>
+<th>Реберная связность</th>
+<th>Радиус</th>
+<th>Диаметр</th>
+<th>Число компонент связности</th>
+<th>Обхват</th>
+<th>Ацикличный</th>
+<th>Двудольный</th>
+<th>Экспонент</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>${graph.getOrder()}</td>
+        <td>${graph.getEdgeAmount()}</td>
+        <td>${graph.isCon()? 'Да':'Нет'}</td>
+        <%--<td>${graph.getVertexConnectivity()}</td>--%>
+        <td>${graph.isCon()? graphs.get(i).getEdgeConnectivity() : 0}</td>
+        <td>${graph.isCon()? graphs.get(i).getRadius(): '-'}</td>
+        <td>${graph.isCon()? graphs.get(i).getDiametr(): '-'}</td>
+        <td>${graph.getComponents()}</td>
+        <td>${graph.isAcyclic()? '-' : graphs.get(i).getGirth()}</td>
+        <td>${graph.isAcyclic()?'Да':'Нет'}</td>
+        <td>${graph.getTwoPartial()==1? 'Да':'Нет'}</td>
+        <td>${graph.getExp()==null?'-':graphs.get(i).getExp()}</td>
+    </tr>
+    </tbody>
+    </table>
 
     <div id="canvas" ></div>
 
