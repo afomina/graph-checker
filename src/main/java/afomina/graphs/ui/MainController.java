@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -74,8 +75,9 @@ public class MainController {
     }
 
     @RequestMapping(value = "/graphs/{id}", method = RequestMethod.GET)
-    public String getGraph(@PathVariable("id") Integer id, Model model) {
+    public String getGraph(@PathVariable("id") Integer id, Model model, HttpServletResponse response) {
         model.addAttribute("graph", graphDao.findById(id));
+        response.getHeaders("X-Content-Type-Options").clear();
         return "graph";
     }
 
