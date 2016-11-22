@@ -53,12 +53,14 @@ public class MainController {
                 }
             }
         }
+        model.addAttribute("params", userParams);
         int page = requestParams.containsKey("page") ? Integer.parseInt(requestParams.get("page")) : 1;
         model.addAttribute("curPage", page);
         List<Graph> graphs = graphDao.find(userParams, DEFAULT_PAGE_SIZE, page);
 
         model.addAttribute("graphs", graphs);
         Long count = graphDao.count(userParams);
+        model.addAttribute("amount", count);
         long pageCount = count / DEFAULT_PAGE_SIZE;
         if (count % DEFAULT_PAGE_SIZE != 0) {
             pageCount++;

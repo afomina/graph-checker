@@ -30,6 +30,8 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
+<h4>По запросу <mark>${params}</mark></h4>
+<h4>найдено графов <mark>${amount}</mark></h4><br />
 <c:if test="${graphs != null && graphs.size() > 0}">
 <table class="table table-bordered">
     <thead>
