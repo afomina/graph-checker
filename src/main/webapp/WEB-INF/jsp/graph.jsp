@@ -12,7 +12,7 @@
 
 </head>
 <body>
-<span id="graph">${graph.matrixString()}</span>
+<span id="graph" style="display:none;">${graph.matrixString()}</span>
 <span id="order" style="display:none;">${graph.getOrder()}</span>
 
     <div id="canvas" ></div>
@@ -21,18 +21,19 @@
 window.onload = function() {
             var graph = $("#graph").text();
             console.log(graph);
+            var n=$("#order").text();
 
             var g = new Dracula.Graph();
 
-            g.addEdge("strawberry", "cherry");
-            g.addEdge("strawberry", "apple");
-            g.addEdge("strawberry", "tomato");
-
-            g.addEdge("tomato", "apple");
-            g.addEdge("tomato", "kiwi");
-
-            g.addEdge("cherry", "apple");
-            g.addEdge("cherry", "kiwi");
+            var s=graph.split(" ");
+            var idx=0;
+            for (var i=0; i<n; i++) {
+                for (var j=0;j<n;j++) {
+                    if (s[idx++] == "1") {
+                        g.addEdge(i+1, j+1);
+                    }
+                }
+            }
 
             var layouter = new Dracula.Layout.Spring(g);
             layouter.layout();
@@ -41,7 +42,6 @@ window.onload = function() {
             renderer.draw();
 
             $('svg').removeAttr("style");
-//    $('svg').removeAttr("width");
             $('svg').width("500");
 };
     </script>
