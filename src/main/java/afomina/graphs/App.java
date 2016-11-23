@@ -1,8 +1,7 @@
 package afomina.graphs;
 
-import afomina.graphs.count.ConnectivityCounter;
+import afomina.graphs.count.Girth;
 import afomina.graphs.count.InvariantCounter;
-import afomina.graphs.count.RadDimCounter;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphService;
 import org.hibernate.Session;
@@ -11,7 +10,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -22,19 +21,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan("afomina.graphs")
-public class App {
-    private static final int MIN_VERTEXES = 9;
-    private static final int MAX_VERTEXES = 11;
+public class App extends SpringBootServletInitializer {
+    private static final int MIN_VERTEXES = 3;
+    private static final int MAX_VERTEXES = 3;
     private static final int GRAPHS_TO_STORE = 5000;
     private static final Pattern GRAPH_BEGIN = Pattern.compile("Graph ([0-9]+), order ([0-9]+).");
     private static final Pattern EDGE_CON = Pattern.compile(".*Edge connectivity = ([0-9]+)");
@@ -42,7 +39,7 @@ public class App {
     private static final String OUTPUT_PATH = "res/g";
     private static final GraphService graphService = GraphService.get();
     private static final Logger log = Logger.getLogger("App");
-    private static final List<InvariantCounter> INVARIANTS = Arrays.asList(new ConnectivityCounter(), new RadDimCounter());
+    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new Girth());
 
     public static void parseAndStoreGraphs() throws Exception {
         long begin = System.currentTimeMillis();
@@ -109,7 +106,7 @@ public class App {
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.sqlite.JDBC");
-        dataSourceBuilder.url("jdbc:sqlite:graph.db");
+        dataSourceBuilder.url("jdbc:sqlite:../webapps/graph-checker-1.0-SNAPSHOT/WEB-INF/classes/graph.db");
         return dataSourceBuilder.build();
     }
 
