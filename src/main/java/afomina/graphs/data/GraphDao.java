@@ -62,7 +62,10 @@ public class GraphDao {
     }
 
     public Graph findById(Integer id) {
-        return entityManager.find(Graph.class, id);
+        Session session = entityManager.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Graph.class);
+        criteria.add(Restrictions.eq("id", id));
+        return (Graph) criteria.list().get(0);
     }
 
     public List<Graph> findBySql(String sql) {
