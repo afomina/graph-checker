@@ -3,6 +3,8 @@ package afomina.graphs.ui;
 import afomina.graphs.count.*;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
+import afomina.graphs.mine.Miner;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,11 @@ public class MainController {
     @Autowired
     GraphDao graphDao;
 
+    org.slf4j.Logger log = LoggerFactory.getLogger(MainController.class);
+
+    @Autowired
+    private Miner graphMiner;
+
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
         return "index";
@@ -36,6 +43,14 @@ public class MainController {
     @RequestMapping(value = "more", method = RequestMethod.GET)
     public String more() {
         return "more";
+    }
+
+    @RequestMapping(value = "/mine", method = RequestMethod.GET)
+    public String mine(Model model) {
+        String res = graphMiner.mine();
+        log.error(res);
+        model.addAttribute("msg", res);
+        return "mineresults";
     }
 
     @RequestMapping(value = "/graphs", method = RequestMethod.GET)
