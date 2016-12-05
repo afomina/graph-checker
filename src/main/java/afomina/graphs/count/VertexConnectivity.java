@@ -4,20 +4,30 @@ import afomina.graphs.data.Graph;
 
 public class VertexConnectivity extends InvariantCounter<Integer> {
 
-    int MAXN = 11;
-    int INF = Integer.MAX_VALUE;
+    private int MAXN = 11;
+    private int INF = Integer.MAX_VALUE;
 
-    int n = MAXN;//??
-    int[][] c = new int[MAXN][MAXN];
-    int[][] f = new int[MAXN][MAXN];
-    int s, t;
-    int[] d = new int[MAXN];
-    int[] ptr = new int[MAXN];
-    int[] q = new int[MAXN];
+    private int n = MAXN;//??
+    private int[][] c = new int[MAXN][MAXN];
+    private int[][] f = new int[MAXN][MAXN];
+    private int s, t;
+    private int[] d = new int[MAXN];
+    private int[] ptr = new int[MAXN];
+    private int[] q = new int[MAXN];
 
     @Override
     public Integer getInvariant(Graph g) {
         return dinic(g);
+    }
+
+    protected Integer menger(Graph g) {
+        int min = Integer.MAX_VALUE;
+        int order = g.getOrder();
+        for (int u = 0; u < order; u++) {
+            for (int v = 0; v < order; v++) {
+
+            }
+        }
     }
 
     Integer dinic(Graph g) {

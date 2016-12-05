@@ -12,12 +12,12 @@ public class EdgeConnectivity extends InvariantCounter<Integer> {
         Graph tmp = g;
         ConnectivityCounter connectivityCounter = new ConnectivityCounter();
         while (tmp.isCon()) {
-            short[][] m =tmp.getMatrix();
-            for (int i=0;i<tmp.getOrder();i++) {
-                for (int j=0;j<tmp.getOrder();j++){
+            short[][] m = tmp.getMatrix();
+            for (int i = 0; i < tmp.getOrder(); i++) {
+                for (int j = 0; j < tmp.getOrder(); j++) {
                     if (m[i][j] == 1) {
-                        m[i][j]=0;
-                        m[j][i]=0;
+                        m[i][j] = 0;
+                        m[j][i] = 0;
                         res++;
                         if (!connectivityCounter.getInvariant(tmp)) {
                             return res;
