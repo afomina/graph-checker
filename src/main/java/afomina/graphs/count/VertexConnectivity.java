@@ -17,17 +17,24 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
 
     @Override
     public Integer getInvariant(Graph g) {
-        return dinic(g);
+        Integer res = menger(g);
+        g.setVertexConnectivity(res);
+        return res;
     }
 
     protected Integer menger(Graph g) {
-        int min = Integer.MAX_VALUE;
         int order = g.getOrder();
-        for (int u = 0; u < order; u++) {
-            for (int v = 0; v < order; v++) {
+        short[][] matrix = g.getMatrix();
 
+        short[][] modMatrix = new short[2 * order][2 * order];
+        for (int i = 0; i < order; i++) {
+            modMatrix[2 * i][2 * i + 1] = modMatrix[2 * i + 1][2 * i] = 1;
+            for (int j = i + 1; j < order; j++) {
+                modMatrix[2 * i][2 * j + 1] = matrix[i][j];
+                modMatrix[2 * j][2 * i + 1] = matrix[j][i];
             }
         }
+        return new EdgeConnectivity().getInvariant(new Graph(modMatrix));
     }
 
     Integer dinic(Graph g) {

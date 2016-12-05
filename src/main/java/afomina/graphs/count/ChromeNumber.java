@@ -2,7 +2,7 @@ package afomina.graphs.count;
 
 import afomina.graphs.data.Graph;
 
-public class ChromeNumber implements InvariantCounter<Integer> {
+public class ChromeNumber extends InvariantCounter<Integer> {
 
     @Override
     public Integer getInvariant(Graph g) {
@@ -10,7 +10,7 @@ public class ChromeNumber implements InvariantCounter<Integer> {
         short[][]matrix = g.getMatrix();
         int[] color = new int[order];
         for (int k = 2; k < order; k++) {
-            int cur
+//            int cur
             for (int i = 0; i < order; i++) {
                 for (int j = 0; j < order; j++) {
                     if (matrix[i][j] == 1) {

@@ -22,11 +22,11 @@ import java.util.Map;
 @Controller
 public class MainController {
 
-    private static final int MIN_VERTEXES = 6;
-    private static final int MAX_VERTEXES = 10;
+    private static final int MIN_VERTEXES = 2;
+    private static final int MAX_VERTEXES = 9;
     private static final int GRAPHS_TO_STORE = 100;
     private static final int DEFAULT_PAGE_SIZE = 20;
-    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new Girth());
+    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new VertexConnectivity());
     @Autowired
     GraphDao graphDao;
 
@@ -108,8 +108,6 @@ public class MainController {
 
     public void processGraphs(Integer min, Integer max) {
         int cnt = 0;
-//        int page = 1;
-//        graphDao.start();
         List<Graph> graphs;
         for (int n = min; n <= max; n++) {
             try {

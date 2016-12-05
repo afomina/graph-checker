@@ -41,7 +41,7 @@
         <th>n</th>
         <th>m</th>
         <th>Связный</th>
-        <%--<th>Вершинная связность</th>--%>
+        <th>Вершинная связность</th>
         <th>Реберная связность</th>
         <th>Радиус</th>
         <th>Диаметр</th>
@@ -64,7 +64,7 @@
         <td>${graphs.get(i).getOrder()}</td>
         <td>${graphs.get(i).getEdgeAmount()}</td>
         <td>${graphs.get(i).isCon()? 'Да':'Нет'}</td>
-        <%--<td>${graphs.get(i).getVertexConnectivity()}</td>--%>
+        <td>${graphs.get(i).getVertexConnectivity()}</td>
         <td>${graphs.get(i).isCon()? graphs.get(i).getEdgeConnectivity() : 0}</td>
         <td>${graphs.get(i).isCon()? graphs.get(i).getRadius(): '-'}</td>
         <td>${graphs.get(i).isCon()? graphs.get(i).getDiametr(): '-'}</td>
