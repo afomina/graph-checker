@@ -26,6 +26,7 @@ public class ChromeNumber extends InvariantCounter<Integer> {
                 }
             }
         }
+        g.setChromeNumber(curColor);
         return curColor;
     }
 

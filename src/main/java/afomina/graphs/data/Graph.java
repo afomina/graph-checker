@@ -31,6 +31,8 @@ public class Graph {
     private Integer exp;
     private Integer twoPartial;
 
+    private Integer chromeNumber;
+
     public Graph() {
     }
 
@@ -180,6 +182,15 @@ public class Graph {
 
     public void setGirth(Integer girth) {
         this.girth = girth;
+    }
+
+    @Column(name = "chrome_number")
+    public Integer getChromeNumber() {
+        return chromeNumber;
+    }
+
+    public void setChromeNumber(Integer chromeNumber) {
+        this.chromeNumber = chromeNumber;
     }
 
     @Transient

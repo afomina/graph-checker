@@ -50,6 +50,7 @@
         <th>Ацикличный</th>
         <th>Двудольный</th>
         <th>Экспонент</th>
+        <th>Хроматическое число</th>
     </tr>
     </thead>
     <tbody>
@@ -73,6 +74,7 @@
         <td>${graphs.get(i).isAcyclic()?'Да':'Нет'}</td>
         <td>${graphs.get(i).getTwoPartial()==1? 'Да':'Нет'}</td>
         <td>${graphs.get(i).getExp()==null?'-':graphs.get(i).getExp()}</td>
+        <td>${graphs.get(i).getChromeNumber()}</td>
     </tr>
     </c:forEach>
     </tbody>

@@ -128,11 +128,11 @@ public class App extends SpringBootServletInitializer {
         Matcher matcher = GRAPH_BEGIN.matcher(s);
         if (matcher.matches()) {
             int n = Integer.parseInt(matcher.group(2));
-            short[][] matrix = new short[n][n];
+            boolean[][] matrix = new boolean[n][n];
             for (int i = 0; i < n; i++) {
                 String line = reader.readLine();
                 for (int j = 0; j < n; j++) {
-                    matrix[i][j] = (short) (line.charAt(j) == '1' ? 1 : 0);
+                    matrix[i][j] = (line.charAt(j) == '1' );
                 }
             }
             return new Graph(matrix, s);
