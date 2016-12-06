@@ -11,16 +11,18 @@ public class ChromeNumber extends InvariantCounter<Integer> {
         int[] color = new int[order];
         int curColor = 0;
         for (int i = 0; i < order; i++) {
-            color[i] = ++curColor;
-            for (int j = 0; j < order; j++) {
-                if (!matrix[i][j] && color[j] == 0) { //нет ребра i,j; j-неокрашенная
+            if (color[i] == 0) {
+                color[i] = ++curColor;
+                for (int j = 0; j < order; j++) {
+                    if (i != j && !matrix[i][j] && color[j] == 0) { //нет ребра i,j; j-неокрашенная
 
-                    for (int k = 0; k < order; k++) {
-                        matrix[i][k] = matrix[i][k] || matrix[j][k]; //соседи j добавляются к i
+                        for (int k = 0; k < order; k++) {
+                            matrix[i][k] = matrix[i][k] || matrix[j][k]; //соседи j добавляются к i
+                        }
+
+                        color[j] = curColor;
+
                     }
-
-                    color[j] = curColor;
-
                 }
             }
         }
