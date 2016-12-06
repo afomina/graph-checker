@@ -11,7 +11,7 @@ import java.math.BigInteger;
 @Table(name = "graph")
 @JsonAutoDetect
 public class Graph {
-    private short[][] matrix;
+    private boolean[][] matrix;
     private String name;
 
     private Integer id;
@@ -34,19 +34,19 @@ public class Graph {
     public Graph() {
     }
 
-    public Graph(short[][] matrix) {
+    public Graph(boolean[][] matrix) {
         this.matrix = matrix;
     }
 
-    public Graph(short[][] matrix, String name) {
+    public Graph(boolean[][] matrix, String name) {
         this.matrix = matrix;
         this.name = name;
     }
 
     @Transient
-    public short[][] getMatrix() {
+    public boolean[][] getMatrix() {
         if (matrix == null) {
-            matrix = new short[order][order];
+            matrix = new boolean[order][order];
             if ("0".equals(getCode())) {
                 return matrix;
             }
@@ -56,7 +56,7 @@ public class Graph {
             int idx = 0;
             for (int i = 0; i < matrix.length - 1; i++) {
                 for (int j = i + 1; j < order; j++) {
-                    matrix[i][j] = matrix[j][i] = Short.parseShort(code2.charAt(idx++) + "");
+                    matrix[i][j] = matrix[j][i] = Short.parseShort(code2.charAt(idx++) + "") == 1;
                     if (idx == code2.length()) {
                         break;
                     }
@@ -120,7 +120,7 @@ public class Graph {
         this.id = id;
     }
 
-    public void setMatrix(short[][] matrix) {
+    public void setMatrix(boolean[][] matrix) {
         this.matrix = matrix;
     }
 
@@ -187,7 +187,7 @@ public class Graph {
         if (girth == null) {
             girth = new Girth().getInvariant(this);
         }
-        return (girth==0);
+        return (girth == 0);
     }
 
     public Integer getPrimitive() {
@@ -217,13 +217,13 @@ public class Graph {
 
     @Transient
     public String matrixString() {
-        short[][] m = getMatrix();
-        String res="";
-        for (int i=0;i<getOrder();i++) {
-            for (int j=0;j<getOrder();j++) {
-                res += m[i][j] + " ";
+        boolean[][] m = getMatrix();
+        String res = "";
+        for (int i = 0; i < getOrder(); i++) {
+            for (int j = 0; j < getOrder(); j++) {
+                res += (m[i][j] ? 1 : 0) + " ";
             }
-            res+="<br />";
+            res += "<br />";
         }
         return res;
     }

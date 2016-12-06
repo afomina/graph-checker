@@ -27,11 +27,11 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
 
     protected Integer menger(Graph g) {
         int order = g.getOrder();
-        short[][] matrix = g.getMatrix();
+        boolean[][] matrix = g.getMatrix();
 
-        short[][] modMatrix = new short[2 * order][2 * order];
+        boolean[][] modMatrix = new boolean[2 * order][2 * order];
         for (int i = 0; i < order; i++) {
-            modMatrix[2 * i][2 * i + 1] = modMatrix[2 * i + 1][2 * i] = 1;
+            modMatrix[2 * i][2 * i + 1] = modMatrix[2 * i + 1][2 * i] = true;
             for (int j = i + 1; j < order; j++) {
                 modMatrix[2 * i][2 * j + 1] = matrix[i][j];
                 modMatrix[2 * j][2 * i + 1] = matrix[j][i];
@@ -40,11 +40,11 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
         return edgeConnectivity(modMatrix, false);
     }
 
-    private int edgeConnectivity(short[][] Graph, boolean isEdge) {
+    private int edgeConnectivity(boolean[][] Graph, boolean isEdge) {
         int ans = Integer.MAX_VALUE;
         for (int i = 0; i < Graph.length; i += (isEdge ? 1 : 2)) {
             for (int j = i + (isEdge ? 1 : 3); j < Graph[i].length; j += (isEdge ? 1 : 2)) {
-                short[][] temp = Graph;
+                boolean[][] temp = Graph;
                 int flow = findFlow(temp, i, j);
                 ans = Math.min(ans, flow);
             }
@@ -52,7 +52,7 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
         return (ans == Integer.MAX_VALUE ? 0 : ans);
     }
 
-    private int findFlow(short[][] Graph, int s, int t) {
+    private int findFlow(boolean[][] Graph, int s, int t) {
         int max_flow = 0;
         int[] p = new int[Graph.length];
         for (int i = 0; i < Graph.length; i++) {
@@ -62,12 +62,14 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
             int min_capacity = Integer.MAX_VALUE;
             int pred = t;
             while (p[pred] != -1) {
-                min_capacity = Math.min(min_capacity, Graph[p[pred]][pred]);
+                min_capacity = Math.min(min_capacity, Graph[p[pred]][pred]?1:0);
                 pred = p[pred];
             }
             pred = t;
             while (p[pred] != -1) {
-                Graph[p[pred]][pred] -= min_capacity;
+                if (min_capacity > 0) {
+                    Graph[p[pred]][pred] = false;
+                }
                 pred = p[pred];
             }
             max_flow += min_capacity;
@@ -75,7 +77,7 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
         return max_flow;
     }
 
-    boolean bfs1(short[][] Graph, int s, int t, int[] p) {
+    boolean bfs1(boolean[][] Graph, int s, int t, int[] p) {
         Queue<Integer> q = new LinkedList<>();
         q.add(s);
         boolean[] used = new boolean[Graph.length];
@@ -86,7 +88,7 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
                 return true;
             }
             for (int to = 0; to < Graph[v].length; to++) {
-                if (Graph[v][to] != 0 && !used[to]) {
+                if (Graph[v][to]  && !used[to]) {
                     used[to] = true;
                     p[to] = v;
                     q.add(to);

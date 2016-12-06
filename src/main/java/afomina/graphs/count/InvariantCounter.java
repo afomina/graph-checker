@@ -8,9 +8,9 @@ public abstract class InvariantCounter<T> {
 
     protected void dfs(int v, Graph g, boolean[] used) {
         used[v] = true;
-        short[][] matrix = g.getMatrix();
+        boolean[][] matrix = g.getMatrix();
         for (int i = 0; i < matrix[v].length; ++i) {
-            if (matrix[v][i] == 1 && !used[i]) {
+            if (matrix[v][i] && !used[i]) {
                 dfs(i, g, used);
             }
         }

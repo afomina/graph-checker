@@ -10,11 +10,11 @@ public class ExponentCounter extends InvariantCounter<Integer> {
     public Integer getInvariant(Graph g) {
         int n = g.getOrder();
         Algebra algebra = new Algebra();
-        short[][] matrix = g.getMatrix();
+        boolean[][] matrix = g.getMatrix();
         double[][] doubleMatrix = new double[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                doubleMatrix[i][j] = matrix[i][j];
+                doubleMatrix[i][j] = matrix[i][j]?1:0;
             }
         }
         DoubleMatrix2D graphMatrix = DoubleFactory2D.dense.make(doubleMatrix);

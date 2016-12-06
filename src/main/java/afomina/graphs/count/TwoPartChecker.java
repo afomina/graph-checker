@@ -6,7 +6,7 @@ public class TwoPartChecker extends InvariantCounter<Boolean> {
     @Override
     public Boolean getInvariant(Graph graph) {
         int n = graph.getOrder();
-        short[][] g = graph.getMatrix();
+        boolean[][] g = graph.getMatrix();
         int[] part = new int[n];
         for (int i = 0; i < n; i++) {
             part[i] = -1;
@@ -24,12 +24,14 @@ public class TwoPartChecker extends InvariantCounter<Boolean> {
                 while (h < t) {
                     int v = q[h++];
                     for (int i = 0; i < g[v].length; ++i) {
-                        int to = g[v][i];
-                        if (part[to] == -1) {
-                            part[to] = curPart++;
-                            q[t++] = to;
-                        } else {
-                            ok &= part[to] != part[v];
+                        if (g[v][i]) { //todo
+                            int to = i;//g[v][i]; todo: what is this??
+                            if (part[to] == -1) {
+                                part[to] = curPart++;
+                                q[t++] = to;
+                            } else {
+                                ok &= part[to] != part[v];
+                            }
                         }
                     }
                 }

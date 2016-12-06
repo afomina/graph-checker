@@ -10,17 +10,17 @@ public class RadDimCounter extends InvariantCounter {
     public Object getInvariant(Graph g) {
         int n = g.getOrder();
         int INF = Integer.MAX_VALUE/2;
-        short[][] matrix = g.getMatrix();
+        boolean[][] matrix = g.getMatrix();
         int[][] d = new int[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (i==j) {
                     continue;
                 }
-                if (matrix[i][j] == 0) {
+                if (!matrix[i][j]) {
                     d[i][j] = INF;
                 } else {
-                    d[i][j] = matrix[i][j];
+                    d[i][j] = matrix[i][j]?1:0;
                 }
             }
         }

@@ -7,7 +7,7 @@ public class Girth extends InvariantCounter<Integer> {
     @Override
     public Integer getInvariant(Graph g) {
         int n = g.getOrder();
-        short[][] matrix = g.getMatrix();
+        boolean[][] matrix = g.getMatrix();
         int minCycle = Integer.MAX_VALUE;
         for (int i = 0; i < n; i++) {
             short[] color = new short[n];
@@ -20,11 +20,11 @@ public class Girth extends InvariantCounter<Integer> {
         return minCycle;
     }
 
-    protected int cycle(int v, short[][] matrix, short[] color, int[] p) {
+    protected int cycle(int v, boolean[][] matrix, short[] color, int[] p) {
         color[v] = 1;
 
         for (int to = 0; to < matrix[v].length; ++to) {
-            if (matrix[v][to] == 1 && to != p[v]) {
+            if (matrix[v][to] && to != p[v]) {
                 if (color[to] == 0) {
                     p[to] = v;
                     return cycle(to, matrix, color, p);
