@@ -37,7 +37,7 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
                 modMatrix[2 * j][2 * i + 1] = matrix[j][i];
             }
         }
-        return edgeConnectivity(modMatrix, false);
+        return new EdgeConnectivity().getInvariant(new Graph(modMatrix)); // edgeConnectivity(modMatrix, false);
     }
 
     private int edgeConnectivity(boolean[][] Graph, boolean isEdge) {
@@ -62,7 +62,7 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
             int min_capacity = Integer.MAX_VALUE;
             int pred = t;
             while (p[pred] != -1) {
-                min_capacity = Math.min(min_capacity, Graph[p[pred]][pred]?1:0);
+                min_capacity = Math.min(min_capacity, Graph[p[pred]][pred] ? 1 : 0);
                 pred = p[pred];
             }
             pred = t;
@@ -88,7 +88,7 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
                 return true;
             }
             for (int to = 0; to < Graph[v].length; to++) {
-                if (Graph[v][to]  && !used[to]) {
+                if (Graph[v][to] && !used[to]) {
                     used[to] = true;
                     p[to] = v;
                     q.add(to);

@@ -8,33 +8,15 @@ import java.util.List;
 
 public class EdgeConnectivity extends InvariantCounter<Integer> {
     public Integer getInvariant(Graph g) {
-        int res = 0;
-        Graph tmp = g;
-        ConnectivityCounter connectivityCounter = new ConnectivityCounter();
-        while (tmp.isCon()) {
-            boolean[][] m = tmp.getMatrix();
-            for (int i = 0; i < tmp.getOrder(); i++) {
-                for (int j = 0; j < tmp.getOrder(); j++) {
-                    if (m[i][j]) {
-                        m[i][j] = false;
-                        m[j][i] = false;
-                        res++;
-                        if (!connectivityCounter.getInvariant(tmp)) {
-                            return res;
-                        }
-                    }
-                }
-            }
-
-        }
+        int res = mincut(g.getMatrix());
         g.setEdgeConnectivity(res);
         return res;
     }
 
     private static final int MAXN = 1000;
 
-    int mincut(short[][] graph) {
-        short[][] g = Arrays.copyOf(graph, graph.length);
+    int mincut(boolean[][] graph) {
+        boolean[][] g = Arrays.copyOf(graph, graph.length);
         for (int i = 0; i < g.length; i++) {
             g[i] = Arrays.copyOf(graph[i], graph[i].length);
         }
@@ -69,13 +51,15 @@ public class EdgeConnectivity extends InvariantCounter<Integer> {
                     }
                     v.get(prev).addAll(v.get(sel));
                     for (int i = 0; i < n; ++i) {
-                        g[prev][i] = g[i][prev] += g[sel][i];
+                        g[prev][i] = g[prev][i] || g[sel][i];
+                        g[i][prev] = g[prev][i];
                     }
                     exist[sel] = false;
                 } else {
                     in_a[sel] = true;
-                    for (int i = 0; i < n; ++i)
-                        w[i] += g[sel][i];
+                    for (int i = 0; i < n; ++i) {
+                        w[i] += g[sel][i] ? 1 : 0;
+                    }
                     prev = sel;
                 }
             }
