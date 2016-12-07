@@ -25,6 +25,16 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
         return res;
     }
 
+    private Integer brute(Graph g) {
+        int max = g.getOrder() - 1;
+        Graph tmp = new Graph(g.getMatrix());
+        for (int k = 0; k < max; k++) {
+            //delete k nodes and check if connected, if not - return k
+//            for ()
+        }
+        return null;
+    }
+
     protected Integer menger(Graph g) {
         int order = g.getOrder();
         boolean[][] matrix = g.getMatrix();
