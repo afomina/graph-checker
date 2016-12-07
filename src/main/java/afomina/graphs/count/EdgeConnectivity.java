@@ -8,17 +8,23 @@ import java.util.List;
 
 public class EdgeConnectivity extends InvariantCounter<Integer> {
     public Integer getInvariant(Graph g) {
-        int res = mincut(g.getMatrix());
+        int res = calc(g);
         g.setEdgeConnectivity(res);
         return res;
+    }
+
+    public int calc(Graph g) {
+        return mincut(g.getMatrix());
     }
 
     private static final int MAXN = 1000;
 
     int mincut(boolean[][] graph) {
-        boolean[][] g = Arrays.copyOf(graph, graph.length);
+        int[][] g = new int[graph.length][graph.length];
         for (int i = 0; i < g.length; i++) {
-            g[i] = Arrays.copyOf(graph[i], graph[i].length);
+            for (int j = 0; j < graph.length; j++) {
+                g[i][j] = graph[i][j] ? 1 : 0;
+            }
         }
 
         int n = g.length;
@@ -51,14 +57,14 @@ public class EdgeConnectivity extends InvariantCounter<Integer> {
                     }
                     v.get(prev).addAll(v.get(sel));
                     for (int i = 0; i < n; ++i) {
-                        g[prev][i] = g[prev][i] || g[sel][i];
+                        g[prev][i] +=  g[sel][i];
                         g[i][prev] = g[prev][i];
                     }
                     exist[sel] = false;
                 } else {
                     in_a[sel] = true;
                     for (int i = 0; i < n; ++i) {
-                        w[i] += g[sel][i] ? 1 : 0;
+                        w[i] += g[sel][i] ;
                     }
                     prev = sel;
                 }

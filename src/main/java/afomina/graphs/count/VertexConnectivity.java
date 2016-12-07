@@ -31,13 +31,14 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
 
         boolean[][] modMatrix = new boolean[2 * order][2 * order];
         for (int i = 0; i < order; i++) {
-            modMatrix[2 * i][2 * i + 1] = modMatrix[2 * i + 1][2 * i] = true;
+            modMatrix[2 * i][2 * i + 1] = true;
+            modMatrix[2 * i + 1][2 * i] = true;
             for (int j = i + 1; j < order; j++) {
                 modMatrix[2 * i][2 * j + 1] = matrix[i][j];
                 modMatrix[2 * j][2 * i + 1] = matrix[j][i];
             }
         }
-        return new EdgeConnectivity().getInvariant(new Graph(modMatrix)); // edgeConnectivity(modMatrix, false);
+        return new EdgeConnectivity().calc(new Graph(modMatrix)); // edgeConnectivity(modMatrix, false);
     }
 
     private int edgeConnectivity(boolean[][] Graph, boolean isEdge) {
