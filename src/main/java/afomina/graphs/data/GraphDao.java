@@ -51,6 +51,19 @@ public class GraphDao {
         return (List<Graph>) criteria.list();
     }
 
+    public List<Graph> findByOrderAndNullInvariants(Integer order, int pageSize, int page) {
+        Criteria criteria;
+
+        Session session = entityManager.unwrap(Session.class);
+        criteria = session.createCriteria(Graph.class);
+        criteria.add(Restrictions.eq("order", order));
+        criteria.add(Restrictions.or(Restrictions.isNull("chromeNumber"), Restrictions.isNull("vertcon")));
+                criteria.setFirstResult(page * pageSize);
+        criteria.setMaxResults(pageSize);
+
+        return (List<Graph>) criteria.list();
+    }
+
     public List<Graph> findByGirth(Integer girth) {
         Criteria criteria;
 
@@ -107,6 +120,15 @@ public class GraphDao {
         Session session = entityManager.unwrap(Session.class);
         Criteria criteria = session.createCriteria(Graph.class)
                 .add(Restrictions.eq("order", order))
+                .setProjection(Projections.rowCount());
+        return (Long) criteria.uniqueResult();
+    }
+
+    public Long countNullInv(Integer order) {
+        Session session = entityManager.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Graph.class)
+                .add(Restrictions.eq("order", order))
+                .add(Restrictions.or(Restrictions.isNull("chromeNumber"), Restrictions.isNull("vertcon")))
                 .setProjection(Projections.rowCount());
         return (Long) criteria.uniqueResult();
     }

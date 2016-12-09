@@ -23,11 +23,11 @@ import java.util.Map;
 @Controller
 public class MainController {
 
-    private static final int MIN_VERTEXES = 2;
+    private static final int MIN_VERTEXES = 9;
     private static final int MAX_VERTEXES = 9;
     private static final int GRAPHS_TO_STORE = 100;
     private static final int DEFAULT_PAGE_SIZE = 20;
-    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new EdgeConnectivity(), new VertexConnectivity());
+    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new VertexConnectivity(), new ChromeNumber());
     @Autowired
     GraphDao graphDao;
 
@@ -118,13 +118,13 @@ public class MainController {
         List<Graph> graphs;
         for (int n = min; n <= max; n++) {
             try {
-                Long count = graphDao.count(n);
+                Long count = graphDao.countNullInv(n);
                 long pageCount = count / 100;
                 if (count % 100 != 0) {
                     pageCount++;
                 }
                 for (int page = 0; page < pageCount; page++) {
-                    graphs = graphDao.findByOrder(n, 100, page);
+                    graphs = graphDao.findByOrderAndNullInvariants(n, 100, page);
                     for (Graph graph : graphs) {
                         for (InvariantCounter invariant : INVARIANTS) {
                             invariant.getInvariant(graph);
