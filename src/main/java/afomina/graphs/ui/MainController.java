@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +48,13 @@ public class MainController {
 
     @RequestMapping(value = "/mine", method = RequestMethod.GET)
     public String mine(Model model) {
-        String res = graphMiner.mine();
+        String res = null;
+        try {
+            res = graphMiner.mine();
+        } catch (IOException e) {
+            res = "io exception";
+            log.error("mine io exception", e);
+        }
         log.error(res);
         model.addAttribute("msg", res);
         return "mineresults";

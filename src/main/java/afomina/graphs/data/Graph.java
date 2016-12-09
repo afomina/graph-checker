@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "graph")
@@ -32,6 +34,7 @@ public class Graph {
     private Integer twoPartial;
 
     private Integer chromeNumber;
+    private Integer independenceNumber;
 
     public Graph() {
     }
@@ -245,5 +248,33 @@ public class Graph {
             setComponents(new ComponentCounter().getInvariant(this));
         }
         return getComponents() == 1;
+    }
+
+    @Column(name = "independenceNumber")
+    public Integer getIndependenceNumber() {
+        return independenceNumber;
+    }
+
+    public void setIndependenceNumber(Integer independenceNumber) {
+        this.independenceNumber = independenceNumber;
+    }
+
+    @Transient
+    public List<Integer> getAllInvariants() {
+        List<Integer> invariants = new ArrayList<>();
+        invariants.add(getChromeNumber());
+        invariants.add(getComponents());
+        invariants.add(getDiametr());
+        invariants.add(getEdgeConnectivity());
+        invariants.add(getExp());
+        invariants.add(getGirth());
+        invariants.add(getRadius());
+        if (getIndependenceNumber() != null) {
+            invariants.add(getIndependenceNumber());
+        }
+        invariants.add(getPrimitive());
+        invariants.add(getTwoPartial());
+        invariants.add(getVertexConnectivity());
+        return invariants;
     }
 }
