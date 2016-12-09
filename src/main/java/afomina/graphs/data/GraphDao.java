@@ -128,7 +128,7 @@ public class GraphDao {
         Session session = entityManager.unwrap(Session.class);
         Criteria criteria = session.createCriteria(Graph.class)
                 .add(Restrictions.eq("order", order))
-                .add(Restrictions.or(Restrictions.isNull("chromeNumber"), Restrictions.isNull("vertcon")))
+                .add(Restrictions.or(Restrictions.isNull("chromeNumber"), Restrictions.isNull("vertexConnectivity")))
                 .setProjection(Projections.rowCount());
         return (Long) criteria.uniqueResult();
     }
