@@ -23,8 +23,8 @@ public class Miner {
         List<Graph> graphs = graphDao.findBySql("order < 7");
         FPGMiner miner = new FPGMiner();
         Itemsets patterns = miner.runAlgorithm(graphs, "mining-out.txt", 0.5);
-//        patterns.printItemsets(miner.getDatabaseSize());
         miner.printStats();
+//        patterns.printItemsets(miner.getDatabaseSize());
         return "finished OK";
     }
 
