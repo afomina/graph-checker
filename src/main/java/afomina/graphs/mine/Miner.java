@@ -22,8 +22,8 @@ public class Miner {
     public String mine() throws IOException {
         List<Graph> graphs = graphDao.findBySql("order < 7");
         FPGMiner miner = new FPGMiner();
-        Itemsets patterns = miner.runAlgorithm(graphs, "mining-out.txt", 1);
-        patterns.printItemsets(miner.getDatabaseSize());
+        Itemsets patterns = miner.runAlgorithm(graphs, "mining-out.txt", 0.5);
+//        patterns.printItemsets(miner.getDatabaseSize());
         miner.printStats();
         return "finished OK";
     }

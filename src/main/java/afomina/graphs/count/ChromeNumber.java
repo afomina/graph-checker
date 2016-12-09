@@ -6,6 +6,9 @@ public class ChromeNumber extends InvariantCounter<Integer> {
 
     @Override
     public Integer getInvariant(Graph g) {
+        if (g.getChromeNumber() != null) {
+            return g.getChromeNumber();
+        }
         int order = g.getOrder();
         boolean[][] matrix = g.getMatrix();
         int[] color = new int[order];

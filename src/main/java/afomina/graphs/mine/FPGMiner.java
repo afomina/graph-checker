@@ -30,30 +30,6 @@ import java.util.*;
  * Modification of {@link AlgoFPGrowth} that accepts a {@link List} of {@Graph} instead of a text input
  */
 public class FPGMiner extends AlgoFPGrowth {
-    /**
-     * number of freq. itemsets found
-     */
-    private int itemsetCount;
-
-    /**
-     * This buffer is used to store an itemset that will be written to file
-     * so that the algorithm can sort the itemset before it is output to file
-     * (when the user choose to output result to file).
-     */
-    private int[] itemsetOutputBuffer = null;
-
-    private int transactionCount = 0; // transaction count in the database
-
-    /**
-     * buffer for storing the current itemset that is mined when performing mining
-     * the idea is to always reuse the same buffer to reduce memory usage.
-     */
-    private int[] itemsetBuffer = null;
-
-    /**
-     * another buffer for storing fpnodes in a single path of the tree
-     */
-    private FPNode[] fpNodeTempBuffer = null;
 
     /**
      * Method to run the FPGRowth algorithm.

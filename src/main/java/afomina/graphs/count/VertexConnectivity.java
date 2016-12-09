@@ -20,6 +20,9 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
 
     @Override
     public Integer getInvariant(Graph g) {
+        if (g.getVertexConnectivity() != null) {
+            return g.getVertexConnectivity();
+        }
         Integer res = menger(g);
         g.setVertexConnectivity(res);
         return res;

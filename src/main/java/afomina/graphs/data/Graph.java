@@ -250,7 +250,7 @@ public class Graph {
         return getComponents() == 1;
     }
 
-    @Column(name = "independenceNumber")
+    @Column(name = "independence_number")
     public Integer getIndependenceNumber() {
         return independenceNumber;
     }
