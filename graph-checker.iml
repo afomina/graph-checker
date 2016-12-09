@@ -113,5 +113,6 @@
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
     <orderEntry type="library" name="Maven: colt:colt:1.2.0" level="project" />
     <orderEntry type="library" name="Maven: concurrent:concurrent:1.3.4" level="project" />
+    <orderEntry type="library" name="spmf" level="project" />
   </component>
 </module>
