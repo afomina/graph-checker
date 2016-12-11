@@ -57,7 +57,7 @@ public class GraphDao {
         Session session = entityManager.unwrap(Session.class);
         criteria = session.createCriteria(Graph.class);
         criteria.add(Restrictions.eq("order", order));
-        criteria.add(Restrictions.or(Restrictions.isNull("chromeNumber"), Restrictions.isNull("vertcon")));
+        criteria.add(Restrictions.or(Restrictions.isNull("chromeNumber"), Restrictions.isNull("vertexConnectivity")));
                 criteria.setFirstResult(page * pageSize);
         criteria.setMaxResults(pageSize);
 
