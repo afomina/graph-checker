@@ -18,23 +18,23 @@ public class Graph {
 
     private Integer id;
     private String code;
-    private int order;
-    private Integer edgeAmount;
-    private Integer edgeConnectivity;
+    public int order;
+    public Integer edgeAmount;
+    public Integer edgeConnectivity;
 
-    private Integer vertexConnectivity;
+    public Integer vertexConnectivity;
     private Integer connected;
-    private Integer radius;
-    private Integer diametr;
+    public Integer radius;
+    public Integer diametr;
 
-    private Integer components;
-    private Integer girth;
+    public Integer components;
+    public Integer girth;
     private Integer primitive;
-    private Integer exp;
+    public Integer exp;
     private Integer twoPartial;
 
-    private Integer chromeNumber;
-    private Integer independenceNumber;
+    public Integer chromeNumber;
+    public Integer independenceNumber;
 
     public Graph() {
     }

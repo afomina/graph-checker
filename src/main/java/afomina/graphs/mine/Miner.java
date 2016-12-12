@@ -5,6 +5,8 @@ import afomina.graphs.data.GraphDao;
 import afomina.graphs.mine.condition.BruteMiner;
 import afomina.graphs.mine.fpg.FPGMiner;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,10 @@ public class Miner {
 
     @Autowired
     GraphDao graphDao;
+    private static final Logger log = LoggerFactory.getLogger(Miner.class);
 
     public String mine() throws IOException {
-        List<Graph> graphs = graphDao.findBySql("order < 7 and conn = 1 ");
+        List<Graph> graphs = graphDao.findBySql("order < 8 and conn = 1 ");
         return new BruteMiner().mine(graphs).toString(); // mine(graphs);
     }
 

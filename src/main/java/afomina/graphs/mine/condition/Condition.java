@@ -34,7 +34,9 @@ public class Condition {
         EXPONENT("exp"),
         GIRTH("girth"),
         RADIUS("radius"),
-        VERTCON("vertexConnectivity");
+        VERTCON("vertexConnectivity"),
+        ORDER("order"),
+        EDGES("edgeAmount");
 
         String property;
 
@@ -89,25 +91,30 @@ public class Condition {
         if (aField == null || bField == null || cField == null) {
             return false;
         }
-        int a, b, c;
+        Integer a, b, c;
         try {
-            a = aField.getInt(graph);
-            b = bField.getInt(graph);
-            c = cField.getInt(graph);
+            a = (Integer) aField.get(graph);
+            b = (Integer) bField.get(graph);
+            c = (Integer) cField.get(graph);
         } catch (IllegalAccessException e) {
             log.error("condition calc error: illegal access to field", e);
             return false;
         }
-        switch (operation) {
-            case SUM:
-                setResult(a <= b + c);
-                break;
-            case MULT:
-                setResult(a <= b * c);
-                break;
-            case POW:
-                setResult(a <= Math.pow(b, c));
-                break;
+        if (a == null || b == null || c == null) {
+            setResult(false);
+        }
+        else {
+            switch (operation) {
+                case SUM:
+                    setResult(a <= b + c);
+                    break;
+                case MULT:
+                    setResult(a <= b * c);
+                    break;
+                case POW:
+                    setResult(a <= Math.pow(b, c));
+                    break;
+            }
         }
         return getResult();
     }
@@ -115,8 +122,8 @@ public class Condition {
     @Override
     public String toString() {
         String expression = operation.pattern;
-        expression.replaceFirst("\\{\\}", invariants[1].property);
-        expression.replaceFirst("\\{\\}", invariants[2].property);
+        expression = expression.replaceFirst("\\{\\}", invariants[1].property);
+        expression = expression.replaceFirst("\\{\\}", invariants[2].property);
         return invariants[0].property + " <= " + expression + " is " + result;
     }
 
