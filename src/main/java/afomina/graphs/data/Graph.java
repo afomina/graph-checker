@@ -272,8 +272,8 @@ public class Graph {
         if (getIndependenceNumber() != null) {
             invariants.add(getIndependenceNumber());
         }
-        invariants.add(getPrimitive());
-        invariants.add(getTwoPartial());
+//        invariants.add(getPrimitive());
+//        invariants.add(getTwoPartial());
         invariants.add(getVertexConnectivity());
         return invariants;
     }

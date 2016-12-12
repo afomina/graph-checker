@@ -15,18 +15,23 @@ public class Miner {
     @Autowired
     GraphDao graphDao;
 
+    public String mine() throws IOException {
+        List<Graph> graphs = graphDao.findBySql("order < 7 and conn = 1 ");
+        return new BruteMiner().mine(graphs).toString(); // mine(graphs);
+    }
+
     /**
      * Some association rule mining
      * See http://www.philippe-fournier-viger.com/spmf/index.php?link=download.php
      */
-    public String mine() throws IOException {
-        List<Graph> graphs = graphDao.findBySql("order < 7");
+    public String mine(List<Graph> graphs) throws IOException {
         FPGMiner miner = new FPGMiner();
         Itemsets patterns = miner.runAlgorithm(graphs, "mining-out.txt", 1);
         patterns.printItemsets(miner.getDatabaseSize());
         miner.printStats();
         return "finished OK";
     }
+
 
     //обхват, экспонент, реб связность - не равно
     //эксп + реб св <= обхват
