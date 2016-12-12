@@ -26,9 +26,9 @@ public class Miner {
      */
     public String mine(List<Graph> graphs) throws IOException {
         FPGMiner miner = new FPGMiner();
-        Itemsets patterns = miner.runAlgorithm(graphs, "mining-out.txt", 1);
-        patterns.printItemsets(miner.getDatabaseSize());
+        Itemsets patterns = miner.runAlgorithm(graphs, "mining-out.txt", 0.5);
         miner.printStats();
+//        patterns.printItemsets(miner.getDatabaseSize());
         return "finished OK";
     }
 

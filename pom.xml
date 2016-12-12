@@ -123,6 +123,12 @@
             <version>4.3.4.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>spmf</groupId>
+            <artifactId>spmf</artifactId>
+            <version>1.0</version>
+        </dependency>
+
 
 
     </dependencies>

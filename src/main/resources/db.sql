@@ -25,6 +25,6 @@ create index rad_index on graph (radius);
 create index diam_index on graph (diametr);
 create index chromen_index on graph (chrome_number);
 
-ALTER TABLE GRAPH ADD COLUMN independenceNumber INTEGER ;
+ALTER TABLE GRAPH ADD COLUMN independence_number INTEGER ;
 create index independenceNumberIndex on graph (independenceNumber);
 create index codeIndex on graph (code);

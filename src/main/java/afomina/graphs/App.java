@@ -4,7 +4,11 @@ import afomina.graphs.count.Girth;
 import afomina.graphs.count.InvariantCounter;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphService;
+import afomina.graphs.mine.Miner;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +26,6 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +41,7 @@ public class App extends SpringBootServletInitializer {
     private static final String INPUT_GRAPH_PATH = "input/g";
     private static final String OUTPUT_PATH = "res/g";
     private static final GraphService graphService = GraphService.get();
-    private static final Logger log = Logger.getLogger("App");
+    private static final Logger log = LoggerFactory.getLogger(App.class);
     private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new Girth());
 
     public static void parseAndStoreGraphs() throws Exception {
@@ -68,7 +71,7 @@ public class App extends SpringBootServletInitializer {
                                 cnt = 0;
                             }
                         } catch (Exception e) {
-                            log.log(Level.SEVERE, "exception when storing graph " + graph.toString(), e);
+                            log.error("exception when storing graph " + graph.toString(), e);
                         }
                     }
                 }

@@ -58,8 +58,8 @@ public class AlgoFPGrowth {
     // for statistics
     private long startTimestamp; // start time of the latest execution
     private long endTime; // end time of the latest execution
-    private int transactionCount = 0; // transaction count in the database
-    private int itemsetCount; // number of freq. itemsets found
+    protected int transactionCount = 0; // transaction count in the database
+    protected int itemsetCount; // number of freq. itemsets found
 
     // parameter
     public int minSupportRelative;// the relative minimum support
@@ -76,14 +76,14 @@ public class AlgoFPGrowth {
 
     // buffer for storing the current itemset that is mined when performing mining
     // the idea is to always reuse the same buffer to reduce memory usage.
-    private int[] itemsetBuffer = null;
+    protected int[] itemsetBuffer = null;
     // another buffer for storing fpnodes in a single path of the tree
-    private FPNode[] fpNodeTempBuffer = null;
+    protected FPNode[] fpNodeTempBuffer = null;
 
     // This buffer is used to store an itemset that will be written to file
     // so that the algorithm can sort the itemset before it is output to file
     // (when the user choose to output result to file).
-    private int[] itemsetOutputBuffer = null;
+    protected int[] itemsetOutputBuffer = null;
 
     /**
      * Constructor
