@@ -1,4 +1,4 @@
-package afomina.graphs.mine;
+package afomina.graphs.mine.fpg;
 
  /* This is an implementation of the FPGrowth algorithm.
  *

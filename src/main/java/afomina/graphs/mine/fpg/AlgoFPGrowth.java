@@ -1,4 +1,4 @@
-package afomina.graphs.mine;
+package afomina.graphs.mine.fpg;
  
  /* This file is copyright (c) 2008-2015 Philippe Fournier-Viger
  * 
@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import afomina.graphs.mine.fpg.FPNode;
+import afomina.graphs.mine.fpg.FPTree;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemset;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
 import ca.pfv.spmf.tools.MemoryLogger;

@@ -1,4 +1,4 @@
-package afomina.graphs.mine;
+package afomina.graphs.mine.fpg;
 
 /* This file is copyright (c) 2008-2013 Philippe Fournier-Viger
 * 
@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.pfv.spmf.algorithms.frequentpatterns.fpgrowth.*;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemset;
 
 
@@ -33,7 +32,7 @@ import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemset;
  * This is an implementation of a FPTree as used by the FPGrowth algorithm.
  *
  * @author Philippe Fournier-Viger
- * @see FPNode
+ * @see afomina.graphs.mine.fpg.FPNode
  * @see Itemset
  * @see ca.pfv.spmf.algorithms.frequentpatterns.fpgrowth.AlgoFPGrowth
  */
@@ -42,14 +41,14 @@ public class FPTree {
     List<Integer> headerList = null;
 
     // List of pairs (item, frequency) of the header table
-    Map<Integer, FPNode> mapItemNodes = new HashMap<Integer, FPNode>();
+    Map<Integer, afomina.graphs.mine.fpg.FPNode> mapItemNodes = new HashMap<Integer, afomina.graphs.mine.fpg.FPNode>();
 
     // Map that indicates the last node for each item using the node links
     // key: item   value: an fp tree node
-    Map<Integer, FPNode> mapItemLastNode = new HashMap<Integer, FPNode>();
+    Map<Integer, afomina.graphs.mine.fpg.FPNode> mapItemLastNode = new HashMap<Integer, afomina.graphs.mine.fpg.FPNode>();
 
     // root of the tree
-    FPNode root = new FPNode(); // null node
+    afomina.graphs.mine.fpg.FPNode root = new afomina.graphs.mine.fpg.FPNode(); // null node
 
     /**
      * Constructor
@@ -65,15 +64,15 @@ public class FPTree {
      * @param transaction
      */
     public void addTransaction(List<Integer> transaction) {
-        FPNode currentNode = root;
+        afomina.graphs.mine.fpg.FPNode currentNode = root;
         // For each item in the transaction
         for (Integer item : transaction) {
             // look if there is a node already in the FP-Tree
             if (item != null) {
-                FPNode child = currentNode.getChildWithID(item);
+                afomina.graphs.mine.fpg.FPNode child = currentNode.getChildWithID(item);
                 if (child == null) {
                     // there is no node, we create a new one
-                    FPNode newNode = new FPNode();
+                    afomina.graphs.mine.fpg.FPNode newNode = new afomina.graphs.mine.fpg.FPNode();
                     newNode.itemID = item;
                     newNode.parent = currentNode;
                     // we link the new node to its parrent
@@ -100,9 +99,9 @@ public class FPTree {
      * @param item    the item of the new node
      * @param newNode the new node thas has been inserted.
      */
-    private void fixNodeLinks(Integer item, FPNode newNode) {
+    private void fixNodeLinks(Integer item, afomina.graphs.mine.fpg.FPNode newNode) {
         // get the latest node in the tree with this item
-        FPNode lastNode = mapItemLastNode.get(item);
+        afomina.graphs.mine.fpg.FPNode lastNode = mapItemLastNode.get(item);
         if (lastNode != null) {
             // if not null, then we add the new node to the node link of the last node
             lastNode.nodeLink = newNode;
@@ -110,7 +109,7 @@ public class FPTree {
         // Finally, we set the new node as the last node
         mapItemLastNode.put(item, newNode);
 
-        FPNode headernode = mapItemNodes.get(item);
+        afomina.graphs.mine.fpg.FPNode headernode = mapItemNodes.get(item);
         if (headernode == null) {  // there is not
             mapItemNodes.put(item, newNode);
         }
@@ -123,23 +122,23 @@ public class FPTree {
      * @param mapSupportBeta  The frequencies of items in the prefixpaths
      * @param relativeMinsupp
      */
-    void addPrefixPath(List<FPNode> prefixPath, Map<Integer, Integer> mapSupportBeta, int relativeMinsupp) {
+    void addPrefixPath(List<afomina.graphs.mine.fpg.FPNode> prefixPath, Map<Integer, Integer> mapSupportBeta, int relativeMinsupp) {
         // the first element of the prefix path contains the path support
         int pathCount = prefixPath.get(0).counter;
 
-        FPNode currentNode = root;
+        afomina.graphs.mine.fpg.FPNode currentNode = root;
         // For each item in the transaction  (in backward order)
         // (and we ignore the first element of the prefix path)
         for (int i = prefixPath.size() - 1; i >= 1; i--) {
-            FPNode pathItem = prefixPath.get(i);
+            afomina.graphs.mine.fpg.FPNode pathItem = prefixPath.get(i);
             // if the item is not frequent we skip it
             if (mapSupportBeta.get(pathItem.itemID) >= relativeMinsupp) {
 
                 // look if there is a node already in the FP-Tree
-                FPNode child = currentNode.getChildWithID(pathItem.itemID);
+                afomina.graphs.mine.fpg.FPNode child = currentNode.getChildWithID(pathItem.itemID);
                 if (child == null) {
                     // there is no node, we create a new one
-                    FPNode newNode = new FPNode();
+                    afomina.graphs.mine.fpg.FPNode newNode = new afomina.graphs.mine.fpg.FPNode();
                     newNode.itemID = pathItem.itemID;
                     newNode.parent = currentNode;
                     newNode.counter = pathCount;  // set its support

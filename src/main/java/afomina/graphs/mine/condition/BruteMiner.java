@@ -1,6 +1,7 @@
-package afomina.graphs.mine;
+package afomina.graphs.mine.condition;
 
 import afomina.graphs.data.Graph;
+import afomina.graphs.mine.GraphMiner;
 import afomina.graphs.mine.condition.Condition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package afomina.graphs.mine;
+package afomina.graphs.mine.fpg;
 
 /* This file is copyright (c) 2008-2013 Philippe Fournier-Viger
 * 
@@ -21,7 +21,6 @@ package afomina.graphs.mine;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.pfv.spmf.algorithms.frequentpatterns.fpgrowth.*;
 import ca.pfv.spmf.algorithms.frequentpatterns.fpgrowth.AlgoFPGrowth;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemset;
 

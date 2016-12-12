@@ -2,6 +2,8 @@ package afomina.graphs.mine;
 
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
+import afomina.graphs.mine.condition.BruteMiner;
+import afomina.graphs.mine.fpg.FPGMiner;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
