@@ -21,7 +21,7 @@ public class Miner {
     private static final Logger log = LoggerFactory.getLogger(Miner.class);
 
     public String mine() throws IOException {
-        List<Graph> graphs = graphDao.findBySql("order < 8 and conn = 1 ");
+        List<Graph> graphs = graphDao.findBySql("order < 10 and conn = 1 ");
         return new BruteMiner().mine(graphs).toString(); // mine(graphs);
     }
 
