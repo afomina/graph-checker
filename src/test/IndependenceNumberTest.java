@@ -6,7 +6,7 @@ import org.junit.Test;
 public class IndependenceNumberTest extends InvariantTest{
 
     @Test
-    public void testIndependencyNumber() {
+    public void testIndependenceNumber() {
         InvariantCounter<Integer> indepCount = new IndependenceNumber();
         int result = indepCount.getInvariant(GRAPH);
         Assert.assertEquals(3, result);
