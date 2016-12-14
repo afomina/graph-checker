@@ -118,13 +118,13 @@ public class MainController {
         List<Graph> graphs;
         for (int n = min; n <= max; n++) {
             try {
-                Long count = graphDao.countNullInv(n);
+                Long count = graphDao.count(n);
                 long pageCount = count / 100;
                 if (count % 100 != 0) {
                     pageCount++;
                 }
                 for (int page = 0; page < pageCount; page++) {
-                    graphs = graphDao.findByOrderAndNullInvariants(n, 100, page);
+                    graphs = graphDao.findByOrder(n, 100, page);
                     for (Graph graph : graphs) {
                         for (InvariantCounter invariant : INVARIANTS) {
                             invariant.getInvariant(graph);
