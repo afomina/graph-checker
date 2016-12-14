@@ -31,6 +31,8 @@
 <th>Ацикличный</th>
 <th>Двудольный</th>
 <th>Экспонент</th>
+        <th>Хроматическое число</th>
+        <th>Число независимости</th>
     </tr>
     </thead>
     <tbody>
@@ -47,6 +49,8 @@
         <td>${graph.isAcyclic()?'Да':'Нет'}</td>
         <td>${graph.getTwoPartial()==1? 'Да':'Нет'}</td>
         <td>${graph.getExp()==null?'-':graphs.get(i).getExp()}</td>
+        <td>${graphs.get(i).getChromeNumber()}</td>
+        <td>${graphs.get(i).getIndependenceNumber()}</td>
     </tr>
     </tbody>
     </table>

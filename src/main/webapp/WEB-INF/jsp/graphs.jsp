@@ -51,6 +51,7 @@
         <th>Двудольный</th>
         <th>Экспонент</th>
         <th>Хроматическое число</th>
+        <th>Число независимости</th>
     </tr>
     </thead>
     <tbody>
@@ -75,6 +76,7 @@
         <td>${graphs.get(i).getTwoPartial()==1? 'Да':'Нет'}</td>
         <td>${graphs.get(i).getExp()==null?'-':graphs.get(i).getExp()}</td>
         <td>${graphs.get(i).getChromeNumber()}</td>
+        <td>${graphs.get(i).getIndependenceNumber()}</td>
     </tr>
     </c:forEach>
     </tbody>

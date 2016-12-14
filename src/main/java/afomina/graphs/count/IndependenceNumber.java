@@ -19,6 +19,7 @@ public class IndependenceNumber extends InvariantCounter<Integer> {
                 maxIndependent = vector.size();
             }
         }
+        g.setIndependenceNumber(maxIndependent);
         return maxIndependent;
     }
 

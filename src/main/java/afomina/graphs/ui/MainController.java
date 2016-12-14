@@ -27,7 +27,7 @@ public class MainController {
     private static final int MAX_VERTEXES = 9;
     private static final int GRAPHS_TO_STORE = 100;
     private static final int DEFAULT_PAGE_SIZE = 20;
-    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new VertexConnectivity(), new ChromeNumber());
+    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new VertexConnectivity(), new ChromeNumber(), new IndependenceNumber());
     @Autowired
     GraphDao graphDao;
 
