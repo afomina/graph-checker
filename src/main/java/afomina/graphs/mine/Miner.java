@@ -3,6 +3,7 @@ package afomina.graphs.mine;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
 import afomina.graphs.mine.condition.BruteMiner;
+import afomina.graphs.mine.condition.Condition;
 import afomina.graphs.mine.fpg.FPGMiner;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
 import org.slf4j.Logger;
@@ -22,7 +23,21 @@ public class Miner {
 
     public String mine() throws IOException {
         List<Graph> graphs = graphDao.findBySql("order < 10 and conn = 1 ");
-        return new BruteMiner().mine(graphs).toString(); // mine(graphs);
+        return stringify(new BruteMiner().mine(graphs));
+    }
+
+    public String mine(String sql, Condition.INVARIANT main, Condition.INVARIANT a, Condition.INVARIANT b) throws IOException {
+        List<Graph> graphs = graphDao.findBySql(sql);
+        return stringify(new BruteMiner().mine(graphs, main, a, b));
+    }
+
+    protected String stringify(List<Condition> conditions) {
+        StringBuffer buffer = new StringBuffer();
+        for (Condition condition : conditions) {
+            buffer.append(condition);
+            buffer.append("<br/>");
+        }
+        return buffer.toString();
     }
 
     /**

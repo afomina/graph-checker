@@ -4,6 +4,7 @@ import afomina.graphs.count.*;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
 import afomina.graphs.mine.Miner;
+import afomina.graphs.mine.condition.Condition;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,10 +48,18 @@ public class MainController {
     }
 
     @RequestMapping(value = "/mine", method = RequestMethod.GET)
-    public String mine(Model model) {
+    public String mine(Model model, @RequestParam(required = false) String sql,
+                       @RequestParam(required = false) Condition.INVARIANT main,
+                       @RequestParam(required = false) Condition.INVARIANT a,
+                       @RequestParam(required = false) Condition.INVARIANT b) {
         String res = null;
         try {
-            res = graphMiner.mine();
+            if (sql == null) {
+                res = graphMiner.mine();
+            } else {
+                sql = replaceParams(sql);
+                res = graphMiner.mine(sql, main, a, b);
+            }
         } catch (IOException e) {
             res = "io exception";
             log.error("mine io exception", e);
