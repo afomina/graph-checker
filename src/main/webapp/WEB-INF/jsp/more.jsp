@@ -200,7 +200,7 @@
                 <li>vertex - количество вершин</li>
                 <li>edge - количество ребер</li>
                 <li>edgeCon - реберная связность</li>
-                <%--<li>vertcon - вершинная связность</li>--%>
+                <li>vertCon - вершинная связность</li>
                 <li>isConnected - связность (значения 0 или 1)</li>
                 <li>radius - радиус</li>
                 <li>diameter - диаметр</li>
@@ -209,6 +209,8 @@
                 <li>isPrimitive - примитивность (значения 0 или 1)</li>
                 <li>exp - экспонент</li>
                 <li>isBipartite - двудольность (значения 0 или 1)</li>
+                <li>chromaticNum - хроматическое число</li>
+                <li>independenceNum - число независимости</li>
             </ul>
         </span>
 <script src="@{/webjars/jquery/2.0.3/jquery.min.js}"></script>

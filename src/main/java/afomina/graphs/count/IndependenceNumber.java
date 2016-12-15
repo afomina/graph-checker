@@ -9,6 +9,9 @@ import java.util.List;
 public class IndependenceNumber extends InvariantCounter<Integer> {
     @Override
     public Integer getInvariant(Graph g) {
+        if (g.getIndependenceNumber() != null) {
+            return g.getIndependenceNumber();
+        }
         int n = g.getOrder();
         boolean[][] matrix = g.getMatrix();
         int vectors = (int) Math.pow(2, n);

@@ -93,9 +93,24 @@ public class MainController {
 
     @RequestMapping(value = "graphsMore", method = RequestMethod.GET)
     public String findGraphs(@RequestParam String sql, Model model) {
+        sql = replaceParams(sql);
         List<Graph> graphs = graphDao.findBySql(sql);
         model.addAttribute("graphs", graphs);
         return "graphs";
+    }
+
+    private String replaceParams(String sql) {
+        sql = sql.replaceAll("vertex", "order");
+        sql = sql.replaceAll("edge", "edgeAmount");
+        sql = sql.replaceAll("edgeCon", "edgeConnectivity");
+        sql = sql.replaceAll("vertCon", "vertexConnectivity");
+        sql = sql.replaceAll("isConnected", "connected");
+        sql = sql.replaceAll("diameter", "diametr");
+        sql = sql.replaceAll("isPrimitive", "primitive");
+        sql = sql.replaceAll("isBipartite", "twoPartial");
+        sql = sql.replaceAll("chromaticNum", "chromeNumber");
+        sql = sql.replaceAll("independenceNum", "independenceNumber");
+        return sql;
     }
 
     @RequestMapping(value = "/graphs/{id}", method = RequestMethod.GET)

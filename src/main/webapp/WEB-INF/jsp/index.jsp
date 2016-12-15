@@ -209,11 +209,11 @@
             <option value="0">Нет</option>
         </select>
         </div>
-    <%--<div class="form-group">--%>
-        <%--<label for="v">Вершинная связность</label>--%>
-        <%--<input id="v" name="vertexConnectivity"/>--%>
-        <%--<span class="form_hint">Наименьшее число вершин, удаление которых приводит к несвязному графу</span>--%>
-    <%--</div>--%>
+    <div class="form-group">
+        <label for="v">Вершинная связность</label>
+        <input id="v" name="vertexConnectivity"/>
+        <span class="form_hint">Наименьшее число вершин, удаление которых приводит к несвязному графу</span>
+    </div>
     <div class="form-group">
         <label>Реберная связность</label>
         <input name="edgeConnectivity"/>
@@ -261,6 +261,16 @@
         </select>
         <span class="form_hint">Можно ли разделить его вершины на две доли так, чтобы не было ребер, соединяющих две вершины одной доли</span>
     </div>
+    <div class="form-group">
+        <label>Хроматическое число</label>
+        <input name="chromeNumber"/>
+        <!--<span class="form_hint"></span>-->
+    </div>
+     <div class="form-group">
+            <labeЧl>Число независимости</label>
+            <input name="independenceNumber"/>
+            <!--<span class="form_hint"></span>-->
+     </div>
     <button type="submit" class="btn btn-primary">Найти</button>
 </form>
 <a href="more" style="font-size: 20px;">Расширенный запрос</a>
