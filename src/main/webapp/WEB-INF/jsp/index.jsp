@@ -274,6 +274,7 @@
     <button type="submit" class="btn btn-primary">Найти</button>
 </form>
 <a href="more" style="font-size: 20px;">Расширенный запрос</a>
+<a href="mining" style="font-size: 20px;">Дата майнинг</a>
 <script src="@{/webjars/jquery/2.0.3/jquery.min.js}"></script>
 <script src="@{/webjars/bootstrap/3.0.3/js/bootstrap.min.js}"></script>
 </body>

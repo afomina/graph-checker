@@ -54,20 +54,27 @@ public class MainController {
 
     @RequestMapping(value = "/mine", method = RequestMethod.GET)
     public String mine(Model model, @RequestParam(required = false) String sql,
-                       @RequestParam(required = false) Condition.INVARIANT main,
-                       @RequestParam(required = false) Condition.INVARIANT a,
-                       @RequestParam(required = false) Condition.INVARIANT b) {
+                       @RequestParam(required = false) String main,
+                       @RequestParam(required = false) String a,
+                       @RequestParam(required = false) String b) {
         String res = null;
         try {
             if (sql == null) {
                 res = graphMiner.mine();
             } else {
                 sql = replaceParams(sql);
-                res = graphMiner.mine(sql, main, a, b);
+                Condition.INVARIANT[] values = Condition.INVARIANT.values();
+                Condition.INVARIANT mainInv = values[Integer.parseInt(main)];
+                Condition.INVARIANT aInv = values[Integer.parseInt(a)];
+                Condition.INVARIANT bInv = values[Integer.parseInt(b)];
+                res = graphMiner.mine(sql, mainInv, aInv, bInv);
             }
         } catch (IOException e) {
             res = "io exception";
             log.error("mine io exception", e);
+        }
+        if (res.isEmpty()) {
+            res = "Nothing found by given parameters";
         }
         log.error(res);
         model.addAttribute("msg", res);
