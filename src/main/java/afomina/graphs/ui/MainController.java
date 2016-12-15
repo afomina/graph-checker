@@ -47,6 +47,11 @@ public class MainController {
         return "more";
     }
 
+    @RequestMapping(value = "mining", method = RequestMethod.GET)
+    public String mining() {
+        return "mining";
+    }
+
     @RequestMapping(value = "/mine", method = RequestMethod.GET)
     public String mine(Model model, @RequestParam(required = false) String sql,
                        @RequestParam(required = false) Condition.INVARIANT main,

@@ -192,7 +192,8 @@
     <button type="submit" class="btn btn-primary">Найти</button>
     <br/>
 
-</form><span>
+</form>
+<span>
             Введите запрос в формате: <b>инвариант1</b> =(<,>) <b>значение1</b> and(or) <b>инвариант2</b> =(<,>) <b>значение2</b> и т.д.<br/>
             Возможные инварианты:<br/>
             <ul>

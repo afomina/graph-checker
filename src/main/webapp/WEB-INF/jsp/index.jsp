@@ -267,7 +267,7 @@
         <!--<span class="form_hint"></span>-->
     </div>
      <div class="form-group">
-            <labeЧl>Число независимости</label>
+            <label>Число независимости</label>
             <input name="independenceNumber"/>
             <!--<span class="form_hint"></span>-->
      </div>

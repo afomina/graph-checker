@@ -36,7 +36,8 @@ public class Condition {
         RADIUS("radius"),
         VERTCON("vertexConnectivity"),
         ORDER("order"),
-        EDGES("edgeAmount");
+        EDGES("edgeAmount"),
+        INDEPENDENCE_NUM("independenceNumber");
 
         String property;
 
