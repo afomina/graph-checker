@@ -63,11 +63,20 @@ public class MainController {
                 res = graphMiner.mine();
             } else {
                 sql = replaceParams(sql);
-                Condition.INVARIANT[] values = Condition.INVARIANT.values();
-                Condition.INVARIANT mainInv = values[Integer.parseInt(main)];
-                Condition.INVARIANT aInv = values[Integer.parseInt(a)];
-                Condition.INVARIANT bInv = values[Integer.parseInt(b)];
-                res = graphMiner.mine(sql, mainInv, aInv, bInv);
+                if (main == null || main.isEmpty()) {
+                    res = graphMiner.mine(sql, null, null, null);
+                } else {
+                    Condition.INVARIANT[] values = Condition.INVARIANT.values();
+                    Condition.INVARIANT mainInv = values[Integer.parseInt(main)];
+                    Condition.INVARIANT aInv = null, bInv = null;
+                    if (a != null && !a.isEmpty()) {
+                      aInv = values[Integer.parseInt(a)];
+                    }
+                    if (b != null && !b.isEmpty()) {
+                        bInv = values[Integer.parseInt(b)];
+                    }
+                    res = graphMiner.mine(sql, mainInv, aInv, bInv);
+                }
             }
         } catch (IOException e) {
             res = "io exception";

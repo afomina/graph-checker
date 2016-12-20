@@ -86,6 +86,12 @@ public class GraphDao {
         return session.createQuery("FROM Graph where " + sql).list();
     }
 
+    public List<Graph> findAll() {
+        Session session = entityManager.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Graph.class);
+        return criteria.list();
+    }
+
     public void save(Graph toStore) {
         Session session = entityManager.unwrap(Session.class);
         session.save(toStore);

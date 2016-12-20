@@ -27,7 +27,15 @@ public class Miner {
     }
 
     public String mine(String sql, Condition.INVARIANT main, Condition.INVARIANT a, Condition.INVARIANT b) throws IOException {
-        List<Graph> graphs = graphDao.findBySql(sql);
+        List<Graph> graphs;
+        if (sql == null || sql.isEmpty()) {
+            graphs = graphDao.findAll();
+        } else {
+            graphs = graphDao.findBySql(sql);
+        }
+        if (main == null) {
+            return stringify(new BruteMiner().mine(graphs));
+        }
         return stringify(new BruteMiner().mine(graphs, main, a, b));
     }
 

@@ -23,19 +23,8 @@ public class BruteMiner implements GraphMiner {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("brute-mine-" + System.currentTimeMillis() + ".txt"));
             try {
-                for (Condition.OPERATION operation : Condition.OPERATION.values()) {
-                    for (Condition.INVARIANT a : Condition.INVARIANT.values()) {
-                        for (Condition.INVARIANT b : Condition.INVARIANT.values()) {
-                            if (b != a) {
-                                for (Condition.INVARIANT c : Condition.INVARIANT.values()) {
-                                    if (c != a && c != b) {
-                                        Condition condition = new Condition(operation, a, b, c);
-                                        checkCondition(graphs, conditions, writer, condition);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                for (Condition.INVARIANT a : Condition.INVARIANT.values()) {
+                    mineFixedA(graphs, conditions, writer, a);
                 }
             } finally {
                 writer.close();
@@ -46,19 +35,60 @@ public class BruteMiner implements GraphMiner {
         return conditions;
     }
 
+    private void mineFixedA(List<Graph> graphs, List<Condition> conditions, BufferedWriter writer, Condition.INVARIANT a) throws IOException {
+        for (Condition.INVARIANT b : Condition.INVARIANT.values()) {
+            if (b != a) {
+                mineFixedAB(graphs, conditions, writer, a, b);
+            }
+        }
+    }
+
+    private void mineFixedAB(List<Graph> graphs, List<Condition> conditions, BufferedWriter writer, Condition.INVARIANT a, Condition.INVARIANT b) throws IOException {
+        for (Condition.INVARIANT c : Condition.INVARIANT.values()) {
+            if (c != a && c != b) {
+                mineABC(graphs, conditions, writer, a, b, c);
+            }
+        }
+    }
+
+    private void mineABC(List<Graph> graphs, List<Condition> conditions, BufferedWriter writer, Condition.INVARIANT a, Condition.INVARIANT b, Condition.INVARIANT c) throws IOException {
+        boolean minusOne = false, divideTwo = false;
+        for (Condition.OPERATION operation : Condition.OPERATION.values()) {
+            if (minusOne && Condition.OPERATION.PLUS_ONE == operation || divideTwo && Condition.OPERATION.MULT_TWO == operation) {
+                continue;
+            }
+
+            Condition condition = new Condition(operation, a, b, c);
+            checkCondition(graphs, conditions, writer, condition);
+
+            if (Condition.OPERATION.MINUS_ONE == operation && condition.getResult()) {
+                minusOne = true;
+            } else if (Condition.OPERATION.DIVIDE_TWO == operation && condition.getResult()) {
+                divideTwo = true;
+            }
+        }
+    }
+
     @Override
     public List<Condition> mine(List<Graph> graphs, Condition.INVARIANT main, Condition.INVARIANT a, Condition.INVARIANT b) {
         List<Condition> conditions = new ArrayList<>(graphs.size());
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("brute-mine-invariants-" + System.currentTimeMillis() + ".txt"));
             try {
-                for (Condition.OPERATION operation : Condition.OPERATION.values()) {
-                    Condition condition = new Condition(operation, main, a, b);
-                    checkCondition(graphs, conditions, writer, condition);
-                    if (Condition.OPERATION.POW.equals(operation)) {
-                        checkCondition(graphs, conditions, writer, new Condition(operation, main, b, a));
-                    }
+                if (a == null) {
+                    mineFixedA(graphs, conditions, writer, main);
+                } else if (b == null) {
+                    mineFixedAB(graphs, conditions, writer, main, a);
+                } else {
+                    mineABC(graphs, conditions, writer, main, a, b); //TODO: remove equal conditions like a+b=b+a
                 }
+//                for (Condition.OPERATION operation : Condition.OPERATION.values()) {
+//                    Condition condition = new Condition(operation, main, a, b);
+//                    checkCondition(graphs, conditions, writer, condition);
+//                    if (Condition.OPERATION.POW.equals(operation)) {
+//                        checkCondition(graphs, conditions, writer, new Condition(operation, main, b, a));
+//                    }
+//                }
             } finally {
                 writer.close();
             }

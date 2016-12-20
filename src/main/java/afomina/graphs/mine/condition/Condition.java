@@ -13,9 +13,16 @@ public class Condition {
     public enum OPERATION {
         SUM("{} + {}"),
         MULT("{} * {}"),
-        POW("power({}, {})");
+        POW("power({}, {})"),
+        MINUS_ONE,
+        PLUS_ONE,
+        DIVIDE_TWO,
+        MULT_TWO;
 
         String pattern;
+
+        OPERATION() {
+        }
 
         OPERATION(String pattern) {
             this.pattern = pattern;
@@ -103,8 +110,7 @@ public class Condition {
         }
         if (a == null || b == null || c == null) {
             setResult(false);
-        }
-        else {
+        } else {
             switch (operation) {
                 case SUM:
                     setResult(a <= b + c);
@@ -114,6 +120,18 @@ public class Condition {
                     break;
                 case POW:
                     setResult(a <= Math.pow(b, c));
+                    break;
+                case MINUS_ONE:
+                    setResult(a <= b - 1);
+                    break;
+                case PLUS_ONE:
+                    setResult(a <= b + 1);
+                    break;
+                case DIVIDE_TWO:
+                    setResult(a <= b / 2);
+                    break;
+                case MULT_TWO:
+                    setResult(a <= b * 2);
                     break;
             }
         }
