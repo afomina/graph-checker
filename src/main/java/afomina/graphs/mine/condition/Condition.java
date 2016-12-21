@@ -5,31 +5,59 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Condition {
+
 
     public enum OPERATION {
         SUM("{} + {}"),
         MULT("{} * {}"),
         POW("power({}, {})"),
-        MINUS_ONE,
-        PLUS_ONE,
-        DIVIDE_TWO,
-        MULT_TWO;
+        MINUS_ONE("{} - 1", true),
+        PLUS_ONE("{} + 1", true),
+        DIVIDE_TWO("{} / 2", true),
+        MULT_TWO("{} * 2", true);
 
         String pattern;
-
-        OPERATION() {
-        }
+        boolean oneParam;
 
         OPERATION(String pattern) {
             this.pattern = pattern;
         }
 
+        OPERATION(String pattern, boolean oneParam) {
+            this.pattern = pattern;
+            this.oneParam = oneParam;
+        }
+
         public String getPattern() {
             return pattern;
+        }
+
+        public static List<OPERATION> twoParamOperations() {
+            OPERATION[] values = values();
+            List<OPERATION> res = new ArrayList<>();
+            for (int i = 0; i < values.length; i++) {
+                if (!values[i].oneParam) {
+                    res.add(values[i]);
+                }
+            }
+            return res;
+        }
+
+        public static List<OPERATION> oneParamOperations() {
+            OPERATION[] values = values();
+            List<OPERATION> res = new ArrayList<>();
+            for (int i = 0; i < values.length; i++) {
+                if (values[i].oneParam) {
+                    res.add(values[i]);
+                }
+            }
+            return res;
         }
     }
 
@@ -95,20 +123,25 @@ public class Condition {
     public boolean calculate(Graph graph) {
         Field aField = getField(invariants[0].property);
         Field bField = getField(invariants[1].property);
-        Field cField = getField(invariants[2].property);
-        if (aField == null || bField == null || cField == null) {
+        Field cField = null;
+        if (invariants[2] != null) {
+            cField = getField(invariants[2].property);
+        }
+        if (aField == null || bField == null) {
             return false;
         }
-        Integer a, b, c;
+        Integer a, b, c = null;
         try {
             a = (Integer) aField.get(graph);
             b = (Integer) bField.get(graph);
-            c = (Integer) cField.get(graph);
+            if (cField != null) {
+                c = (Integer) cField.get(graph);
+            }
         } catch (IllegalAccessException e) {
             log.error("condition calc error: illegal access to field", e);
             return false;
         }
-        if (a == null || b == null || c == null) {
+        if (a == null || b == null || (c == null && invariants[2] != null)) {
             setResult(false);
         } else {
             switch (operation) {
@@ -142,7 +175,9 @@ public class Condition {
     public String toString() {
         String expression = operation.pattern;
         expression = expression.replaceFirst("\\{\\}", invariants[1].property);
-        expression = expression.replaceFirst("\\{\\}", invariants[2].property);
+        if (invariants[2] != null) {
+            expression = expression.replaceFirst("\\{\\}", invariants[2].property);
+        }
         return invariants[0].property + " <= " + expression + " is " + result;
     }
 

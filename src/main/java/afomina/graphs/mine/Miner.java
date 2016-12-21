@@ -20,23 +20,38 @@ public class Miner {
     @Autowired
     GraphDao graphDao;
     private static final Logger log = LoggerFactory.getLogger(Miner.class);
+    final BruteMiner bruteMiner = new BruteMiner();
 
     public String mine() throws IOException {
         List<Graph> graphs = graphDao.findBySql("order < 10 and conn = 1 ");
-        return stringify(new BruteMiner().mine(graphs));
+        return stringify(bruteMiner.mine(graphs));
     }
 
     public String mine(String sql, Condition.INVARIANT main, Condition.INVARIANT a, Condition.INVARIANT b) throws IOException {
         List<Graph> graphs;
         if (sql == null || sql.isEmpty()) {
-            graphs = graphDao.findAll();
+            Long count = graphDao.count();
+            long pageCount = count / 100;
+            if (count % 100 != 0) {
+                pageCount++;
+            }
+            StringBuilder res = new StringBuilder();
+            for (int page = 0; page < pageCount; page++) {
+                graphs = graphDao.findAll(100, page);
+                if (main == null) {
+                    res.append(stringify(bruteMiner.mine(graphs)));
+                } else {
+                    res.append(stringify(bruteMiner.mine(graphs, main, a, b)));
+                }
+            }
+            return res.toString();
         } else {
             graphs = graphDao.findBySql(sql);
         }
         if (main == null) {
-            return stringify(new BruteMiner().mine(graphs));
+            return stringify(bruteMiner.mine(graphs));
         }
-        return stringify(new BruteMiner().mine(graphs, main, a, b));
+        return stringify(bruteMiner.mine(graphs, main, a, b));
     }
 
     protected String stringify(List<Condition> conditions) {

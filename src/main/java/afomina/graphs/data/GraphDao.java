@@ -40,11 +40,9 @@ public class GraphDao {
     }
 
     public List<Graph> findByOrder(Integer order, int pageSize, int page) {
-        Criteria criteria;
-
         Session session = entityManager.unwrap(Session.class);
-        criteria = session.createCriteria(Graph.class);
-        criteria.add(Restrictions.eq("order", order));
+        Criteria criteria = session.createCriteria(Graph.class)
+                .add(Restrictions.eq("order", order));
         criteria.setFirstResult(page * pageSize);
         criteria.setMaxResults(pageSize);
 
@@ -92,6 +90,14 @@ public class GraphDao {
         return criteria.list();
     }
 
+    public List<Graph> findAll(int pageSize, int page) {
+        Session session = entityManager.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Graph.class);
+        criteria.setFirstResult(page * pageSize);
+        criteria.setMaxResults(pageSize);
+        return criteria.list();
+    }
+
     public void save(Graph toStore) {
         Session session = entityManager.unwrap(Session.class);
         session.save(toStore);
@@ -112,6 +118,13 @@ public class GraphDao {
         Session session = entityManager.unwrap(Session.class);
         session.getTransaction().commit();
         session.close();
+    }
+
+    public Long count() {
+        Session session = entityManager.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Graph.class)
+                .setProjection(Projections.rowCount());
+        return (Long) criteria.uniqueResult();
     }
 
     public Long count(Map<String, Object> userParams) {
