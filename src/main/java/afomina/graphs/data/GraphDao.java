@@ -62,16 +62,6 @@ public class GraphDao {
         return (List<Graph>) criteria.list();
     }
 
-    public List<Graph> findByGirth(Integer girth) {
-        Criteria criteria;
-
-        Session session = entityManager.unwrap(Session.class);
-        criteria = session.createCriteria(Graph.class);
-        criteria.add(Restrictions.eq("girth", girth));
-
-        return (List<Graph>) criteria.list();
-    }
-
     public Graph findById(Integer id) {
         Session session = entityManager.unwrap(Session.class);
         Criteria criteria = session.createCriteria(Graph.class);
@@ -107,17 +97,6 @@ public class GraphDao {
         Session session = entityManager.unwrap(Session.class);
         session.flush();
         session.clear();
-    }
-
-    public void start() {
-        Session session = entityManager.unwrap(Session.class);
-        session.getTransaction().begin();
-    }
-
-    public void close() {
-        Session session = entityManager.unwrap(Session.class);
-        session.getTransaction().commit();
-        session.close();
     }
 
     public Long count() {

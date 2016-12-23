@@ -8,9 +8,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-/**
- * Created by alexandra on 08.10.2016.
- */
 @Configuration
 @ComponentScan("afomina.graphs")
 @EnableWebMvc

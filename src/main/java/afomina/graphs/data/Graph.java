@@ -1,8 +1,6 @@
 package afomina.graphs.data;
 
-import afomina.graphs.count.ComponentCounter;
 import afomina.graphs.count.Girth;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -11,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "graph")
-@JsonAutoDetect
 public class Graph {
     private boolean[][] matrix;
     private String name;
@@ -242,14 +239,6 @@ public class Graph {
         return res;
     }
 
-    @Transient
-    public boolean isCon() {
-        if (getComponents() == null) {
-            setComponents(new ComponentCounter().getInvariant(this));
-        }
-        return getComponents() == 1;
-    }
-
     @Column(name = "independence_number")
     public Integer getIndependenceNumber() {
         return independenceNumber;
@@ -272,8 +261,6 @@ public class Graph {
         if (getIndependenceNumber() != null) {
             invariants.add(getIndependenceNumber());
         }
-//        invariants.add(getPrimitive());
-//        invariants.add(getTwoPartial());
         invariants.add(getVertexConnectivity());
         return invariants;
     }

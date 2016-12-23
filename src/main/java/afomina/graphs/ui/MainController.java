@@ -1,6 +1,9 @@
 package afomina.graphs.ui;
 
-import afomina.graphs.count.*;
+import afomina.graphs.count.ChromeNumber;
+import afomina.graphs.count.IndependenceNumber;
+import afomina.graphs.count.InvariantCounter;
+import afomina.graphs.count.VertexConnectivity;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
 import afomina.graphs.mine.Miner;
@@ -57,27 +60,26 @@ public class MainController {
                        @RequestParam(required = false) String main,
                        @RequestParam(required = false) String a,
                        @RequestParam(required = false) String b) {
-        String res = null;
+        String res;
         try {
-            if (sql == null) {
-                res = graphMiner.mine();
-            } else {
+            if (sql != null) {
                 sql = replaceParams(sql);
-                if (main == null || main.isEmpty()) {
-                    res = graphMiner.mine(sql, null, null, null);
-                } else {
-                    Condition.INVARIANT[] values = Condition.INVARIANT.values();
-                    Condition.INVARIANT mainInv = values[Integer.parseInt(main)];
-                    Condition.INVARIANT aInv = null, bInv = null;
-                    if (a != null && !a.isEmpty()) {
-                      aInv = values[Integer.parseInt(a)];
-                    }
-                    if (b != null && !b.isEmpty()) {
-                        bInv = values[Integer.parseInt(b)];
-                    }
-                    res = graphMiner.mine(sql, mainInv, aInv, bInv);
-                }
             }
+            if (main == null || main.isEmpty()) {
+                res = graphMiner.mine(sql, null, null, null);
+            } else {
+                Condition.INVARIANT[] values = Condition.INVARIANT.values();
+                Condition.INVARIANT mainInv = values[Integer.parseInt(main)];
+                Condition.INVARIANT aInv = null, bInv = null;
+                if (a != null && !a.isEmpty()) {
+                    aInv = values[Integer.parseInt(a)];
+                }
+                if (b != null && !b.isEmpty()) {
+                    bInv = values[Integer.parseInt(b)];
+                }
+                res = graphMiner.mine(sql, mainInv, aInv, bInv);
+            }
+
         } catch (IOException e) {
             res = "io exception";
             log.error("mine io exception", e);
@@ -184,24 +186,9 @@ public class MainController {
             } catch (Exception e) {
                 System.out.println("Exception processing graph, vertexes=" + n);
                 e.printStackTrace();
-//                break;
             }
         }
         graphDao.flush();
     }
 
-    public void processGraphs(List<Graph> graphs) {
-        int cnt = 0;
-        for (Graph graph : graphs) {
-            for (InvariantCounter invariant : INVARIANTS) {
-                invariant.getInvariant(graph);
-            }
-            graphDao.save(graph);
-            if (++cnt == GRAPHS_TO_STORE) {
-                graphDao.flush();
-                cnt = 0;
-            }
-        }
-        graphDao.flush();
-    }
 }

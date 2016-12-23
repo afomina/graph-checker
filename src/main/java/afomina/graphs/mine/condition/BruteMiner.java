@@ -87,13 +87,6 @@ public class BruteMiner implements GraphMiner {
                 } else {
                     mineABC(graphs, conditions, writer, main, a, b); //TODO: remove equal conditions like a+b=b+a
                 }
-//                for (Condition.OPERATION operation : Condition.OPERATION.values()) {
-//                    Condition condition = new Condition(operation, main, a, b);
-//                    checkCondition(graphs, conditions, writer, condition);
-//                    if (Condition.OPERATION.POW.equals(operation)) {
-//                        checkCondition(graphs, conditions, writer, new Condition(operation, main, b, a));
-//                    }
-//                }
             } finally {
                 writer.close();
             }
@@ -117,5 +110,4 @@ public class BruteMiner implements GraphMiner {
             writer.newLine();
         }
     }
-
 }

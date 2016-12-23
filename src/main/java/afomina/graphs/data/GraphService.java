@@ -25,7 +25,6 @@ public class GraphService {
      * @return the <code>GraphService</code> object
      */
     public static GraphService get() {
-//    	Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
     	Configuration configuration = new Configuration().configure();
         serviceRegistry =  new StandardServiceRegistryBuilder().applySettings(configuration.getProperties())
         				  .build();
@@ -35,7 +34,6 @@ public class GraphService {
 
     public Session openSession() {
         Session session = sessionFactory.openSession();
-//        session.beginTransaction();
         return session;
     }
 
@@ -80,10 +78,5 @@ public class GraphService {
             return Collections.emptyList();
         }
     }
-
-//    public List<Graph> findByCriteria(Criteria criteria) {
-//
-//    }
-
 
 }

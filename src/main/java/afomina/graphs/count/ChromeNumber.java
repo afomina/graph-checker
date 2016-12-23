@@ -33,12 +33,4 @@ public class ChromeNumber extends InvariantCounter<Integer> {
         return curColor;
     }
 
-//    protected int[] getPermutation(int len) {
-//        int[] perm = new int[len];
-//        for (int i = 0; i < len; i++) {
-//            for (int j = 0; j < len; j++) {
-//                perm[j] = i;
-//            }
-//        }
-//    }
 }

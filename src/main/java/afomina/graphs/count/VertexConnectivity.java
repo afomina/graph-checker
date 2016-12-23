@@ -7,17 +7,6 @@ import java.util.Queue;
 
 public class VertexConnectivity extends InvariantCounter<Integer> {
 
-    private int MAXN = 11;
-    private int INF = Integer.MAX_VALUE;
-
-    private int n = MAXN;//??
-    private int[][] c = new int[MAXN][MAXN];
-    private int[][] f = new int[MAXN][MAXN];
-    private int s, t;
-    private int[] d = new int[MAXN];
-    private int[] ptr = new int[MAXN];
-    private int[] q = new int[MAXN];
-
     @Override
     public Integer getInvariant(Graph g) {
         if (g.getVertexConnectivity() != null) {
@@ -26,16 +15,6 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
         Integer res = menger(g);
         g.setVertexConnectivity(res);
         return res;
-    }
-
-    private Integer brute(Graph g) {
-        int max = g.getOrder() - 1;
-        Graph tmp = new Graph(g.getMatrix());
-        for (int k = 0; k < max; k++) {
-            //delete k nodes and check if connected, if not - return k
-//            for ()
-        }
-        return null;
     }
 
     protected Integer menger(Graph g) {
@@ -51,7 +30,7 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
                 modMatrix[2 * j][2 * i + 1] = matrix[j][i];
             }
         }
-        return edgeConnectivity(modMatrix, false); //new EdgeConnectivity().calc(new Graph(modMatrix));
+        return edgeConnectivity(modMatrix, false);
     }
 
     private int edgeConnectivity(boolean[][] Graph, boolean isEdge) {
@@ -119,54 +98,4 @@ public class VertexConnectivity extends InvariantCounter<Integer> {
         }
         return false;
     }
-
-    Integer dinic(Graph g) {
-        int flow = 0;
-        for (; ; ) {
-            if (!bfs()) break;
-            for (int i = 0; i < n; i++) {
-                ptr[i] = 0;
-            }
-            int pushed;
-            while ((pushed = dfs(s, INF)) != 0) {
-                flow += pushed;
-            }
-        }
-        g.setVertexConnectivity(flow);
-        return flow;
-    }
-
-    boolean bfs() {
-        int qh = 0, qt = 0;
-        q[qt++] = s;
-        for (int i = 0; i < n; i++) {
-            d[i] = -1;
-        }
-        d[s] = 0;
-        while (qh < qt) {
-            int v = q[qh++];
-            for (int to = 0; to < n; ++to)
-                if (d[to] == -1 && f[v][to] < c[v][to]) {
-                    q[qt++] = to;
-                    d[to] = d[v] + 1;
-                }
-        }
-        return d[t] != -1;
-    }
-
-    int dfs(int v, int flow) {
-        if (flow == 0) return 0;
-        if (v == t) return flow;
-        for (int to = ptr[v]; to < n; ++to) {
-            if (d[to] != d[v] + 1) continue;
-            int pushed = dfs(to, Math.min(flow, c[v][to] - f[v][to]));
-            if (pushed != 0) {
-                f[v][to] += pushed;
-                f[to][v] -= pushed;
-                return pushed;
-            }
-        }
-        return 0;
-    }
-
 }

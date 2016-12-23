@@ -3,7 +3,6 @@ package afomina.graphs.count;
 import afomina.graphs.data.Graph;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class EdgeConnectivity extends InvariantCounter<Integer> {
