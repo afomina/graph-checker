@@ -204,17 +204,11 @@ public class Condition {
 
         if (operation != condition.operation) return false;
         if (invariants[0] != condition.invariants[0]) return false;
-        if (invariants[1] != null && invariants[2] != null) {
-            if (condition.invariants[1] == null || condition.invariants[2] == null) {
-                return false;
-            }
-            if (operation == OPERATION.SUM || operation == OPERATION.MULT) {
-                return invariants[1] == condition.invariants[1] && invariants[2] == condition.invariants[2] ||
-                        invariants[1] == condition.invariants[2] && invariants[2] == condition.invariants[1];
-            }
+        if (operation == OPERATION.SUM || operation == OPERATION.MULT) {
+            return (invariants[1] == condition.invariants[1] && invariants[2] == condition.invariants[2]) ||
+                    (invariants[1] == condition.invariants[2] && invariants[2] == condition.invariants[1]);
         }
         return Arrays.equals(invariants, condition.invariants);
-
     }
 
     @Override

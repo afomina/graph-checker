@@ -67,7 +67,10 @@ public class BruteMiner implements GraphMiner {
 
     private void mineABC(List<Graph> graphs, Set<Condition> conditions, BufferedWriter writer, Condition.INVARIANT a, Condition.INVARIANT b, Condition.INVARIANT c) throws IOException {
         for (Condition.OPERATION operation : Condition.OPERATION.twoParamOperations()) {
-            checkCondition(graphs, conditions, writer, new Condition(operation, a, b, c));
+            Condition condition = new Condition(operation, a, b, c);
+            if (!conditions.contains(condition)) {
+                checkCondition(graphs, conditions, writer, condition);
+            }
         }
     }
 
