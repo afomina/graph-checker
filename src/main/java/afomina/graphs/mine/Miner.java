@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -44,7 +45,7 @@ public class Miner {
         return stringify(bruteMiner.mine(graphs, main, a, b));
     }
 
-    protected String stringify(List<Condition> conditions) {
+    protected String stringify(Collection<Condition> conditions) {
         StringBuffer buffer = new StringBuffer();
         for (Condition condition : conditions) {
             buffer.append(condition);

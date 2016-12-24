@@ -5,17 +5,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Condition {
 
     public enum OPERATION {
         SUM("{} + {}"),
         MULT("{} * {}"),
-        POW("power({}, {})"),
+        POW("{}<sup>{}</sup>)"),
         MINUS_ONE("{} - 1", true),
         PLUS_ONE("{} + 1", true),
         DIVIDE_TWO("{} / 2", true),
@@ -61,22 +58,24 @@ public class Condition {
     }
 
     public enum INVARIANT {
-        CHROM_NUM("chromeNumber"),
-        COMPONENTS("components"),
-        DIAMETER("diametr"),
-        EDGE_CON("edgeConnectivity"),
-        EXPONENT("exp"),
-        GIRTH("girth"),
-        RADIUS("radius"),
-        VERTCON("vertexConnectivity"),
-        ORDER("order"),
-        EDGES("edgeAmount"),
-        INDEPENDENCE_NUM("independenceNumber");
+        CHROM_NUM("chromeNumber", "χ"),
+        COMPONENTS("components", "c"),
+        DIAMETER("diametr", "d"),
+        EDGE_CON("edgeConnectivity", "λ"),
+        EXPONENT("exp", "e"),
+        GIRTH("girth", "g"),
+        RADIUS("radius", "r"),
+        VERTCON("vertexConnectivity", "k"),
+        ORDER("order", "n"),
+        EDGES("edgeAmount", "m"),
+        INDEPENDENCE_NUM("independenceNumber", "i");
 
         String property;
+        String shortName;
 
-        INVARIANT(String property) {
+        INVARIANT(String property, String name) {
             this.property = property;
+            this.shortName = name;
         }
     }
 
@@ -177,7 +176,7 @@ public class Condition {
         if (invariants[2] != null) {
             expression = expression.replaceFirst("\\{\\}", invariants[2].property);
         }
-        return invariants[0].property + " <= " + expression + " is " + result;
+        return invariants[0].shortName + " <= " + expression;
     }
 
     private final static Class graphClass = Graph.class;
@@ -196,4 +195,32 @@ public class Condition {
         return null;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Condition condition = (Condition) o;
+
+        if (operation != condition.operation) return false;
+        if (invariants[0] != condition.invariants[0]) return false;
+        if (invariants[1] != null && invariants[2] != null) {
+            if (condition.invariants[1] == null || condition.invariants[2] == null) {
+                return false;
+            }
+            if (operation == OPERATION.SUM || operation == OPERATION.MULT) {
+                return invariants[1] == condition.invariants[1] && invariants[2] == condition.invariants[2] ||
+                        invariants[1] == condition.invariants[2] && invariants[2] == condition.invariants[1];
+            }
+        }
+        return Arrays.equals(invariants, condition.invariants);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = operation.hashCode();
+        result = 31 * result + (invariants != null ? Arrays.hashCode(invariants) : 0);
+        return result;
+    }
 }

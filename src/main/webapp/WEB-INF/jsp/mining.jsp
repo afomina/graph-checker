@@ -5,7 +5,7 @@
 <html>
 <head>
   <!--<meta charset="UTF-8">-->
-  <title>Дата майнинг</title>
+  <title>Data mining</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <style>
@@ -135,7 +135,7 @@
     </div>
 
   <div class="form-group">
-    <label for="a">Вспомогательный инвариант1</label>
+    <label for="a">Инвариант1</label>
     <select name="a" id="a">
       <option></option>
       <option value="0">Хроматическое число</option>
@@ -153,7 +153,7 @@
     </div>
 
   <div class="form-group">
-    <label for="b">Вспомогательный инвариант2</label>
+    <label for="b">Инвариант2</label>
     <select name="b" id="b">
       <option></option>
       <option value="0">Хроматическое число</option>

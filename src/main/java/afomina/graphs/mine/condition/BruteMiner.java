@@ -2,24 +2,21 @@ package afomina.graphs.mine.condition;
 
 import afomina.graphs.data.Graph;
 import afomina.graphs.mine.GraphMiner;
-import afomina.graphs.mine.condition.Condition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BruteMiner implements GraphMiner {
 
     private static final Logger log = LoggerFactory.getLogger(GraphMiner.class);
 
     @Override
-    public List<Condition> mine(List<Graph> graphs) {
-        List<Condition> conditions = new ArrayList<>(graphs.size());
+    public Collection<Condition> mine(List<Graph> graphs) {
+        Set<Condition> conditions = new HashSet<>(graphs.size());
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("brute-mine-" + System.currentTimeMillis() + ".txt"));
             try {
@@ -35,7 +32,7 @@ public class BruteMiner implements GraphMiner {
         return conditions;
     }
 
-    private void mineFixedA(List<Graph> graphs, List<Condition> conditions, BufferedWriter writer, Condition.INVARIANT a) throws IOException {
+    private void mineFixedA(List<Graph> graphs, Set<Condition> conditions, BufferedWriter writer, Condition.INVARIANT a) throws IOException {
         for (Condition.INVARIANT b : Condition.INVARIANT.values()) {
             if (b != a) {
                 mineFixedAB(graphs, conditions, writer, a, b);
@@ -43,7 +40,7 @@ public class BruteMiner implements GraphMiner {
         }
     }
 
-    private void mineFixedAB(List<Graph> graphs, List<Condition> conditions, BufferedWriter writer, Condition.INVARIANT a, Condition.INVARIANT b) throws IOException {
+    private void mineFixedAB(List<Graph> graphs, Set<Condition> conditions, BufferedWriter writer, Condition.INVARIANT a, Condition.INVARIANT b) throws IOException {
         boolean minusOne = false, divideTwo = false;
 
         for (Condition.OPERATION operation : Condition.OPERATION.oneParamOperations()) {
@@ -68,15 +65,15 @@ public class BruteMiner implements GraphMiner {
         }
     }
 
-    private void mineABC(List<Graph> graphs, List<Condition> conditions, BufferedWriter writer, Condition.INVARIANT a, Condition.INVARIANT b, Condition.INVARIANT c) throws IOException {
+    private void mineABC(List<Graph> graphs, Set<Condition> conditions, BufferedWriter writer, Condition.INVARIANT a, Condition.INVARIANT b, Condition.INVARIANT c) throws IOException {
         for (Condition.OPERATION operation : Condition.OPERATION.twoParamOperations()) {
             checkCondition(graphs, conditions, writer, new Condition(operation, a, b, c));
         }
     }
 
     @Override
-    public List<Condition> mine(List<Graph> graphs, Condition.INVARIANT main, Condition.INVARIANT a, Condition.INVARIANT b) {
-        List<Condition> conditions = new ArrayList<>(graphs.size());
+    public Collection<Condition> mine(List<Graph> graphs, Condition.INVARIANT main, Condition.INVARIANT a, Condition.INVARIANT b) {
+        Set<Condition> conditions = new HashSet<>(graphs.size());
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("brute-mine-invariants-" + System.currentTimeMillis() + ".txt"));
             try {
@@ -96,7 +93,7 @@ public class BruteMiner implements GraphMiner {
         return conditions;
     }
 
-    private void checkCondition(List<Graph> graphs, List<Condition> conditions, BufferedWriter writer, Condition condition) throws IOException {
+    private void checkCondition(List<Graph> graphs, Set<Condition> conditions, BufferedWriter writer, Condition condition) throws IOException {
         for (Graph graph : graphs) {
             if (!condition.calculate(graph)) {
                 break;
