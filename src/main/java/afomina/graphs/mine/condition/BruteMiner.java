@@ -100,7 +100,7 @@ public class BruteMiner implements GraphMiner {
             }
         }
 
-        if (condition.getResult()) {
+        if (condition.getResult() && !conditions.contains(condition)) {
             conditions.add(condition);
             log.error(condition.toString());
             writer.write(condition.toString());

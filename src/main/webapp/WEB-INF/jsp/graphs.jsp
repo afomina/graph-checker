@@ -65,11 +65,11 @@
         </td>
         <td>${graphs.get(i).getOrder()}</td>
         <td>${graphs.get(i).getEdgeAmount()}</td>
-        <td>${graphs.get(i).isCon()? 'Да':'Нет'}</td>
+        <td>${graphs.get(i).getConnected() == 1? 'Да':'Нет'}</td>
         <td>${graphs.get(i).getVertexConnectivity()}</td>
-        <td>${graphs.get(i).isCon()? graphs.get(i).getEdgeConnectivity() : 0}</td>
-        <td>${graphs.get(i).isCon()? graphs.get(i).getRadius(): '-'}</td>
-        <td>${graphs.get(i).isCon()? graphs.get(i).getDiametr(): '-'}</td>
+        <td>${graphs.get(i).getConnected() == 1? graphs.get(i).getEdgeConnectivity() : 0}</td>
+        <td>${graphs.get(i).getConnected() == 1? graphs.get(i).getRadius(): '-'}</td>
+        <td>${graphs.get(i).getConnected() == 1? graphs.get(i).getDiametr(): '-'}</td>
         <td>${graphs.get(i).getComponents()}</td>
         <td>${graphs.get(i).isAcyclic()? '-' : graphs.get(i).getGirth()}</td>
         <td>${graphs.get(i).isAcyclic()?'Да':'Нет'}</td>

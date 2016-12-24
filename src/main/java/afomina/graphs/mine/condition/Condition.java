@@ -12,7 +12,7 @@ public class Condition {
     public enum OPERATION {
         SUM("{} + {}"),
         MULT("{} * {}"),
-        POW("{}<sup>{}</sup>)"),
+        POW("{}<sup>{}</sup>"),
         MINUS_ONE("{} - 1", true),
         PLUS_ONE("{} + 1", true),
         DIVIDE_TWO("{} / 2", true),
@@ -172,9 +172,9 @@ public class Condition {
     @Override
     public String toString() {
         String expression = operation.pattern;
-        expression = expression.replaceFirst("\\{\\}", invariants[1].property);
+        expression = expression.replaceFirst("\\{\\}", invariants[1].shortName);
         if (invariants[2] != null) {
-            expression = expression.replaceFirst("\\{\\}", invariants[2].property);
+            expression = expression.replaceFirst("\\{\\}", invariants[2].shortName);
         }
         return invariants[0].shortName + " <= " + expression;
     }

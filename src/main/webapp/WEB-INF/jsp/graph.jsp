@@ -22,7 +22,7 @@
 <th>n</th>
 <th>m</th>
 <th>Связный</th>
-<%--<th>Вершинная связность</th>--%>
+<th>Вершинная связность</th>
 <th>Реберная связность</th>
 <th>Радиус</th>
 <th>Диаметр</th>
@@ -39,11 +39,11 @@
     <tr>
         <td>${graph.getOrder()}</td>
         <td>${graph.getEdgeAmount()}</td>
-        <td>${graph.isCon()? 'Да':'Нет'}</td>
-        <%--<td>${graph.getVertexConnectivity()}</td>--%>
-        <td>${graph.isCon()? graphs.get(i).getEdgeConnectivity() : 0}</td>
-        <td>${graph.isCon()? graphs.get(i).getRadius(): '-'}</td>
-        <td>${graph.isCon()? graphs.get(i).getDiametr(): '-'}</td>
+        <td>${graph.getConnected() == 1? 'Да':'Нет'}</td>
+        <td>${graph.getVertexConnectivity()}</td>
+        <td>${graph.getConnected() == 1? graphs.get(i).getEdgeConnectivity() : 0}</td>
+        <td>${graph.getConnected() == 1? graphs.get(i).getRadius(): '-'}</td>
+        <td>${graph.getConnected() == 1? graphs.get(i).getDiametr(): '-'}</td>
         <td>${graph.getComponents()}</td>
         <td>${graph.isAcyclic()? '-' : graphs.get(i).getGirth()}</td>
         <td>${graph.isAcyclic()?'Да':'Нет'}</td>
