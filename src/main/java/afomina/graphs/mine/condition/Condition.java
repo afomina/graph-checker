@@ -176,7 +176,7 @@ public class Condition {
         if (invariants[2] != null) {
             expression = expression.replaceFirst("\\{\\}", invariants[2].shortName);
         }
-        return invariants[0].shortName + " <= " + expression;
+        return invariants[0].shortName + " ≤ " + expression;
     }
 
     private final static Class graphClass = Graph.class;

@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class Miner {
@@ -46,10 +45,29 @@ public class Miner {
     }
 
     protected String stringify(Collection<Condition> conditions) {
+        List<Condition> conditionList = new ArrayList<>(conditions);
         StringBuffer buffer = new StringBuffer();
-        for (Condition condition : conditions) {
-            buffer.append(condition);
-            buffer.append("<br/>");
+        for (int i = 0; i < conditionList.size(); i++) {
+            Condition condition = conditionList.get(i);
+
+            boolean repeated = false;
+            if (condition.getOperation().equals(Condition.OPERATION.SUM) || condition.getOperation().equals(Condition.OPERATION.MULT)) {
+                for (int j = 0; j < i; j++) {
+                    Condition another = conditionList.get(j);
+                    if (another.getOperation().equals(condition.getOperation()) && another.getInvariants()[0].equals(condition.getInvariants()[0]) &&
+                            (another.getInvariants()[1].equals(condition.getInvariants()[1]) && another.getInvariants()[2].equals(condition.getInvariants()[2])
+                            ||
+                            another.getInvariants()[1].equals(condition.getInvariants()[2]) && another.getInvariants()[2].equals(condition.getInvariants()[1]))) {
+                        repeated = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!repeated) {
+                buffer.append(condition);
+                buffer.append("<br/>");
+            }
         }
         return buffer.toString();
     }
