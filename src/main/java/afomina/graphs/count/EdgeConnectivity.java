@@ -7,6 +7,9 @@ import java.util.List;
 
 public class EdgeConnectivity extends InvariantCounter<Integer> {
     public Integer getInvariant(Graph g) {
+        if (g.getEdgeConnectivity() != null) {
+            return g.getEdgeConnectivity();
+        }
         int res = calc(g);
         g.setEdgeConnectivity(res);
         return res;

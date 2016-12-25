@@ -5,6 +5,9 @@ import afomina.graphs.data.Graph;
 public class TwoPartChecker extends InvariantCounter<Boolean> {
     @Override
     public Boolean getInvariant(Graph graph) {
+        if (graph.getTwoPartial() != null) {
+            return graph.getTwoPartial() == 1;
+        }
         int n = graph.getOrder();
         boolean[][] g = graph.getMatrix();
         int[] part = new int[n];

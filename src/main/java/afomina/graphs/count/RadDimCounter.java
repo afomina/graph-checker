@@ -8,6 +8,9 @@ import java.util.TreeSet;
 public class RadDimCounter extends InvariantCounter {
     @Override
     public Object getInvariant(Graph g) {
+        if (g.getRadius() != null) {
+            return g.getRadius();
+        }
         int n = g.getOrder();
         int INF = Integer.MAX_VALUE/2;
         boolean[][] matrix = g.getMatrix();

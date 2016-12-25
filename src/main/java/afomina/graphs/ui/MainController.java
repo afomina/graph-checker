@@ -1,9 +1,6 @@
 package afomina.graphs.ui;
 
-import afomina.graphs.count.ChromeNumber;
-import afomina.graphs.count.IndependenceNumber;
-import afomina.graphs.count.InvariantCounter;
-import afomina.graphs.count.VertexConnectivity;
+import afomina.graphs.count.*;
 import afomina.graphs.data.Graph;
 import afomina.graphs.data.GraphDao;
 import afomina.graphs.mine.Miner;
@@ -31,7 +28,10 @@ public class MainController {
     private static final int MAX_VERTEXES = 9;
     private static final int GRAPHS_TO_STORE = 100;
     private static final int DEFAULT_PAGE_SIZE = 20;
-    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(new VertexConnectivity(), new ChromeNumber(), new IndependenceNumber());
+    private static final List<? extends InvariantCounter> INVARIANTS = Arrays.asList(
+            new VertexConnectivity(), new ChromeNumber(), new IndependenceNumber(),
+            new ComponentCounter(),
+            new EdgeConnectivity(), new RadDimCounter(), new TwoPartChecker());
     @Autowired
     GraphDao graphDao;
 
