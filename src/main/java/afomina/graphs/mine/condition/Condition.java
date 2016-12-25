@@ -172,11 +172,11 @@ public class Condition {
     @Override
     public String toString() {
         String expression = operation.pattern;
-        expression = expression.replaceFirst("\\{\\}", invariants[1].shortName);
+        expression = expression.replaceFirst("\\{\\}", "<i>"+ invariants[1].shortName + "</i>");
         if (invariants[2] != null) {
-            expression = expression.replaceFirst("\\{\\}", invariants[2].shortName);
+            expression = expression.replaceFirst("\\{\\}", "<i>"+ invariants[2].shortName + "</i>");
         }
-        return invariants[0].shortName + " ≤ " + expression;
+        return "<i>"+ invariants[0].shortName + "</i> ≤ " + expression;
     }
 
     private final static Class graphClass = Graph.class;
