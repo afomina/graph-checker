@@ -8,6 +8,9 @@ import cern.colt.matrix.linalg.Algebra;
 public class ExponentCounter extends InvariantCounter<Integer> {
     @Override
     public Integer getInvariant(Graph g) {
+        if (g.getExp() != null) {
+            return g.getExp();
+        }
         int n = g.getOrder();
         Algebra algebra = new Algebra();
         boolean[][] matrix = g.getMatrix();
