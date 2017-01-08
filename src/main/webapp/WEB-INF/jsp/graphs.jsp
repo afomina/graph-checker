@@ -71,7 +71,7 @@
         <td>${graphs.get(i).getConnected() == 1? graphs.get(i).getRadius(): '-'}</td>
         <td>${graphs.get(i).getConnected() == 1? graphs.get(i).getDiametr(): '-'}</td>
         <td>${graphs.get(i).getComponents()}</td>
-        <td>${graphs.get(i).isAcyclic()? '-' : graphs.get(i).getGirth()}</td>
+        <td>${graphs.get(i).isAcyclic()? '-' : graphs.get(i).getGirth() > 9? '-' : graphs.get(i).getGirth()}</td>
         <td>${graphs.get(i).isAcyclic()?'Да':'Нет'}</td>
         <td>${graphs.get(i).getTwoPartial()==1? 'Да':'Нет'}</td>
         <td>${graphs.get(i).getExp()==null?'-':graphs.get(i).getExp()}</td>
