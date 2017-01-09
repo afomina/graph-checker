@@ -6,6 +6,9 @@ public class Girth extends InvariantCounter<Integer> {
 
     @Override
     public Integer getInvariant(Graph g) {
+        if (g.getGirth() != null) {
+            return g.getGirth();
+        }
         int n = g.getOrder();
         boolean[][] matrix = g.getMatrix();
         int minCycle = Integer.MAX_VALUE;
@@ -16,7 +19,7 @@ public class Girth extends InvariantCounter<Integer> {
             minCycle = Math.min(minCycle, cycle);
         }
 
-        g.setGirth(minCycle == Integer.MAX_VALUE? 0 : minCycle);
+        g.setGirth(minCycle == Integer.MAX_VALUE ? 0 : minCycle);
         return minCycle;
     }
 

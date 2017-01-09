@@ -56,7 +56,7 @@ public class GraphDao {
         criteria = session.createCriteria(Graph.class);
         criteria.add(Restrictions.eq("order", order));
         criteria.add(Restrictions.or(Restrictions.isNull("chromeNumber"), Restrictions.isNull("vertexConnectivity")));
-                criteria.setFirstResult(page * pageSize);
+        criteria.setFirstResult(page * pageSize);
         criteria.setMaxResults(pageSize);
 
         return (List<Graph>) criteria.list();
@@ -74,6 +74,11 @@ public class GraphDao {
         return session.createQuery("FROM Graph where " + sql).list();
     }
 
+    public int countBySql(String sql) {
+        Session session = entityManager.unwrap(Session.class);
+        return session.createQuery("FROM Graph where " + sql).list().size();
+    }
+
     public List<Graph> findAll() {
         Session session = entityManager.unwrap(Session.class);
         Criteria criteria = session.createCriteria(Graph.class);
@@ -86,6 +91,14 @@ public class GraphDao {
         criteria.setFirstResult(page * pageSize);
         criteria.setMaxResults(pageSize);
         return criteria.list();
+    }
+
+    public List<Graph> findPageBySql(String sql, int pageSize, int page) {
+        Session session = entityManager.unwrap(Session.class);
+        return session.createQuery("FROM Graph where " + sql)
+                .setFirstResult(page * pageSize)
+                .setMaxResults(pageSize)
+                .list();
     }
 
     public void save(Graph toStore) {

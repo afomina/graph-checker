@@ -56,7 +56,7 @@
     </tbody>
 </table>
 
-<canvas id="canvas" width="200" height="200"></canvas>
+<canvas id="canvas" width="400" height="400"></canvas>
 
 <script type="text/javascript">
     window.onload = function () {
@@ -65,7 +65,7 @@
         var n = $("#order").text();
 
 //            var g = new Dracula.Graph();
-        var x0 = 100, y0 = 100, r = 50;
+        var x0 = 200, y0 = 200, r = 100;
         var fi = 2 * Math.PI / n;
 
         var c = document.getElementById("canvas");
@@ -77,7 +77,7 @@
             var xi = x0 + r * Math.cos(fi * (i + 1));
             var yi = y0 + r * Math.sin(fi * (i + 1));
             ctx.beginPath();
-            ctx.arc(xi, yi, 4, 0, 2 * Math.PI);
+            ctx.arc(xi, yi, 8, 0, 2 * Math.PI);
             ctx.stroke();
         }
 

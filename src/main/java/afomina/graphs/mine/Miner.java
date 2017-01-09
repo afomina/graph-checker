@@ -19,29 +19,34 @@ public class Miner {
 
     public String mine(String sql, Condition.INVARIANT main, Condition.INVARIANT a, Condition.INVARIANT b) throws IOException {
         List<Graph> graphs;
+        Long count;
         if (sql == null || sql.isEmpty()) {
-            Long count = graphDao.count();
-            long pageCount = count / 100;
-            if (count % 100 != 0) {
-                pageCount++;
-            }
-            StringBuilder res = new StringBuilder();
-            for (int page = 0; page < pageCount; page++) {
-                graphs = graphDao.findAll(100, page);
-                if (main == null) {
-                    res.append(stringify(bruteMiner.mine(graphs)));
-                } else {
-                    res.append(stringify(bruteMiner.mine(graphs, main, a, b)));
-                }
-            }
-            return res.toString();
+            count = graphDao.count();
         } else {
-            graphs = graphDao.findBySql(sql);
+            count = new Long(graphDao.countBySql(sql));
         }
-        if (main == null) {
-            return stringify(bruteMiner.mine(graphs));
+        long pageCount = count / 100;
+        if (count % 100 != 0) {
+            pageCount++;
         }
-        return stringify(bruteMiner.mine(graphs, main, a, b));
+        StringBuilder res = new StringBuilder();
+        for (int page = 0; page < pageCount; page++) {
+            if (sql == null || sql.isEmpty()) {
+                graphs = graphDao.findAll(100, page);
+            } else {
+                graphs = graphDao.findPageBySql(sql, 100, page);
+            }
+            if (main == null) {
+                res.append(stringify(bruteMiner.mine(graphs)));
+            } else {
+                res.append(stringify(bruteMiner.mine(graphs, main, a, b)));
+            }
+        }
+        return res.toString();
+//        if (main == null) {
+//            return stringify(bruteMiner.mine(graphs));
+//        }
+//                return stringify(bruteMiner.mine(graphs, main, a, b));
     }
 
     protected String stringify(Collection<Condition> conditions) {
@@ -56,8 +61,8 @@ public class Miner {
                     Condition another = conditionList.get(j);
                     if (another.getOperation().equals(condition.getOperation()) && another.getInvariants()[0].equals(condition.getInvariants()[0]) &&
                             (another.getInvariants()[1].equals(condition.getInvariants()[1]) && another.getInvariants()[2].equals(condition.getInvariants()[2])
-                            ||
-                            another.getInvariants()[1].equals(condition.getInvariants()[2]) && another.getInvariants()[2].equals(condition.getInvariants()[1]))) {
+                                    ||
+                                    another.getInvariants()[1].equals(condition.getInvariants()[2]) && another.getInvariants()[2].equals(condition.getInvariants()[1]))) {
                         repeated = true;
                         break;
                     }
