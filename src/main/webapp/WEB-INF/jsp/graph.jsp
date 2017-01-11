@@ -42,16 +42,16 @@
         <td>${graph.getEdgeAmount()}</td>
         <td>${graph.getConnected() == 1? 'Да':'Нет'}</td>
         <td>${graph.getVertexConnectivity()}</td>
-        <td>${graph.getConnected() == 1? graphs.get(i).getEdgeConnectivity() : 0}</td>
-        <td>${graph.getConnected() == 1? graphs.get(i).getRadius(): '-'}</td>
-        <td>${graph.getConnected() == 1? graphs.get(i).getDiametr(): '-'}</td>
+        <td>${graph.getConnected() == 1? graph.getEdgeConnectivity() : 0}</td>
+        <td>${graph.getConnected() == 1? graph.getRadius(): '-'}</td>
+        <td>${graph.getConnected() == 1? graph.getDiametr(): '-'}</td>
         <td>${graph.getComponents()}</td>
-        <td>${graph.isAcyclic()? '-' : graphs.get(i).getGirth()}</td>
+        <td>${graph.isAcyclic()? '-' : graph.getGirth()}</td>
         <td>${graph.isAcyclic()?'Да':'Нет'}</td>
         <td>${graph.getTwoPartial()==1? 'Да':'Нет'}</td>
-        <td>${graph.getExp()==null?'-':graphs.get(i).getExp()}</td>
-        <td>${graphs.get(i).getChromeNumber()}</td>
-        <td>${graphs.get(i).getIndependenceNumber()}</td>
+        <td>${graph.getExp()==null?'-':graph.getExp()}</td>
+        <td>${graph.getChromeNumber()}</td>
+        <td>${graph.getIndependenceNumber()}</td>
     </tr>
     </tbody>
 </table>
